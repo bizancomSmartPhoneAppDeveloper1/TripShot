@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		189D4AEB191D4AA200498178 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AEA191D4AA200498178 /* libsqlite3.dylib */; };
+		189D4AEF191D4B6800498178 /* extra in Resources */ = {isa = PBXBuildFile; fileRef = 189D4AED191D4B6800498178 /* extra */; };
+		189D4AF0191D4B6800498178 /* fmdb in Resources */ = {isa = PBXBuildFile; fileRef = 189D4AEE191D4B6800498178 /* fmdb */; };
 		87AC9663191CF98300C69813 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9662191CF98300C69813 /* Foundation.framework */; };
 		87AC9665191CF98300C69813 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9664191CF98300C69813 /* CoreGraphics.framework */; };
 		87AC9667191CF98300C69813 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9666191CF98300C69813 /* UIKit.framework */; };
@@ -36,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		189D4AEA191D4AA200498178 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		189D4AED191D4B6800498178 /* extra */ = {isa = PBXFileReference; lastKnownFileType = folder; path = extra; sourceTree = "<group>"; };
+		189D4AEE191D4B6800498178 /* fmdb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fmdb; sourceTree = "<group>"; };
 		87AC965F191CF98300C69813 /* TripShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87AC9662191CF98300C69813 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		87AC9664191CF98300C69813 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -82,6 +86,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		189D4AEC191D4B3000498178 /* FMDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				189D4AED191D4B6800498178 /* extra */,
+				189D4AEE191D4B6800498178 /* fmdb */,
+			);
+			name = FMDatabase;
+			sourceTree = "<group>";
+		};
 		87AC9656191CF98300C69813 = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +135,7 @@
 				87AC9677191CF98400C69813 /* ViewController.h */,
 				87AC9678191CF98400C69813 /* ViewController.m */,
 				87AC967A191CF98400C69813 /* Images.xcassets */,
+				189D4AEC191D4B3000498178 /* FMDatabase */,
 				87AC9669191CF98300C69813 /* Supporting Files */,
 			);
 			path = TripShot;
@@ -232,7 +246,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				189D4AF0191D4B6800498178 /* fmdb in Resources */,
 				87AC967B191CF98400C69813 /* Images.xcassets in Resources */,
+				189D4AEF191D4B6800498178 /* extra in Resources */,
 				87AC966D191CF98400C69813 /* InfoPlist.strings in Resources */,
 				87AC9676191CF98400C69813 /* Main.storyboard in Resources */,
 			);
