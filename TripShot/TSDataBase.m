@@ -32,7 +32,7 @@
     
     
     /* テーブルの作成 */
-    NSString *sql = @"CREATE TABLE testTable(id INTEGER PRIMARY KEY ,place_name TEXT,latitude REAL, longitude REAL , date NONE , weather TEXT ,text TEXT ,pics TEXT ,went_flag INTEGER , delete_flag INTEGER);"; //testTableというテーブルを作成。""の中に、送りたいSQL文を記入するぉ
+    NSString *sql = @"CREATE TABLE testTable(id INTEGER PRIMARY KEY ,place_name TEXT,latitude REAL, longitude REAL , date INTEGER , weather TEXT ,text TEXT ,pics TEXT ,went_flag INTEGER , delete_flag INTEGER , hour INTEGER , address TEXT);"; //testTableというテーブルを作成。""の中に、送りたいSQL文を記入するぉ
     [database executeUpdate:sql];
     
     [database close];
@@ -47,21 +47,24 @@
         dataid = 0;
     }
     
-    NSString *insert_sql = @"INSERT INTO testTable(id, place_name, latitude, longitude, date, weather, text, pics, went_flag, delete_flag) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    NSString *insert_sql = @"INSERT INTO testTable(id, place_name, latitude, longitude, date, weather, text, pics, went_flag, delete_flag , hour , address) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
     
     [database open];
     
     //データをいれる
     [database executeUpdate:insert_sql ,
-     [NSNumber numberWithInteger:4],
+     [NSNumber numberWithInteger:dataid],//番号
      @"場所",
      [NSNumber numberWithDouble:34.070162], [NSNumber numberWithDouble:134.556246],
-     [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]],
+     [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]],//日にち　intに変換すること
      @"天気",
      @"文章の全文",
      @"pic1.png",
      [NSNumber numberWithInteger:1],
-     [NSNumber numberWithInteger:0]];
+     [NSNumber numberWithInteger:0],
+     [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]],//時刻　intに変換すること
+     @"ここには変換された住所が入る"
+     ];
     
     NSLog(@"記事No:%d DB書き込み完了",dataid);
     
@@ -88,6 +91,11 @@
     [database open];
     
     //必要なデータを取り出す（ここでは、delete_flagが0のものすべて）
+
+    
+    //sqlのさいごにORDER BY ID DESC　をいれるとIDの順番でソートできる
+    //日付順にソートしたいのでとりあえず考えなおし
+    
     NSString *sql = @"SELECT * FROM testTable WHERE delete_flag = '0';";
     FMResultSet *results = [database executeQuery:sql];//DBの中身はresultsにはいるよ
 
@@ -101,6 +109,8 @@
     NSMutableArray *picsarray = [[NSMutableArray alloc]init];
     NSMutableArray *weatherarray = [[NSMutableArray alloc]init];
     NSMutableArray *wentflagarray = [[NSMutableArray alloc]init];
+    NSMutableArray *hourarray = [[NSMutableArray alloc]init];
+    NSMutableArray *addressarray = [[NSMutableArray alloc]init];
     
     //データ取得を行うループ
     while([results next]){ //結果が一行ずつ返されて、最後までいくとnextメソッドがnoを返す
@@ -119,8 +129,8 @@
         double lon = [results doubleForColumn:@"longitude"];
         [lonarray addObject:@(lon)];
         
-        NSString *db_date = [results stringForColumn:@"date"];//＊＊＊＊＊要確認＊＊＊＊＊＊
-        [datearray addObject:db_date];
+        int db_date = [results intForColumn:@"date"];//＊＊＊＊＊要確認＊＊＊＊＊＊
+        [datearray addObject:@(db_date)];
         
         NSString *db_text = [results stringForColumn:@"text"];
         [textarray addObject:db_text];
@@ -134,19 +144,23 @@
         int wentflag = [results intForColumn:@"went_flag"];
         [wentflagarray addObject:@(wentflag)];
         
+        int db_hour = [results intForColumn:@"hour"];//＊＊＊＊＊要確認＊＊＊＊＊＊
+        [hourarray addObject:@(db_date)];
+        
+        NSString *db_address = [results stringForColumn:@"address"];
+        [addressarray addObject:db_address];
+        
         //        int deleteflag = [results intForColumn:@"delete_flag"];
         
-        NSLog(@"check1 %d,%@,%f,%f,%@,%@,%@,%@,%d"
-              ,db_id,db_title,lat,lon,db_weather,db_date,db_text,db_pics,wentflag
+        NSLog(@"check1 %d,%@,%f,%f,%@,%d,%@,%@,%d,%d,%@"
+              ,db_id,db_title,lat,lon,db_weather,db_date,db_text,db_pics,wentflag,db_hour,db_address
               );//確認表示
         
          //最終的にresltArrayに配列がそれぞれぼこっと入る感じで。
-
-        //        NSString *insert_sql = @"INSERT INTO testTable(id, place_name, latitude, longitude, date, weather, text, pics, went_flag, delete_flag) VALUES (?,?,?,?,?,?,?,?,?,?)";
         i++;
     }
     
-    NSLog(@"check2=====試しに配列の表示%@",weatherarray[2]);
+    NSLog(@"check2=====試しに配列の表示%@",weatherarray[0]);
 
     [database close];
     
@@ -161,6 +175,8 @@
     [resultArray addObject:picsarray];//6
     [resultArray addObject:weatherarray];//7
     [resultArray addObject:wentflagarray];//8
+    [resultArray addObject:hourarray]; //9
+    [resultArray addObject:addressarray]; //10
     
     NSLog(@"check3 ====%@",resultArray);
     return resultArray;
@@ -175,7 +191,7 @@
 
 }
 
--(NSString *)getAddressFromLat:(double)lat AndLot:(double)lot{ //引数が緯度、経度 ***********要チェック*********
+-(NSString *)getAddressFromLat:(double)lat AndLot:(double)lot{ //引数が緯度、経度 ***********アラートなど最終的に要チェック*********
     
     NSDictionary *jsonObjectResults = nil;
     NSString *urlApi1 = @"http://maps.google.com/maps/api/geocode/json?latlng=";
@@ -188,7 +204,7 @@
     NSHTTPURLResponse* resp;
     NSData *json_data = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:nil];
     
-    //通信エラーの際の処理を考える必要がある
+    //通信エラーの際の処理
     if (resp.statusCode != 200){
   //      [self alertViewMethod];//アラートビュー出す
     }

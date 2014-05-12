@@ -42,6 +42,8 @@
 
     //使うデータをここで読み込む
     TSDataBase *db = [[TSDataBase alloc]init];
+    [db makeDatabase];
+    [db createDBData];
     
 //    [db loadData];
 
@@ -62,15 +64,14 @@
     _lotArray = [[NSMutableArray alloc]init];
     _lotArray = resultArray[3];
 
-    //ここまでちゃんと通ってる。
     NSLog(@"できるはずのセル個数%d",_idArray.count);
-//    double型にキャストする
-//    （例）double val = [num doubleValue];
-    NSNumber *temp1 = _latArray[1];
-    NSNumber *temp2 = _lotArray[1];
+
+    /*　テスト */
+    NSNumber *temp1 = _latArray[0];
+    NSNumber *temp2 = _lotArray[0];
     
     NSString *tempstr = [db getAddressFromLat:[temp1 doubleValue] AndLot:[temp2 doubleValue]];
-    NSLog(@"緯度経度がちゃんと住所に変換できているか？%@",tempstr);
+    NSLog(@"住所%@",tempstr);
 }
 
 - (void)didReceiveMemoryWarning
