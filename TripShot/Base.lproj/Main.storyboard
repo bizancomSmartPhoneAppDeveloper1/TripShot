@@ -211,7 +211,7 @@
                                     <segue destination="KQW-ax-y4I" kind="modal" id="rKy-i3-UKR"/>
                                 </connections>
                             </button>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Man-Q1-MmQ">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Man-Q1-MmQ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="510"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </mapView>
