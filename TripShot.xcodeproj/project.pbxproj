@@ -18,6 +18,7 @@
 		189D4B0C191F9C8F00498178 /* WantsToGoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4B0B191F9C8F00498178 /* WantsToGoListViewController.m */; };
 		189D4B0E191FBA8900498178 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4B0D191FBA8800498178 /* CoreLocation.framework */; };
 		189D4B11191FBAA600498178 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4B10191FBAA600498178 /* Weather.m */; };
+		189D4B14192008F600498178 /* CreateListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4B13192008F600498178 /* CreateListViewController.m */; };
 		87AC9663191CF98300C69813 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9662191CF98300C69813 /* Foundation.framework */; };
 		87AC9665191CF98300C69813 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9664191CF98300C69813 /* CoreGraphics.framework */; };
 		87AC9667191CF98300C69813 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9666191CF98300C69813 /* UIKit.framework */; };
@@ -65,6 +66,8 @@
 		189D4B0D191FBA8800498178 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		189D4B0F191FBAA600498178 /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Weather.h; path = ../Weather.h; sourceTree = "<group>"; };
 		189D4B10191FBAA600498178 /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Weather.m; path = ../Weather.m; sourceTree = "<group>"; };
+		189D4B12192008F600498178 /* CreateListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateListViewController.h; sourceTree = "<group>"; };
+		189D4B13192008F600498178 /* CreateListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateListViewController.m; sourceTree = "<group>"; };
 		87AC965F191CF98300C69813 /* TripShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87AC9662191CF98300C69813 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		87AC9664191CF98300C69813 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -172,6 +175,8 @@
 				87AC9671191CF98400C69813 /* AppDelegate.h */,
 				87AC9672191CF98400C69813 /* AppDelegate.m */,
 				87AC9674191CF98400C69813 /* Main.storyboard */,
+				189D4B12192008F600498178 /* CreateListViewController.h */,
+				189D4B13192008F600498178 /* CreateListViewController.m */,
 				87AC9677191CF98400C69813 /* ViewController.h */,
 				87AC9678191CF98400C69813 /* ViewController.m */,
 				189D4B0A191F9C8F00498178 /* WantsToGoListViewController.h */,
@@ -319,6 +324,7 @@
 				189D4B04191E122500498178 /* FMDatabasePool.m in Sources */,
 				189D4B06191E122500498178 /* FMResultSet.m in Sources */,
 				189D4B09191F7AFA00498178 /* TSDataBase.m in Sources */,
+				189D4B14192008F600498178 /* CreateListViewController.m in Sources */,
 				189D4B0C191F9C8F00498178 /* WantsToGoListViewController.m in Sources */,
 				87AC966F191CF98400C69813 /* main.m in Sources */,
 				189D4B03191E122500498178 /* FMDatabaseAdditions.m in Sources */,

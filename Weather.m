@@ -61,13 +61,12 @@
 
 
 -(NSString *)getWeather{
+    
     //天気を取得
     
     //天気API
     
     //文字列に変換
-    
-    
     
     
     NSString *weather;

@@ -50,6 +50,7 @@
     
     [database open];
     
+    //データをいれる
     [database executeUpdate:insert_sql ,
      [NSNumber numberWithInteger:4],
      @"場所",
