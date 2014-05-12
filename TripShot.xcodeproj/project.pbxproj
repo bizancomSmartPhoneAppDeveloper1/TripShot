@@ -20,6 +20,7 @@
 		189D4B11191FBAA600498178 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4B10191FBAA600498178 /* Weather.m */; };
 		87522D35192082E400334492 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87522D34192082E400334492 /* CameraViewController.m */; };
 		87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */; };
+		87522D3E1920E88900334492 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 87522D3D1920E88900334492 /* camera.png */; };
 		87AC9663191CF98300C69813 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9662191CF98300C69813 /* Foundation.framework */; };
 		87AC9665191CF98300C69813 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9664191CF98300C69813 /* CoreGraphics.framework */; };
 		87AC9667191CF98300C69813 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9666191CF98300C69813 /* UIKit.framework */; };
@@ -77,6 +78,7 @@
 		87522D33192082E400334492 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		87522D34192082E400334492 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "free-textures-japanese-style-06.jpg"; sourceTree = "<group>"; };
+		87522D3D1920E88900334492 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		87AC965F191CF98300C69813 /* TripShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87AC9662191CF98300C69813 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		87AC9664191CF98300C69813 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -158,6 +160,7 @@
 		87522D3A19208F4A00334492 /* pics */ = {
 			isa = PBXGroup;
 			children = (
+				87522D3D1920E88900334492 /* camera.png */,
 				87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */,
 			);
 			name = pics;
@@ -347,6 +350,7 @@
 				87AC966D191CF98400C69813 /* InfoPlist.strings in Resources */,
 				87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */,
 				87AC9676191CF98400C69813 /* Main.storyboard in Resources */,
+				87522D3E1920E88900334492 /* camera.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

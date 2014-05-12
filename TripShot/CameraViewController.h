@@ -8,15 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CameraViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate>{
+@interface CameraViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>{
     
     UIImage *editedImage;
 }
+@property NSString *temp;
+@property NSString *icon;
+@property NSDictionary *jsonObject;
+@property NSString* tomorrow;
 
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
+
 -(void)startCamera;
+- (IBAction)takePhoto:(UIButton *)sender;
+
 
 
 
