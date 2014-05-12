@@ -10,7 +10,10 @@
 #import "CollectionCell.h"
 
 @interface AlbumViewController ()
-
+{
+    NSArray *picture;
+    NSArray *date;
+}
 @end
 
 @implementation AlbumViewController
@@ -31,34 +34,38 @@
     
     [[self AlbumCollection]setDataSource:self];
     [[self AlbumCollection]setDelegate:self];
+    
+    picture = [[NSArray alloc]initWithObjects:@"image-1.jpg",@"image-2.jpg",@"image-3.jpg",@"image-4.jpg", nil];
+    date = [[NSArray alloc]initWithObjects:@"5/3",@"5/4",@"5/5",@"5/6", nil];
+    
 }
 
-//-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView;//セクションの数を設定
-//{
-//    return 1;
-//}
-//
-//-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section;
-//
-////セクションに応じたセルの数を返す。
-//{
-//    return [picture count];
-//}
-//
-////collectionView:cellForItemAtIndexPath:メソッドでセルの編集をする
-//-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-//                 cellForItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    // スタイルを指定したセル生成
-//    static NSString *CellIdentifier =@"Cell";
-//    CollectionCell *cell = [collectionView
-//                            dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-//    
-//    [[cell seapicture] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
-//    [[cell pictureLabel] setText:[namelabel objectAtIndex:indexPath.item]];
-//    
-//    return cell;
-//}
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView;//セクションの数を設定
+{
+    return 1;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section;
+
+//セクションに応じたセルの数を返す。
+{
+    return [picture count];
+}
+
+//collectionView:cellForItemAtIndexPath:メソッドでセルの編集をする
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // スタイルを指定したセル生成
+    static NSString *CellIdentifier =@"Cell";
+    CollectionCell *cell = [collectionView
+                            dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
+    [[cell pictureDate] setText:[date objectAtIndex:indexPath.item]];
+    
+    return cell;
+}
 
 - (void)didReceiveMemoryWarning
 {
