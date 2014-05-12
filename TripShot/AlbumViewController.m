@@ -35,7 +35,7 @@
     [[self AlbumCollection]setDataSource:self];
     [[self AlbumCollection]setDelegate:self];
     
-    picture = [[NSArray alloc]initWithObjects:@"image-1.jpg",@"image-2.jpg",@"image-3.jpg",@"image-4.jpg", nil];
+    picture = [[NSArray alloc]initWithObjects:@"image1.jpg",@"image2.jpg",@"image3.jpg",@"image4.jpg", nil];
     date = [[NSArray alloc]initWithObjects:@"5/3",@"5/4",@"5/5",@"5/6", nil];
     
 }
