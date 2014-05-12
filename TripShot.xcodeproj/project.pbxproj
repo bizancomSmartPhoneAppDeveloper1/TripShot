@@ -18,6 +18,8 @@
 		189D4B0C191F9C8F00498178 /* WantsToGoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4B0B191F9C8F00498178 /* WantsToGoListViewController.m */; };
 		189D4B0E191FBA8900498178 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4B0D191FBA8800498178 /* CoreLocation.framework */; };
 		189D4B11191FBAA600498178 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4B10191FBAA600498178 /* Weather.m */; };
+		87522D35192082E400334492 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87522D34192082E400334492 /* CameraViewController.m */; };
+		87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */; };
 		87AC9663191CF98300C69813 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9662191CF98300C69813 /* Foundation.framework */; };
 		87AC9665191CF98300C69813 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9664191CF98300C69813 /* CoreGraphics.framework */; };
 		87AC9667191CF98300C69813 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9666191CF98300C69813 /* UIKit.framework */; };
@@ -68,6 +70,9 @@
 		189D4B0D191FBA8800498178 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		189D4B0F191FBAA600498178 /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Weather.h; path = ../Weather.h; sourceTree = "<group>"; };
 		189D4B10191FBAA600498178 /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Weather.m; path = ../Weather.m; sourceTree = "<group>"; };
+		87522D33192082E400334492 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		87522D34192082E400334492 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "free-textures-japanese-style-06.jpg"; sourceTree = "<group>"; };
 		87AC965F191CF98300C69813 /* TripShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87AC9662191CF98300C69813 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		87AC9664191CF98300C69813 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -142,6 +147,14 @@
 			name = DataBaseFolder;
 			sourceTree = "<group>";
 		};
+		87522D3A19208F4A00334492 /* pics */ = {
+			isa = PBXGroup;
+			children = (
+				87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */,
+			);
+			name = pics;
+			sourceTree = "<group>";
+		};
 		87AC9656191CF98300C69813 = {
 			isa = PBXGroup;
 			children = (
@@ -179,9 +192,12 @@
 		87AC9668191CF98300C69813 /* TripShot */ = {
 			isa = PBXGroup;
 			children = (
+				87522D3A19208F4A00334492 /* pics */,
 				87AC9671191CF98400C69813 /* AppDelegate.h */,
 				87AC9672191CF98400C69813 /* AppDelegate.m */,
 				87AC9674191CF98400C69813 /* Main.storyboard */,
+				87522D33192082E400334492 /* CameraViewController.h */,
+				87522D34192082E400334492 /* CameraViewController.m */,
 				87AC9677191CF98400C69813 /* ViewController.h */,
 				87AC9678191CF98400C69813 /* ViewController.m */,
 				189D4B0A191F9C8F00498178 /* WantsToGoListViewController.h */,
@@ -313,6 +329,7 @@
 			files = (
 				87AC967B191CF98400C69813 /* Images.xcassets in Resources */,
 				87AC966D191CF98400C69813 /* InfoPlist.strings in Resources */,
+				87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */,
 				87AC9676191CF98400C69813 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,6 +354,7 @@
 				189D4B05191E122500498178 /* FMDatabaseQueue.m in Sources */,
 				87AC9673191CF98400C69813 /* AppDelegate.m in Sources */,
 				189D4B02191E122500498178 /* FMDatabase.m in Sources */,
+				87522D35192082E400334492 /* CameraViewController.m in Sources */,
 				189D4B04191E122500498178 /* FMDatabasePool.m in Sources */,
 				189D4B06191E122500498178 /* FMResultSet.m in Sources */,
 				189D4B09191F7AFA00498178 /* TSDataBase.m in Sources */,
