@@ -8,12 +8,13 @@
 
 #import "TSDataBase.h"
 @interface TSDataBase()
+@property NSInteger dataid;
 @end
 
 @implementation TSDataBase{
 
     FMDatabase *database;
-    int dataid;
+//    int dataid;
     NSString *addressStr;
 
 }
@@ -41,38 +42,76 @@
 
 - (void)createDBData{
     
+    _dataid = [self loadData];
+    
     /*　データの追加　*/
 
-    if(!dataid){
-        dataid = 0;
+    if(!_dataid){
+        _dataid = 0;
     }
     
     NSString *insert_sql = @"INSERT INTO testTable(id, place_name, latitude, longitude, date, weather, text, pics, went_flag, delete_flag , hour , address) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    //入れるデータの準備
+    NSInteger date = [self getIntegerDate];
+    NSInteger hour = [self getIntegerHour];
     
-    [database open];
+    double lat = 34.070162;//仮データ
+    double lot = 134.556246; //仮データ
+
+    NSString *address = [self getAddressFromLat:lat AndLot:lot];
+    
     
     //データをいれる
+
+    [database open];
     [database executeUpdate:insert_sql ,
-     [NSNumber numberWithInteger:dataid],//番号
+     [NSNumber numberWithInteger:_dataid],//番号をいれる
      @"場所",
-     [NSNumber numberWithDouble:34.070162], [NSNumber numberWithDouble:134.556246],
-     [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]],//日にち　intに変換すること
+     [NSNumber numberWithDouble:lat], [NSNumber numberWithDouble:lot],
+     [NSNumber numberWithInteger:date] ,//日にち6桁int
      @"天気",
      @"文章の全文",
      @"pic1.png",
      [NSNumber numberWithInteger:1],
      [NSNumber numberWithInteger:0],
-     [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]],//時刻　intに変換すること
-     @"ここには変換された住所が入る"
+     [NSNumber numberWithInteger:hour],//時刻4桁int
+     address
      ];
     
-    NSLog(@"記事No:%d DB書き込み完了",dataid);
+    NSLog(@"記事No:%d DB書き込み完了",_dataid);
     
     [database close];
- 
-    dataid++;
+    
+    _dataid++;
+    [self saveData];
 }
 
+-(int)getIntegerDate{ //日付を取得してint型に変換
+    //日付取得
+    NSString* date_str;
+    NSDate *now = [NSDate date];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYYMMdd"];
+    date_str = [formatter stringFromDate:now]; //strに変換
+
+    int result = [date_str integerValue];
+
+    return result;
+
+}
+
+-(int)getIntegerHour{ //現在の時刻を取得してint型に変換
+
+    //日付取得
+    NSString* date_str;
+    NSDate *now = [NSDate date];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HHmm"];
+    date_str = [formatter stringFromDate:now]; //strに変換
+    int result = [date_str integerValue];
+    return result;
+}
 
 
 -(NSMutableArray *)loadDBData{ //DBデータの読み込み
@@ -94,9 +133,9 @@
 
     
     //sqlのさいごにORDER BY ID DESC　をいれるとIDの順番でソートできる
-    //日付順にソートしたいのでとりあえず考えなおし
+    //できてるかな？確認
     
-    NSString *sql = @"SELECT * FROM testTable WHERE delete_flag = '0';";
+    NSString *sql = @"SELECT * FROM testTable WHERE delete_flag = '0' ORDER BY date DESC;";
     FMResultSet *results = [database executeQuery:sql];//DBの中身はresultsにはいるよ
 
     //要素のいれものをつくる
@@ -178,7 +217,7 @@
     [resultArray addObject:hourarray]; //9
     [resultArray addObject:addressarray]; //10
     
-    NSLog(@"check3 ====%@",resultArray);
+//    NSLog(@"check3 ====%@",resultArray);
     return resultArray;
     
 
@@ -221,13 +260,13 @@
             NSLog(@"ZERO_RESULTS");
         }else{
             NSMutableArray *result = [jsonObjectResults objectForKey:@"results"];
-            NSString *str = [result description];
-            NSLog(@"%@",str);
+//            NSString *str = [result description];
+//            NSLog(@"%@",str);
             NSDictionary *dic = [result objectAtIndex:0];
             //NSString *str2 = [dic description];
             NSDictionary *dic2 = [dic objectForKey:@"formatted_address"];
             addressStr = [dic2 description];
-            NSLog(@"address=%@",addressStr);
+//            NSLog(@"address=%@",addressStr);
             
         }
     }
@@ -239,15 +278,16 @@
 -(void)saveData{ //通しナンバーを保存
 
     NSUserDefaults *savedata = [NSUserDefaults standardUserDefaults];
-    [savedata setInteger:dataid forKey:@"dataid"];
+    [savedata setInteger:_dataid forKey:@"dataid"];//INTEGER型
+    [savedata synchronize];
 
 }
 
--(void)loadData{ //通しナンバーの読み込み
+-(int)loadData{ //通しナンバーの読み込み
     
     NSUserDefaults *savedata = [NSUserDefaults standardUserDefaults];
-    dataid = [savedata integerForKey:@"dataid"];
-
+    _dataid = [savedata integerForKey:@"dataid"];
+    return  _dataid;
 }
 
 

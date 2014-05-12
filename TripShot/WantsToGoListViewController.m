@@ -42,10 +42,12 @@
 
     //使うデータをここで読み込む
     TSDataBase *db = [[TSDataBase alloc]init];
+//    [db loadData];
+
     [db makeDatabase];
     [db createDBData];
     
-//    [db loadData];
+
 
     NSMutableArray *resultArray = [db loadDBData];
     //ここにはそれぞれの配列がぼこっと入ってう。（deleteflagが0のやつね）

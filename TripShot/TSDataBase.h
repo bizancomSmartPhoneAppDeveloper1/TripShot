@@ -18,9 +18,12 @@
 -(NSMutableArray *)loadDBData;//データの読み込み(配列に入れ込んでいる）
 
 -(NSString *)getAddressFromLat:(double)lat AndLot:(double)lot;//緯度経度情報から住所を取得する
+-(int)getIntegerDate; //日付を取得してint型に変換
+-(int)getIntegerHour; //現在の時刻を取得してint型に変換
+
 
 -(void)saveData;//通し番号セーブ（記事作成後に必ず）
--(void)loadData;//通し番号読み込み（記事作成前に必ず）
+-(int)loadData;//通し番号読み込み（記事作成前に必ず）通し番号がかえってくる
 
 -(void)deleteData;//削除フラグをたてるだけだけどね 未完了
 -(void)editData;//編集する 未完了
