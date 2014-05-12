@@ -33,6 +33,7 @@
 		87AC9684191CF98400C69813 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9666191CF98300C69813 /* UIKit.framework */; };
 		87AC968C191CF98400C69813 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 87AC968A191CF98400C69813 /* InfoPlist.strings */; };
 		87AC968E191CF98400C69813 /* TripShotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AC968D191CF98400C69813 /* TripShotTests.m */; };
+		F66BEDBE19206029000E60E8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F66BEDBD19206029000E60E8 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		87AC9689191CF98400C69813 /* TripShotTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TripShotTests-Info.plist"; sourceTree = "<group>"; };
 		87AC968B191CF98400C69813 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		87AC968D191CF98400C69813 /* TripShotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TripShotTests.m; sourceTree = "<group>"; };
+		F66BEDBD19206029000E60E8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F66BEDBE19206029000E60E8 /* MapKit.framework in Frameworks */,
 				189D4B0E191FBA8900498178 /* CoreLocation.framework in Frameworks */,
 				189D4AF6191E105000498178 /* libsqlite3.0.dylib in Frameworks */,
 				189D4AEB191D4AA200498178 /* libsqlite3.dylib in Frameworks */,
@@ -158,6 +161,7 @@
 		87AC9661191CF98300C69813 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F66BEDBD19206029000E60E8 /* MapKit.framework */,
 				189D4B0D191FBA8800498178 /* CoreLocation.framework */,
 				189D4AF5191E105000498178 /* libsqlite3.0.dylib */,
 				189D4AEA191D4AA200498178 /* libsqlite3.dylib */,
