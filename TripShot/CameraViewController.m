@@ -15,6 +15,7 @@
     NSString *comment;
     NSMutableArray *picsArray;
     NSString *pics;
+    int picsCount;
 }
 
 
@@ -89,7 +90,7 @@
     
     
     //とりあえずカメラロールに保存されたものを使用するが、アプリ専用のフォルダに保存することを検討が必要
-    UIImageWriteToSavedPhotosAlbum(editedImage, nil, nil, nil);  //編集済みの画像をカメラロールに保存する
+    //UIImageWriteToSavedPhotosAlbum(editedImage, nil, nil, nil);  //編集済みの画像をカメラロールに保存する
     
     [array addObject:editedImage];
     self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -100,9 +101,16 @@
     //UIImageWriteToSavedPhotosAlbum(originalImage, nil, nil, nil);  //撮影したそのままの画像をカメラロールに保存
     
     //pathを取得
-    NSURL *url = (NSURL *)[info objectForKey:UIImagePickerControllerEditedImage];
+    //NSURL *url = (NSURL *)[info objectForKey:UIImagePickerControllerEditedImage];
+    
+    //PNG形式で0.5に圧縮してシリアライズ化
+    NSData *imageData = UIImageJPEGRepresentation(editedImage, 0.5);
+    
     //一旦配列に保存
-    [picsArray addObject:url];
+    //カメラロールに保存したパスを配列として渡す場合
+    //[picsArray addObject:url];
+    //シリアライズ化した情報を配列として渡す場合
+    [picsArray addObject:imageData];
     
     //カメラ機能終了
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -199,10 +207,17 @@
         
         //本文情報 変数comment
         
-        //写真情報　変数pics
+        //写真情報　変数picsと写真数picsCount
         pics = [picsArray description];
         NSLog(@"pics=%@",pics);
+        picsCount =[picsArray count];
+        NSLog(@"count=%d",picsCount);
         
+        //シリアライズ化した情報を取り出す場合を参考までに
+        int i;
+        for (i=0; i<picsCount; i++) {
+            UIImage* image = [[UIImage alloc] initWithData:[picsArray objectAtIndex:i]];
+        }
         
     }
 }
