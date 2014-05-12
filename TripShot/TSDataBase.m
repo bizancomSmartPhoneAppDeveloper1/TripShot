@@ -14,6 +14,7 @@
 
     FMDatabase *database;
     int dataid;
+    NSString *addressStr;
 
 }
 
@@ -172,6 +173,50 @@
 
 -(void)editData{//編集する 未完了
 
+}
+
+-(NSString *)getAddressFromLat:(double)lat AndLot:(double)lot{ //引数が緯度、経度 ***********要チェック*********
+    
+    NSDictionary *jsonObjectResults = nil;
+    NSString *urlApi1 = @"http://maps.google.com/maps/api/geocode/json?latlng=";
+    NSString *urlApi2 = @"&sensor=false";
+    NSString *urlApi = [NSString stringWithFormat:@"%@%f,%f%@",urlApi1,lat,lot,urlApi2];
+
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlApi]cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
+    
+    //sendSynchronousRequestメソッドでURLにアクセス
+    NSHTTPURLResponse* resp;
+    NSData *json_data = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:nil];
+    
+    //通信エラーの際の処理を考える必要がある
+    if (resp.statusCode != 200){
+  //      [self alertViewMethod];//アラートビュー出す
+    }
+    
+    //返ってきたデータをJSONObjectWithDataメソッドで解析
+    else{
+        jsonObjectResults = [NSJSONSerialization JSONObjectWithData:json_data options:NSJSONReadingAllowFragments error:nil];
+        
+        NSDictionary *status = [jsonObjectResults objectForKey:@"status"];
+        NSString *statusString = [status description];
+        
+        if ([statusString isEqualToString:@"ZERO_RESULTS"]) {
+//            [self alertViewMethod]; //アラートビュー出す
+            NSLog(@"ZERO_RESULTS");
+        }else{
+            NSMutableArray *result = [jsonObjectResults objectForKey:@"results"];
+            NSString *str = [result description];
+            NSLog(@"%@",str);
+            NSDictionary *dic = [result objectAtIndex:0];
+            //NSString *str2 = [dic description];
+            NSDictionary *dic2 = [dic objectForKey:@"formatted_address"];
+            addressStr = [dic2 description];
+            NSLog(@"address=%@",addressStr);
+            
+        }
+    }
+    NSString *temp = addressStr;
+    return temp;
 }
 
 

@@ -17,6 +17,8 @@
 -(void)createDBData;//データの新規作成
 -(NSMutableArray *)loadDBData;//データの読み込み(配列に入れ込んでいる）
 
+-(NSString *)getAddressFromLat:(double)lat AndLot:(double)lot;//緯度経度情報から住所を取得する
+
 -(void)saveData;//通し番号セーブ（記事作成後に必ず）
 -(void)loadData;//通し番号読み込み（記事作成前に必ず）
 

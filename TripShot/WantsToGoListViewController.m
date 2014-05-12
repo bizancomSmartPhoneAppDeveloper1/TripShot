@@ -64,6 +64,13 @@
 
     //ここまでちゃんと通ってる。
     NSLog(@"できるはずのセル個数%d",_idArray.count);
+//    double型にキャストする
+//    （例）double val = [num doubleValue];
+    NSNumber *temp1 = _latArray[1];
+    NSNumber *temp2 = _lotArray[1];
+    
+    NSString *tempstr = [db getAddressFromLat:[temp1 doubleValue] AndLot:[temp2 doubleValue]];
+    NSLog(@"緯度経度がちゃんと住所に変換できているか？%@",tempstr);
 }
 
 - (void)didReceiveMemoryWarning
