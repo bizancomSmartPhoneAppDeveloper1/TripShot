@@ -199,6 +199,13 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = bizan.com.mac02;
 				TargetAttributes = {
+					87AC965E191CF98300C69813 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					87AC967F191CF98400C69813 = {
 						TestTargetID = 87AC965E191CF98300C69813;
 					};
@@ -456,6 +463,7 @@
 				87AC9693191CF98400C69813 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		87AC9694191CF98400C69813 /* Build configuration list for PBXNativeTarget "TripShotTests" */ = {
 			isa = XCConfigurationList;
@@ -464,6 +472,7 @@
 				87AC9696191CF98400C69813 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
