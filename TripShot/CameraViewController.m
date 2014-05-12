@@ -10,7 +10,11 @@
 
 @interface CameraViewController (){
     UIImageView *imageViewBack;
-    BOOL boolDidAppear;
+    NSMutableArray *array;
+    NSDate *date;
+    NSString *comment;
+    NSMutableArray *picsArray;
+    NSString *pics;
 }
 
 
@@ -32,19 +36,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self viewMethod];
-    boolDidAppear = NO;
+    array = [[NSMutableArray alloc]init];
+    picsArray = [[NSMutableArray alloc]init];
     
     
     
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    if (boolDidAppear == NO) {
-        [self startCamera];
-    }
-    //[self startCamera];
-    
-}
 
 
 - (void)didReceiveMemoryWarning
@@ -53,16 +51,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
 -(void)startCamera{
     
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])  //カメラを使用できるかチェック
@@ -77,6 +66,10 @@
     
 }
 
+- (IBAction)takePhoto:(UIButton *)sender {
+    [self startCamera];
+}
+
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     //カメラが呼び出され、cancelボタンが押されると呼び出されるメソッド
     [self dismissViewControllerAnimated:YES completion:nil];  //撮影モード終了
@@ -89,36 +82,87 @@
     
     editedImage = (UIImage *)[info objectForKey:UIImagePickerControllerEditedImage];
     
-    self.myImageView.image = editedImage;
+    //self.myImageView.image = editedImage;
     
+    //self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    
+    
+    //とりあえずカメラロールに保存されたものを使用するが、アプリ専用のフォルダに保存することを検討が必要
+    UIImageWriteToSavedPhotosAlbum(editedImage, nil, nil, nil);  //編集済みの画像をカメラロールに保存する
+    
+    [array addObject:editedImage];
     self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
-    
-    //UIImageWriteToSavedPhotosAlbum(editedImage, nil, nil, nil);  //編集済みの画像をカメラロールに保存する
+    self.myImageView.animationImages = array;
+    self.myImageView.animationDuration = 3.0;
+    self.myImageView.animationRepeatCount = 0;
+    [self.myImageView startAnimating];
     //UIImageWriteToSavedPhotosAlbum(originalImage, nil, nil, nil);  //撮影したそのままの画像をカメラロールに保存
     
-    [self dismissViewControllerAnimated:YES completion:nil];  //カメラ機能終了
-    boolDidAppear = YES;
-
+    //pathを取得
+    NSURL *url = (NSURL *)[info objectForKey:UIImagePickerControllerEditedImage];
+    //一旦配列に保存
+    [picsArray addObject:url];
     
+    //カメラ機能終了
+    [self dismissViewControllerAnimated:YES completion:nil];
+
 }
+
+
 
 - (void)viewMethod{
     
+    
+    //行きたい場所リストタイトル表示
+    CGRect titleRect = CGRectMake(90, 320, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
+    //仮に入力
+    titleLabel.text = @"眉山";
+    titleLabel.textColor = [UIColor blueColor];
+    titleLabel.font = [UIFont boldSystemFontOfSize:30];
+    [self.view addSubview:titleLabel];
+    
+    //住所情報入力
+    CGRect addressRect = CGRectMake(90, 380, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
+    //仮に入力
+    addressLabel.text = @"徳島県徳島市";
+    addressLabel.textColor = [UIColor blueColor];
+    addressLabel.font = [UIFont boldSystemFontOfSize:20];
+    [self.view addSubview:addressLabel];
+    
+    
+    //日付入力
+    date = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComps = [calendar components:NSYearCalendarUnit |
+                 NSMonthCalendarUnit  |
+                 NSDayCalendarUnit    |
+                 NSHourCalendarUnit   |
+                 NSMinuteCalendarUnit |
+                 NSSecondCalendarUnit
+                            fromDate:date];
+    
     CGRect daterect = CGRectMake(90, 400, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *dateLabel = [[UILabel alloc]initWithFrame:daterect];
-    dateLabel.text = @" ５月　１２日（火）";
+    dateLabel.text = [NSString stringWithFormat:@"%d月　%d日",(int)dateComps.month,(int)dateComps.day];
     dateLabel.textColor = [UIColor blueColor];
     dateLabel.font = [UIFont boldSystemFontOfSize:20];
-    
     [self.view addSubview:dateLabel];
     
-    CGRect placerect = CGRectMake(90, 430, 220, 50);
-    UILabel *placeLabel = [[UILabel alloc]initWithFrame:placerect];
-    placeLabel.text = @"   ○○○　Cafe ♪";
-    placeLabel.textColor = [UIColor blueColor];
-    placeLabel.font = [UIFont boldSystemFontOfSize:25];
     
-    [self.view addSubview:placeLabel];
+    //コメント欄
+    //コメントを入れる時にコメント欄を上にスクロールすることが必要
+    CGRect textRect = CGRectMake(90, 430, 220, 50);
+    UITextField *textField = [[UITextField alloc]initWithFrame:textRect];
+    textField.text = @"コメントを入れてね♪";
+    comment = textField.text;
+    textField.textColor = [UIColor blueColor];
+    textField.font = [UIFont boldSystemFontOfSize:10];
+    textField.returnKeyType = UIReturnKeyDefault;
+    textField.delegate = self;
+    [self.view addSubview:textField];
     
     
     //スクリーンサイズの取得
@@ -135,6 +179,32 @@
     imageViewBack.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageViewBack];
     [self.view sendSubviewToBack:imageViewBack];
+}
+
+
+
+//textfieldでリターンキーが押されるとキーボードを隠す
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+
+//main画面に戻る際の関数。
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"cameraViewToMainView"]) {
+       
+        //ここでDBに保存する処理を書く
+        //日付情報 変数date
+        
+        //本文情報 変数comment
+        
+        //写真情報　変数pics
+        pics = [picsArray description];
+        NSLog(@"pics=%@",pics);
+        
+        
+    }
 }
 
 
