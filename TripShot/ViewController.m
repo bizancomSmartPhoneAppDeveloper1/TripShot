@@ -36,6 +36,11 @@
     //最新の位置情報を取り出す
     CLLocation *location = [locations lastObject];
     [self.mapView setCenterCoordinate:location.coordinate animated:YES];
+    
+    //現在地を地図表示
+    MKCoordinateRegion region = MKCoordinateRegionMake([location coordinate], MKCoordinateSpanMake(0.01, 0.01));//現在地を地図の中心位置を表した値と、表示領域（地図縮尺）の値をMKCoordinateRegionクラスのインスタンスへ代入
+    [self.mapView setRegion:region];//地図表示
+
 }
 
 @end
