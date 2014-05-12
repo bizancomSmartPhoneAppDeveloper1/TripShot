@@ -33,6 +33,8 @@
 		87AC968C191CF98400C69813 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 87AC968A191CF98400C69813 /* InfoPlist.strings */; };
 		87AC968E191CF98400C69813 /* TripShotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AC968D191CF98400C69813 /* TripShotTests.m */; };
 		F66BEDBE19206029000E60E8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F66BEDBD19206029000E60E8 /* MapKit.framework */; };
+		F66BEDC119206F92000E60E8 /* AlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BEDC019206F92000E60E8 /* AlbumViewController.m */; };
+		F66BEDC419206FF7000E60E8 /* CollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BEDC319206FF7000E60E8 /* CollectionCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +88,10 @@
 		87AC968B191CF98400C69813 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		87AC968D191CF98400C69813 /* TripShotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TripShotTests.m; sourceTree = "<group>"; };
 		F66BEDBD19206029000E60E8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		F66BEDBF19206F92000E60E8 /* AlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumViewController.h; sourceTree = "<group>"; };
+		F66BEDC019206F92000E60E8 /* AlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumViewController.m; sourceTree = "<group>"; };
+		F66BEDC219206FF7000E60E8 /* CollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionCell.h; sourceTree = "<group>"; };
+		F66BEDC319206FF7000E60E8 /* CollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +186,10 @@
 				87AC9678191CF98400C69813 /* ViewController.m */,
 				189D4B0A191F9C8F00498178 /* WantsToGoListViewController.h */,
 				189D4B0B191F9C8F00498178 /* WantsToGoListViewController.m */,
+				F66BEDBF19206F92000E60E8 /* AlbumViewController.h */,
+				F66BEDC219206FF7000E60E8 /* CollectionCell.h */,
+				F66BEDC319206FF7000E60E8 /* CollectionCell.m */,
+				F66BEDC019206F92000E60E8 /* AlbumViewController.m */,
 				189D4B0F191FBAA600498178 /* Weather.h */,
 				189D4B10191FBAA600498178 /* Weather.m */,
 				189D4AF1191D537F00498178 /* DataBaseFolder */,
@@ -323,8 +333,10 @@
 				189D4B04191E122500498178 /* FMDatabasePool.m in Sources */,
 				189D4B06191E122500498178 /* FMResultSet.m in Sources */,
 				189D4B09191F7AFA00498178 /* TSDataBase.m in Sources */,
+				F66BEDC119206F92000E60E8 /* AlbumViewController.m in Sources */,
 				189D4B0C191F9C8F00498178 /* WantsToGoListViewController.m in Sources */,
 				87AC966F191CF98400C69813 /* main.m in Sources */,
+				F66BEDC419206FF7000E60E8 /* CollectionCell.m in Sources */,
 				189D4B03191E122500498178 /* FMDatabaseAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
