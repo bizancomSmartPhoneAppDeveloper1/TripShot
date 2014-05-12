@@ -42,15 +42,14 @@
 
     //使うデータをここで読み込む
     TSDataBase *db = [[TSDataBase alloc]init];
-//    [db loadData];
-
+    
     [db makeDatabase];
-    [db createDBData];
+
+    //    [db createDBData]; //あたらしい行の新規作成
     
 
-
     NSMutableArray *resultArray = [db loadDBData];
-    //ここにはそれぞれの配列がぼこっと入ってう。（deleteflagが0のやつね）
+    
     //必要な項目の配列をこの中から取り出すよ（中身もNSMutableArray）
     //必要な項目？…id0、場所1、住所（つまり緯度2経度3）
     
@@ -65,15 +64,12 @@
     
     _lotArray = [[NSMutableArray alloc]init];
     _lotArray = resultArray[3];
+    
+    _addressArray = [[NSMutableArray alloc]init];
+    _addressArray = resultArray[10];
 
     NSLog(@"できるはずのセル個数%d",_idArray.count);
 
-    /*　テスト */
-    NSNumber *temp1 = _latArray[0];
-    NSNumber *temp2 = _lotArray[0];
-    
-    NSString *tempstr = [db getAddressFromLat:[temp1 doubleValue] AndLot:[temp2 doubleValue]];
-    NSLog(@"住所%@",tempstr);
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,15 +87,18 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //リストのアイテム数が行になる
-    //ここではidが入っているものを一覧にしようか
+
     return _idArray.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+    //ここではスタンダードなsubtitleのセルをつかっている。
+    //地図を表示させたいので、これはカスタムする必要があるよ！覚えておいて！藤原さん！
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //ここでは「＞」を表示させているけど地図を。
+
     
 //配列からアイテムを取得してLabelのテキストに入れる
     cell.textLabel.text = _titleArray[indexPath.row];

@@ -40,9 +40,9 @@
 
 }
 
-- (void)createDBData{
+- (void)createDBData{ //データをいれこむ
     
-    _dataid = [self loadData];
+    _dataid = [self loadData]; //連番の取得
     
     /*　データの追加　*/
 
@@ -55,18 +55,17 @@
     //入れるデータの準備
     NSInteger date = [self getIntegerDate];
     NSInteger hour = [self getIntegerHour];
-    
     double lat = 34.070162;//仮データ
     double lot = 134.556246; //仮データ
-
     NSString *address = [self getAddressFromLat:lat AndLot:lot];
     
     
     //データをいれる
 
     [database open];
+    
     [database executeUpdate:insert_sql ,
-     [NSNumber numberWithInteger:_dataid],//番号をいれる
+     [NSNumber numberWithInteger:_dataid],
      @"場所",
      [NSNumber numberWithDouble:lat], [NSNumber numberWithDouble:lot],
      [NSNumber numberWithInteger:date] ,//日にち6桁int
@@ -84,10 +83,12 @@
     [database close];
     
     _dataid++;
+    
     [self saveData];
 }
 
 -(int)getIntegerDate{ //日付を取得してint型に変換
+    
     //日付取得
     NSString* date_str;
     NSDate *now = [NSDate date];
@@ -168,7 +169,7 @@
         double lon = [results doubleForColumn:@"longitude"];
         [lonarray addObject:@(lon)];
         
-        int db_date = [results intForColumn:@"date"];//＊＊＊＊＊要確認＊＊＊＊＊＊
+        int db_date = [results intForColumn:@"date"];
         [datearray addObject:@(db_date)];
         
         NSString *db_text = [results stringForColumn:@"text"];
@@ -183,7 +184,7 @@
         int wentflag = [results intForColumn:@"went_flag"];
         [wentflagarray addObject:@(wentflag)];
         
-        int db_hour = [results intForColumn:@"hour"];//＊＊＊＊＊要確認＊＊＊＊＊＊
+        int db_hour = [results intForColumn:@"hour"];
         [hourarray addObject:@(db_date)];
         
         NSString *db_address = [results stringForColumn:@"address"];
@@ -226,9 +227,6 @@
     
 }
 
--(void)editData{//編集する 未完了
-
-}
 
 -(NSString *)getAddressFromLat:(double)lat AndLot:(double)lot{ //引数が緯度、経度 ***********アラートなど最終的に要チェック*********
     
