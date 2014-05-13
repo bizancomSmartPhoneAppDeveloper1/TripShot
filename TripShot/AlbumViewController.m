@@ -2,7 +2,7 @@
 //  AlbumViewController.m
 //  TripShot
 //
-//  Created by bizan.com.mac03 on 2014/05/12.
+//  Created by Komaya & Fujiwara on 2014/05/12.
 //  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
 //
 
@@ -12,11 +12,9 @@
 
 @interface AlbumViewController ()
 {
-//    NSArray *picture;
-//    NSArray *date;
-
     NSMutableArray *picture;
-    NSMutableArray *date; 
+//    NSMutableArray *date;
+    NSMutableArray *placeName;
 }
 @end
 
@@ -44,17 +42,23 @@
     TSDataBase *db = [[TSDataBase alloc]init];
     NSMutableArray *DBData = [db loadDBData];
 
-    //dateに、BDData[]の文字列をintからstringに変換して入れる。
+
+/*  dateに、BDData[]の文字列をintからstringに変換して入れる。
     date = [[NSMutableArray alloc]init];
     NSMutableArray *temp = DBData[4];
     for(int i = 0 ; i<=DBData.count ; i++){
         
         date[i] = [NSString stringWithFormat:@"%@",temp[i]];//数字をそのまま変換してstringにした
+        //最終的にyyyy年mm月dd日、という表記にしたい
     }
-    
+ 
+ */
+    placeName = DBData[1];
     picture = DBData[6];
     
 }
+
+
 
 
 
@@ -68,11 +72,9 @@
 
 //セクションに応じたセルの数を返す。
 {
-    TSDataBase *db = [[TSDataBase alloc]init];
-    NSMutableArray *DBData = [db loadDBData];
-    picture = DBData[6];
-    NSLog(@"%d",date.count);
-    return date.count;
+
+    return placeName.count;
+
 }
 
 //collectionView:cellForItemAtIndexPath:メソッドでセルの編集をする
@@ -86,7 +88,7 @@
 
     [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
 
-    [[cell pictureDate] setText:[date objectAtIndex:indexPath.item]];
+    [[cell pictureDate] setText:[placeName objectAtIndex:indexPath.item]];
 
     return cell;
 }

@@ -145,6 +145,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		180E0C831921E92900399554 /* temppics */ = {
+			isa = PBXGroup;
+			children = (
+				F62A87EF19208E7D001BBDDB /* image1.jpg */,
+				F62A87F119208E83001BBDDB /* image2.jpg */,
+				F62A87F319208E8B001BBDDB /* image3.jpg */,
+				F62A87F519208E93001BBDDB /* image4.jpg */,
+				180E0C811921E23000399554 /* pic1.png */,
+			);
+			name = temppics;
+			sourceTree = "<group>";
+		};
 		189D4AF1191D537F00498178 /* DataBaseFolder */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,11 +243,7 @@
 				F66BEDC019206F92000E60E8 /* AlbumViewController.m */,
 				189D4B0F191FBAA600498178 /* Weather.h */,
 				189D4B10191FBAA600498178 /* Weather.m */,
-				180E0C811921E23000399554 /* pic1.png */,
-				F62A87EF19208E7D001BBDDB /* image1.jpg */,
-				F62A87F119208E83001BBDDB /* image2.jpg */,
-				F62A87F319208E8B001BBDDB /* image3.jpg */,
-				F62A87F519208E93001BBDDB /* image4.jpg */,
+				180E0C831921E92900399554 /* temppics */,
 				189D4AF1191D537F00498178 /* DataBaseFolder */,
 				87AC967A191CF98400C69813 /* Images.xcassets */,
 				87AC9669191CF98300C69813 /* Supporting Files */,
