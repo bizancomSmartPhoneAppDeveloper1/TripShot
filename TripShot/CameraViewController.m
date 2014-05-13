@@ -9,7 +9,10 @@
 #import "CameraViewController.h"
 
 @interface CameraViewController (){
+    TSDataBase *tsdatabase;
     UIImageView *imageViewBack;
+    UITextField *textfield;
+    NSString *address;
     NSMutableArray *array;
     NSDate *date;
     NSString *comment;
@@ -36,12 +39,21 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self viewMethod];
+
     array = [[NSMutableArray alloc]init];
     picsArray = [[NSMutableArray alloc]init];
     
+    //TSDataBaseのインスタンス化
+    tsdatabase = [[TSDataBase alloc]init];
     
+    //仮にDBを作成　問題無し
+    //[tsdatabase makeDatabase];
     
+    //仮にtableをinsert　問題無し
+    //[tsdatabase createDBData];
+    
+    //各表示
+    [self viewMethod];
 }
 
 
@@ -121,38 +133,54 @@
 
 - (void)viewMethod{
     
+    //メイン画面から受け渡されるID 仮に0とする。
+    self.idFromMainPage = 0;
+    NSMutableArray *resultArray = [tsdatabase loadDBDataOnCamera:self.idFromMainPage];
+    
+    
+    /*
+     //シリアライズ化した情報を取り出して画像表示
+    pics = [resultArray objectAtIndex:6];
+    NSArray *arrayPicNotMutable = [pics componentsSeparatedByString:@","];
+    NSLog(@"%@",[arrayPicNotMutable objectAtIndex:1]);
+    NSLog(@"%d",[[resultArray objectAtIndex:7] intValue]);
+    NSData *data= [[NSData alloc]initWithData:[arrayPicNotMutable objectAtIndex:0]];
+    UIImage* image = [[UIImage alloc] initWithData:data];
+    
+     //ここから出来ない
+    for (int i=0; i<[[resultArray objectAtIndex:7] intValue]; i++) {
+         UIImage* image = [[UIImage alloc] initWithData:[arrayPicNotMutable objectAtIndex:i]];
+        [array addObject:image];
+     }
+    self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.myImageView.animationImages = array;
+    self.myImageView.animationDuration = 3.0;
+    self.myImageView.animationRepeatCount = 0;
+    [self.myImageView startAnimating];
+    */
     
     //行きたい場所リストタイトル表示
     CGRect titleRect = CGRectMake(90, 320, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
     //仮に入力
-    titleLabel.text = @"眉山";
+    titleLabel.text = [resultArray objectAtIndex:1];
     titleLabel.textColor = [UIColor blueColor];
     titleLabel.font = [UIFont boldSystemFontOfSize:30];
     [self.view addSubview:titleLabel];
-    
-    //住所情報入力
-    CGRect addressRect = CGRectMake(90, 380, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
-    UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
-    //仮に入力
-    addressLabel.text = @"徳島県徳島市";
-    addressLabel.textColor = [UIColor blueColor];
-    addressLabel.font = [UIFont boldSystemFontOfSize:20];
-    [self.view addSubview:addressLabel];
     
     
     //日付入力
     date = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *dateComps = [calendar components:NSYearCalendarUnit |
-                 NSMonthCalendarUnit  |
-                 NSDayCalendarUnit    |
-                 NSHourCalendarUnit   |
-                 NSMinuteCalendarUnit |
-                 NSSecondCalendarUnit
-                            fromDate:date];
+                                   NSMonthCalendarUnit  |
+                                   NSDayCalendarUnit    |
+                                   NSHourCalendarUnit   |
+                                   NSMinuteCalendarUnit |
+                                   NSSecondCalendarUnit
+                                              fromDate:date];
     
-    CGRect daterect = CGRectMake(90, 400, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    CGRect daterect = CGRectMake(90, 370, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *dateLabel = [[UILabel alloc]initWithFrame:daterect];
     dateLabel.text = [NSString stringWithFormat:@"%d月　%d日",(int)dateComps.month,(int)dateComps.day];
     dateLabel.textColor = [UIColor blueColor];
@@ -160,17 +188,25 @@
     [self.view addSubview:dateLabel];
     
     
+    //住所情報入力
+    CGRect addressRect = CGRectMake(90, 400, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
+    //仮に入力
+    addressLabel.text = [self webAPI:[[resultArray objectAtIndex:2] doubleValue] LONG:[[resultArray objectAtIndex:3] doubleValue]];
+    addressLabel.textColor = [UIColor blueColor];
+    addressLabel.font = [UIFont boldSystemFontOfSize:14];
+    [self.view addSubview:addressLabel];
+    
     //コメント欄
     //コメントを入れる時にコメント欄を上にスクロールすることが必要
     CGRect textRect = CGRectMake(90, 430, 220, 50);
-    UITextField *textField = [[UITextField alloc]initWithFrame:textRect];
-    textField.text = @"コメントを入れてね♪";
-    comment = textField.text;
-    textField.textColor = [UIColor blueColor];
-    textField.font = [UIFont boldSystemFontOfSize:10];
-    textField.returnKeyType = UIReturnKeyDefault;
-    textField.delegate = self;
-    [self.view addSubview:textField];
+    textfield = [[UITextField alloc]initWithFrame:textRect];
+    textfield.text = @"コメントを入れてね♪";
+    textfield.textColor = [UIColor blueColor];
+    textfield.font = [UIFont boldSystemFontOfSize:10];
+    textfield.returnKeyType = UIReturnKeyDefault;
+    textfield.delegate = self;
+    [self.view addSubview:textfield];
     
     
     //スクリーンサイズの取得
@@ -198,27 +234,85 @@
 }
 
 
+//住所webAPI
+- (NSString *)webAPI:(double)lat LONG:(double)lon{
+    NSDictionary *jsonObjectResults =nil;
+    NSString *urlApi1 = @"http://maps.google.com/maps/api/geocode/json?latlng=";
+    //double lat= 34.070162;
+    //double lon= 134.556246;
+    NSString *urlApi2 = @"&sensor=false";
+    NSString *urlApi = [NSString stringWithFormat:@"%@%f,%f%@",urlApi1,lat,lon,urlApi2];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlApi]cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
+    
+    //sendSynchronousRequestメソッドでURLにアクセス
+    NSHTTPURLResponse* resp;
+    NSData *json_data = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:nil];
+    
+    //通信エラーの際の処理を考える必要がある
+    if (resp.statusCode != 200){
+        [self alertViewMethod];
+    }
+    
+    //返ってきたデータをJSONObjectWithDataメソッドで解析
+    else{
+        jsonObjectResults = [NSJSONSerialization JSONObjectWithData:json_data options:NSJSONReadingAllowFragments error:nil];
+        
+        NSDictionary *status = [jsonObjectResults objectForKey:@"status"];
+        NSString *statusString = [status description];
+        
+        if ([statusString isEqualToString:@"ZERO_RESULTS"]) {
+            [self alertViewMethod];
+            NSLog(@"ZERO_RESULTS");
+        }else{
+            NSMutableArray *result = [jsonObjectResults objectForKey:@"results"];
+            //NSString *str = [result description];
+            //NSLog(@"%@",str);
+            NSDictionary *dic = [result objectAtIndex:0];
+            //NSString *str2 = [dic description];
+            NSDictionary *dic2 = [dic objectForKey:@"formatted_address"];
+            NSString *fullAddress = [dic2 description];
+            address = [fullAddress substringFromIndex:3];
+        }
+    }
+    return address;
+}
+
+//読み込み失敗時に呼ばれる関数
+- (void)alertViewMethod{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"読み込みに失敗しました"
+                                                    message:nil
+                                                   delegate:self
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:@"OK",nil];
+    [alert show];
+}
+
+
+
+
+
+
+
+
 //main画面に戻る際の関数。
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"cameraViewToMainView"]) {
-       
+        
         //ここでDBに保存する処理を書く
         //日付情報 変数date
-        
         //本文情報 変数comment
-        
         //写真情報　変数picsと写真数picsCount
-        pics = [picsArray description];
-        NSLog(@"pics=%@",pics);
+        pics = [picsArray componentsJoinedByString:@","];
+        //NSLog(@"pics=%@",pics);
+        //pics = @"testtest";//仮
         picsCount =[picsArray count];
+        //picsCount = 2;//仮
         NSLog(@"count=%d",picsCount);
-        
-        //シリアライズ化した情報を取り出す場合を参考までに
-        int i;
-        for (i=0; i<picsCount; i++) {
-            UIImage* image = [[UIImage alloc] initWithData:[picsArray objectAtIndex:i]];
-        }
-        
+        comment = textfield.text;
+
+        //DBへ上書き保存　仮にidは0に設定
+        [tsdatabase updateDBDataOnCamera:self.idFromMainPage TEXT:comment PICS:pics PICCOUNT:picsCount];
     }
 }
 
