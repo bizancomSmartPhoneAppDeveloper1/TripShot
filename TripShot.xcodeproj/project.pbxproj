@@ -39,6 +39,7 @@
 		F62A87F219208E83001BBDDB /* image2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F62A87F119208E83001BBDDB /* image2.jpg */; };
 		F62A87F419208E8B001BBDDB /* image3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F62A87F319208E8B001BBDDB /* image3.jpg */; };
 		F62A87F619208E93001BBDDB /* image4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F62A87F519208E93001BBDDB /* image4.jpg */; };
+		F62A87F9192097FF001BBDDB /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F62A87F8192097FF001BBDDB /* CustomAnnotation.m */; };
 		F66BEDBE19206029000E60E8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F66BEDBD19206029000E60E8 /* MapKit.framework */; };
 		F66BEDC119206F92000E60E8 /* AlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BEDC019206F92000E60E8 /* AlbumViewController.m */; };
 		F66BEDC419206FF7000E60E8 /* CollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BEDC319206FF7000E60E8 /* CollectionCell.m */; };
@@ -102,6 +103,8 @@
 		F62A87F119208E83001BBDDB /* image2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image2.jpg; sourceTree = "<group>"; };
 		F62A87F319208E8B001BBDDB /* image3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image3.jpg; sourceTree = "<group>"; };
 		F62A87F519208E93001BBDDB /* image4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image4.jpg; sourceTree = "<group>"; };
+		F62A87F7192097FF001BBDDB /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
+		F62A87F8192097FF001BBDDB /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		F66BEDBD19206029000E60E8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F66BEDBF19206F92000E60E8 /* AlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumViewController.h; sourceTree = "<group>"; };
 		F66BEDC019206F92000E60E8 /* AlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumViewController.m; sourceTree = "<group>"; };
@@ -207,8 +210,8 @@
 				87AC9671191CF98400C69813 /* AppDelegate.h */,
 				87AC9672191CF98400C69813 /* AppDelegate.m */,
 				87AC9674191CF98400C69813 /* Main.storyboard */,
-				87522D33192082E400334492 /* CameraViewController.h */,
-				87522D34192082E400334492 /* CameraViewController.m */,
+				F62A87F7192097FF001BBDDB /* CustomAnnotation.h */,
+				F62A87F8192097FF001BBDDB /* CustomAnnotation.m */,
 				87AC9677191CF98400C69813 /* ViewController.h */,
 				87AC9678191CF98400C69813 /* ViewController.m */,
 				189D4B0A191F9C8F00498178 /* WantsToGoListViewController.h */,
@@ -374,7 +377,7 @@
 				189D4B05191E122500498178 /* FMDatabaseQueue.m in Sources */,
 				87AC9673191CF98400C69813 /* AppDelegate.m in Sources */,
 				189D4B02191E122500498178 /* FMDatabase.m in Sources */,
-				87522D35192082E400334492 /* CameraViewController.m in Sources */,
+				F62A87F9192097FF001BBDDB /* CustomAnnotation.m in Sources */,
 				189D4B04191E122500498178 /* FMDatabasePool.m in Sources */,
 				189D4B06191E122500498178 /* FMResultSet.m in Sources */,
 				189D4B09191F7AFA00498178 /* TSDataBase.m in Sources */,
