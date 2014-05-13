@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SearchListViewController : UITableViewController
+@property (weak, nonatomic) IBOutlet UISearchBar *searchField;
 
 @end
