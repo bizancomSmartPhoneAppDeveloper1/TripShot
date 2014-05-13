@@ -23,6 +23,10 @@
 -(void)deleteData;//削除フラグをたてるだけだけどね 未完了
 -(void)editData;//編集する 未完了
 
+- (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)text PICS:(NSString *)pics PICCOUNT:(int)picCount;//cameraViewでupdate
+
+- (NSMutableArray *)loadDBDataOnCamera:(int)number;//cemaraviewで読み込むために使う
+
 //緯度経度から住所・地名に変換必要
 
 //あと必要なメソッドって何がある？

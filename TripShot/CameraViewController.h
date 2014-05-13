@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TSDataBase.h"
 
 @interface CameraViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>{
     
@@ -16,6 +17,7 @@
 @property NSString *icon;
 @property NSDictionary *jsonObject;
 @property NSString* tomorrow;
+@property int idFromMainPage;//メイン画面でピンを選択した時にcameraViewに対して渡されるDBのID
 
 
 
