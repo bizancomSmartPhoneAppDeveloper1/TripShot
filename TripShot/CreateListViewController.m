@@ -2,7 +2,7 @@
 //  CreateListViewController.m
 //  TripShot
 //
-//  Created by EmikoFujiwara on 2014/05/12.
+//  Created by EmikoFujiwara on 2014/05/13.
 //  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
 //
 
@@ -116,22 +116,4 @@
 }
 */
 
-- (IBAction)cancelButtonTapped:(id)sender {
-    if([self.delegate respondsToSelector:@selector(createListViewControllerDidCancel:)]){
-    
-        [self.delegate createListViewControllerDidCancel:self];
-    }
-    
-}
-
-- (IBAction)saveButtonTapped:(id)sender {
-    //createListViewControllerDidFinish:を呼び出す
-    if([self.delegate respondsToSelector:@selector(createLisViewControllerDidFinish:item:)]){
-        
-    //入力文字列の取得（仮。サンプルのままです）
-        NSString *item = self.textField.text;
-        [self.delegate createLisViewControllerDidFinish:self item:item];
-        
-    }
-}
 @end

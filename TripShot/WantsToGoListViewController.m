@@ -2,7 +2,7 @@
 //  WantsToGoListViewController.m
 //  TripShot
 //
-//  Created by bizan.com.mac05 on 2014/05/11.
+//  Created by EmikoFUjiwara on 2014/05/11.
 //  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
 //
 
@@ -45,7 +45,7 @@
     
     [db makeDatabase];
 
-    //    [db createDBData]; //あたらしい行の新規作成
+
     
 
     NSMutableArray *resultArray = [db loadDBData];
@@ -157,4 +157,14 @@
 }
 */
 
+- (IBAction)cancelButtonTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (IBAction)addButtonTapped:(id)sender {
+    TSDataBase *db = [[TSDataBase alloc]init];
+    [db createDBData]; //あたらしい行の新規作成 メソッドはとおってるけど？
+    
+    [self.tableView reloadData];
+}
 @end

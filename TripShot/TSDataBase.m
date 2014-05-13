@@ -13,7 +13,7 @@
 
 @implementation TSDataBase{
 
-    FMDatabase *database;
+//    FMDatabase *database;
 //    int dataid;
     NSString *addressStr;
 
@@ -27,7 +27,7 @@
     NSString *documentDirectry = paths[0];
     NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
     //インスタンスの作成
-    database = [FMDatabase databaseWithPath:databaseFilePath];
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
     //データベースを開く
     [database open];
     
@@ -61,12 +61,19 @@
     
     
     //データをいれる
+    
+    //ディレクトリのリストを取得する
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    //インスタンスの作成
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
 
     [database open];
     
     [database executeUpdate:insert_sql ,
      [NSNumber numberWithInteger:_dataid],
-     @"場所",
+     @"えみこちゃんのおうち",
      [NSNumber numberWithDouble:lat], [NSNumber numberWithDouble:lot],
      [NSNumber numberWithInteger:date] ,//日にち6桁int
      @"天気",
@@ -122,7 +129,7 @@
     NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
 
     //データベース接続
-    database = [FMDatabase databaseWithPath:databaseFilePath];
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
 
     //容れ物の準備
     NSMutableArray *resultArray = [[NSMutableArray alloc]init];

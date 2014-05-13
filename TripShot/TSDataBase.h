@@ -2,7 +2,7 @@
 //  TSDataBase.h
 //  TripShot
 //
-//  Created by bizan.com.mac05 on 2014/05/11.
+//  Created by EmikoFujiwara on 2014/05/11.
 //  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
 //
 
@@ -45,13 +45,10 @@
 
 
 //あと必要なメソッドって何がある？
-//とりあえず自分の作業範囲で考えてみる
 
 /*
  
 　保存するときに画像を入れ込む？未完了
- 
-　地図の表示 あとでする　このクラスじゃなくていい
  
  */
 
