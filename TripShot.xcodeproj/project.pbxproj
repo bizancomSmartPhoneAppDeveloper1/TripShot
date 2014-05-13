@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		180E0C7D1921BEFB00399554 /* SearchListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E0C7C1921BEFB00399554 /* SearchListViewController.m */; };
+		180E0C821921E23000399554 /* pic1.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E0C811921E23000399554 /* pic1.png */; };
 		189D4AEB191D4AA200498178 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AEA191D4AA200498178 /* libsqlite3.dylib */; };
 		189D4AF6191E105000498178 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AF5191E105000498178 /* libsqlite3.0.dylib */; };
 		189D4B02191E122500498178 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4AF8191E122500498178 /* FMDatabase.m */; };
@@ -59,6 +60,7 @@
 /* Begin PBXFileReference section */
 		180E0C7B1921BEFB00399554 /* SearchListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchListViewController.h; sourceTree = "<group>"; };
 		180E0C7C1921BEFB00399554 /* SearchListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchListViewController.m; sourceTree = "<group>"; };
+		180E0C811921E23000399554 /* pic1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic1.png; sourceTree = "<group>"; };
 		189D4AEA191D4AA200498178 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		189D4AF5191E105000498178 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		189D4AF7191E122500498178 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -223,12 +225,13 @@
 				189D4B0B191F9C8F00498178 /* WantsToGoListViewController.m */,
 				180E0C7B1921BEFB00399554 /* SearchListViewController.h */,
 				180E0C7C1921BEFB00399554 /* SearchListViewController.m */,
-				F66BEDBF19206F92000E60E8 /* AlbumViewController.h */,
 				F66BEDC219206FF7000E60E8 /* CollectionCell.h */,
 				F66BEDC319206FF7000E60E8 /* CollectionCell.m */,
+				F66BEDBF19206F92000E60E8 /* AlbumViewController.h */,
 				F66BEDC019206F92000E60E8 /* AlbumViewController.m */,
 				189D4B0F191FBAA600498178 /* Weather.h */,
 				189D4B10191FBAA600498178 /* Weather.m */,
+				180E0C811921E23000399554 /* pic1.png */,
 				F62A87EF19208E7D001BBDDB /* image1.jpg */,
 				F62A87F119208E83001BBDDB /* image2.jpg */,
 				F62A87F319208E8B001BBDDB /* image3.jpg */,
@@ -353,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87AC967B191CF98400C69813 /* Images.xcassets in Resources */,
+				180E0C821921E23000399554 /* pic1.png in Resources */,
 				F62A87F219208E83001BBDDB /* image2.jpg in Resources */,
 				F62A87F019208E7D001BBDDB /* image1.jpg in Resources */,
 				F62A87F419208E8B001BBDDB /* image3.jpg in Resources */,

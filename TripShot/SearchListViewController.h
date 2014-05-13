@@ -10,5 +10,7 @@
 
 @interface SearchListViewController : UITableViewController
 @property (weak, nonatomic) IBOutlet UISearchBar *searchField;
+- (IBAction)cancelButtonTapped:(id)sender;
+- (IBAction)addButtonTapped:(id)sender;
 
 @end

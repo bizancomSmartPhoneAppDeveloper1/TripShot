@@ -172,12 +172,12 @@
                     <navigationItem key="navigationItem" id="337-RB-E45">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Cgx-MP-DFr">
                             <connections>
-                                <action selector="cancelButtonTapped:" destination="dc9-mh-IFs" id="xa0-qj-ckj"/>
+                                <action selector="cancelButtonTapped:" destination="dc9-mh-IFs" id="hqN-H9-5Fw"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="yfJ-jT-UON">
                             <connections>
-                                <action selector="addButtonTapped:" destination="dc9-mh-IFs" id="z2Z-JE-L1Q"/>
+                                <action selector="addButtonTapped:" destination="dc9-mh-IFs" id="XAC-6v-Q2f"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

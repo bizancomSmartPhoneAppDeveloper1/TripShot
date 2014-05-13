@@ -7,6 +7,7 @@
 //
 
 #import "SearchListViewController.h"
+#import "TSDataBase.h"
 
 @interface SearchListViewController ()
 
@@ -116,4 +117,14 @@
 }
 */
 
+- (IBAction)cancelButtonTapped:(id)sender {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (IBAction)addButtonTapped:(id)sender {
+    TSDataBase *db = [[TSDataBase alloc]init];
+    [db createDBData]; //あたらしい行の新規作成 メソッドはとおってるけど？
+    
+    [self.tableView reloadData];
+}
 @end

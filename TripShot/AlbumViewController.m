@@ -8,11 +8,15 @@
 
 #import "AlbumViewController.h"
 #import "CollectionCell.h"
+#import "TSDataBase.h"
 
 @interface AlbumViewController ()
 {
-    NSArray *picture;
-    NSArray *date;
+//    NSArray *picture;
+//    NSArray *date;
+
+    NSMutableArray *picture;
+    NSMutableArray *date; 
 }
 @end
 
@@ -30,15 +34,30 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [[self AlbumCollection]setDataSource:self];
     [[self AlbumCollection]setDelegate:self];
     
-    picture = [[NSArray alloc]initWithObjects:@"image1.jpg",@"image2.jpg",@"image3.jpg",@"image4.jpg", nil];
-    date = [[NSArray alloc]initWithObjects:@"5/3",@"5/4",@"5/5",@"5/6", nil];
+//    picture = [[NSArray alloc]initWithObjects:@"image1.jpg",@"image2.jpg",@"image3.jpg",@"image4.jpg", nil];
+//    date = [[NSArray alloc]initWithObjects:@"5/3",@"5/4",@"5/5",@"5/6", nil];
+    
+    TSDataBase *db = [[TSDataBase alloc]init];
+    NSMutableArray *DBData = [db loadDBData];
+
+    //dateに、BDData[]の文字列をintからstringに変換して入れる。
+    date = [[NSMutableArray alloc]init];
+    NSMutableArray *temp = DBData[4];
+    for(int i = 0 ; i<=DBData.count ; i++){
+        
+        date[i] = [NSString stringWithFormat:@"%@",temp[i]];//数字をそのまま変換してstringにした
+    }
+    
+    picture = DBData[6];
     
 }
+
+
+
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView;//セクションの数を設定
 {
@@ -49,7 +68,11 @@
 
 //セクションに応じたセルの数を返す。
 {
-    return [picture count];
+    TSDataBase *db = [[TSDataBase alloc]init];
+    NSMutableArray *DBData = [db loadDBData];
+    picture = DBData[6];
+    NSLog(@"%d",date.count);
+    return date.count;
 }
 
 //collectionView:cellForItemAtIndexPath:メソッドでセルの編集をする
@@ -60,10 +83,11 @@
     static NSString *CellIdentifier =@"Cell";
     CollectionCell *cell = [collectionView
                             dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+
     [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
+
     [[cell pictureDate] setText:[date objectAtIndex:indexPath.item]];
-    
+
     return cell;
 }
 
