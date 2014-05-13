@@ -34,7 +34,7 @@
 		87AC9684191CF98400C69813 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9666191CF98300C69813 /* UIKit.framework */; };
 		87AC968C191CF98400C69813 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 87AC968A191CF98400C69813 /* InfoPlist.strings */; };
 		87AC968E191CF98400C69813 /* TripShotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AC968D191CF98400C69813 /* TripShotTests.m */; };
-		87CB77D31921B2F100F2AFDC /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87CB77D21921B2F100F2AFDC /* CameraViewController.m */; };
+		87CB77D91921B49700F2AFDC /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87CB77D81921B49700F2AFDC /* CameraViewController.m */; };
 		F62A87F019208E7D001BBDDB /* image1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F62A87EF19208E7D001BBDDB /* image1.jpg */; };
 		F62A87F219208E83001BBDDB /* image2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F62A87F119208E83001BBDDB /* image2.jpg */; };
 		F62A87F419208E8B001BBDDB /* image3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F62A87F319208E8B001BBDDB /* image3.jpg */; };
@@ -97,8 +97,8 @@
 		87AC9689191CF98400C69813 /* TripShotTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TripShotTests-Info.plist"; sourceTree = "<group>"; };
 		87AC968B191CF98400C69813 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		87AC968D191CF98400C69813 /* TripShotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TripShotTests.m; sourceTree = "<group>"; };
-		87CB77D11921B2F100F2AFDC /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
-		87CB77D21921B2F100F2AFDC /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		87CB77D71921B49700F2AFDC /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		87CB77D81921B49700F2AFDC /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		F62A87EF19208E7D001BBDDB /* image1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image1.jpg; sourceTree = "<group>"; };
 		F62A87F119208E83001BBDDB /* image2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image2.jpg; sourceTree = "<group>"; };
 		F62A87F319208E8B001BBDDB /* image3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image3.jpg; sourceTree = "<group>"; };
@@ -163,8 +163,6 @@
 		87522D3A19208F4A00334492 /* pics */ = {
 			isa = PBXGroup;
 			children = (
-				87CB77D11921B2F100F2AFDC /* CameraViewController.h */,
-				87CB77D21921B2F100F2AFDC /* CameraViewController.m */,
 				87522D3D1920E88900334492 /* camera.png */,
 				87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */,
 			);
@@ -211,6 +209,8 @@
 				87522D3A19208F4A00334492 /* pics */,
 				87AC9671191CF98400C69813 /* AppDelegate.h */,
 				87AC9672191CF98400C69813 /* AppDelegate.m */,
+				87CB77D71921B49700F2AFDC /* CameraViewController.h */,
+				87CB77D81921B49700F2AFDC /* CameraViewController.m */,
 				87AC9674191CF98400C69813 /* Main.storyboard */,
 				F62A87F7192097FF001BBDDB /* CustomAnnotation.h */,
 				F62A87F8192097FF001BBDDB /* CustomAnnotation.m */,
@@ -374,7 +374,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87CB77D31921B2F100F2AFDC /* CameraViewController.m in Sources */,
+				87CB77D91921B49700F2AFDC /* CameraViewController.m in Sources */,
 				189D4B11191FBAA600498178 /* Weather.m in Sources */,
 				87AC9679191CF98400C69813 /* ViewController.m in Sources */,
 				189D4B05191E122500498178 /* FMDatabaseQueue.m in Sources */,
