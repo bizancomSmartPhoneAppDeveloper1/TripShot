@@ -125,10 +125,10 @@
             </objects>
             <point key="canvasLocation" x="132" y="526"/>
         </scene>
-        <!--Create List View Controller-->
+        <!--Search List View Controller-->
         <scene sceneID="hCz-vd-bPd">
             <objects>
-                <tableViewController id="dc9-mh-IFs" customClass="CreateListViewController" sceneMemberID="viewController">
+                <tableViewController id="dc9-mh-IFs" customClass="SearchListViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="X3d-zu-BhA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
