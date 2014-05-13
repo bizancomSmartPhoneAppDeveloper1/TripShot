@@ -86,7 +86,7 @@
      address
      ];
     
-    NSLog(@"記事No:%d DB書き込み完了",_dataid);
+    //NSLog(@"記事No:%d DB書き込み完了",_dataid);
     
     [database close];
     
@@ -202,15 +202,16 @@
         
         //        int deleteflag = [results intForColumn:@"delete_flag"];
         
+        /*
         NSLog(@"check1 %d,%@,%f,%f,%@,%d,%@,%@,%d,%d,%@"
               ,db_id,db_title,lat,lon,db_weather,db_date,db_text,db_pics,wentflag,db_hour,db_address
               );//確認表示
-        
+        */
          //最終的にresltArrayに配列がそれぞれぼこっと入る感じで。
         i++;
     }
     
-    NSLog(@"check2=====試しに配列の表示%@",weatherarray[0]);
+    //NSLog(@"check2=====試しに配列の表示%@",weatherarray[0]);
 
     [database close];
     
