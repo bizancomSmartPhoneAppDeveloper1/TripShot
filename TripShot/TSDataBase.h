@@ -2,7 +2,7 @@
 //  TSDataBase.h
 //  TripShot
 //
-//  Created by bizan.com.mac05 on 2014/05/11.
+//  Created by EmikoFujiwara on 2014/05/11.
 //  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
 //
 
@@ -13,26 +13,42 @@
 @interface TSDataBase : NSObject
 
 
--(void)makeDatabase;//データベースがなかったらつくる
+-(void)makeDatabase;//データベースがなかったらつくる(あったら無視されるから安心）
 -(void)createDBData;//データの新規作成
--(NSMutableArray *)loadDBData;//データの読み込み(配列に入れ込んでいる）
+
+-(NSMutableArray *)loadDBData; //データの読み込み(配列にまとめて入れ込んでいる）
+/*
+ 
+ [0] idarray int
+ [1] titlearray NSString
+ [2] latarray double
+ [3] lonarray double
+ [4] datearray int
+ [5] textarray NSString
+ [6] picsarray NSString
+ [7] weatherarray NSString
+ [8] wentflagarray int
+ [9] hourarray int
+ [10] addressarray NSString
+ 
+ */
+
+-(NSString *)getAddressFromLat:(double)lat AndLot:(double)lot;//緯度経度情報から住所を取得する
+-(int)getIntegerDate; //日付を取得してint型に変換
+-(int)getIntegerHour; //現在の時刻を取得してint型に変換
+
 
 -(void)saveData;//通し番号セーブ（記事作成後に必ず）
--(void)loadData;//通し番号読み込み（記事作成前に必ず）
+-(int)loadData;//通し番号読み込み（記事作成前に必ず）通し番号がかえってくる
 
 -(void)deleteData;//削除フラグをたてるだけだけどね 未完了
--(void)editData;//編集する 未完了
 
-//緯度経度から住所・地名に変換必要
 
 //あと必要なメソッドって何がある？
-//とりあえず自分の作業範囲で考えてみる
 
 /*
  
 　保存するときに画像を入れ込む？未完了
- 
-　地図の表示 あとでする　このクラスじゃなくていい
  
  */
 

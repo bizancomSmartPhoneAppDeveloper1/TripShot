@@ -1,25 +1,18 @@
 //
-//  WantsToGoListViewController.m
+//  SearchListViewController.m
 //  TripShot
 //
-//  Created by EmikoFUjiwara on 2014/05/11.
+//  Created by bizan.com.mac05 on 2014/05/13.
 //  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
 //
 
-#import "WantsToGoListViewController.h"
+#import "SearchListViewController.h"
 
-
-@interface WantsToGoListViewController ()
-@property NSMutableArray *idArray;
-@property NSMutableArray *titleArray;
-@property NSMutableArray *latArray;
-@property NSMutableArray *lotArray;
-@property NSMutableArray *addressArray;//緯度経度情報から住所を表示
+@interface SearchListViewController ()
 
 @end
 
-@implementation WantsToGoListViewController{
-}
+@implementation SearchListViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -39,37 +32,6 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
-    //使うデータをここで読み込む
-    TSDataBase *db = [[TSDataBase alloc]init];
-    
-    [db makeDatabase];
-
-
-    
-
-    NSMutableArray *resultArray = [db loadDBData];
-    
-    //必要な項目の配列をこの中から取り出すよ（中身もNSMutableArray）
-    //必要な項目？…id0、場所1、住所（つまり緯度2経度3）
-    
-    _idArray = [[NSMutableArray alloc]init];
-    _idArray = resultArray[0];
-
-    _titleArray = [[NSMutableArray alloc]init];
-    _titleArray = resultArray[1];
-
-    _latArray = [[NSMutableArray alloc]init];
-    _latArray = resultArray[2];
-    
-    _lotArray = [[NSMutableArray alloc]init];
-    _lotArray = resultArray[3];
-    
-    _addressArray = [[NSMutableArray alloc]init];
-    _addressArray = resultArray[10];
-
-    NSLog(@"できるはずのセル個数%d",_idArray.count);
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,31 +44,28 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+#warning Potentially incomplete method implementation.
+    // Return the number of sections.
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
-    return _idArray.count;
+#warning Incomplete method implementation.
+    // Return the number of rows in the section.
+    return 0;
 }
 
-
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
-    //ここではスタンダードなsubtitleのセルをつかっている。
-    //地図を表示させたいので、これはカスタムする必要があるよ！覚えておいて！藤原さん！
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //ここでは「＞」を表示させているけど地図を。
-
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-//配列からアイテムを取得してLabelのテキストに入れる
-    cell.textLabel.text = _titleArray[indexPath.row];
-    cell.detailTextLabel.text = _addressArray[indexPath.row];
+    // Configure the cell...
     
     return cell;
 }
-
+*/
 
 /*
 // Override to support conditional editing of the table view.
@@ -157,14 +116,4 @@
 }
 */
 
-- (IBAction)cancelButtonTapped:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-- (IBAction)addButtonTapped:(id)sender {
-    TSDataBase *db = [[TSDataBase alloc]init];
-    [db createDBData]; //あたらしい行の新規作成 メソッドはとおってるけど？
-    
-    [self.tableView reloadData];
-}
 @end
