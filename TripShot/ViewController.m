@@ -29,7 +29,7 @@
     
     self.locationManager = [[CLLocationManager alloc]init];
     self.locationManager.delegate = self;
-    [self.locationManager startUpdatingLocation];
+   // [self.locationManager startUpdatingLocation];
     
     //位置情報が使えるか確認する
     [self locationAuth];
@@ -39,10 +39,7 @@
     
     //住所から緯度経度取得　とりあえず使わない
     //[self webAPI];
-    //ジオフェンス作成
-    [self createGeofence];
-    //到達点についた時に分かるようにジオフェンスをスタート
-    [self.locationManager startMonitoringForRegion:distCircularRegion];
+    
 
 }
 
@@ -69,12 +66,21 @@
     MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
     pin.coordinate = loc; //ピンの座標
     
-    
-    
     //ピンの設定
     [self.mapView addAnnotation:pin];
     
     [self.mapView setRegion:region];//地図表示
+    
+    //ジオフェンス作成
+    [self createGeofence];
+    //到達点についた時に分かるようにジオフェンスをスタート
+    [self.locationManager startMonitoringForRegion:distCircularRegion];
+    
+    //60秒に一回ロケーションマネージャを立ち上げる
+    [self.locationManager stopUpdatingLocation];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
+    
+
 
 }
 
@@ -123,21 +129,21 @@
     
 }
 
-// 位置情報更新関数
-- (void)locationManager:(CLLocationManager *)manager//引数managerはシステムからの情報か？CLLocationManagerクラスにある位置情報を取得するlocationManagerメソッド
-    didUpdateToLocation:(CLLocation *)newLocation
-           fromLocation:(CLLocation *)oldLocation {
-    
-    //更新された緯度・経度を出力
-    NSLog(@"didUpdateToLocation latitude=%f, longitude=%f",
-          [newLocation coordinate].latitude,//didUpdateToLocationクラスのcoordinateプロパティに緯度情報を代入
-          [newLocation coordinate].longitude);//didUpdateToLocationクラスのcoordinateプロパティに経度情報を代入
-    
-    longitude = [newLocation coordinate].longitude;
-    latitude = [newLocation coordinate].latitude;
-    
-    
-    
+//// 位置情報更新関数
+//- (void)locationManager:(CLLocationManager *)manager//引数managerはシステムからの情報か？CLLocationManagerクラスにある位置情報を取得するlocationManagerメソッド
+//    didUpdateToLocation:(CLLocation *)newLocation
+//           fromLocation:(CLLocation *)oldLocation {
+//    
+//    //更新された緯度・経度を出力
+//    NSLog(@"didUpdateToLocation latitude=%f, longitude=%f",
+//          [newLocation coordinate].latitude,//didUpdateToLocationクラスのcoordinateプロパティに緯度情報を代入
+//          [newLocation coordinate].longitude);//didUpdateToLocationクラスのcoordinateプロパティに経度情報を代入
+//    
+//    longitude = [newLocation coordinate].longitude;
+//    latitude = [newLocation coordinate].latitude;
+//    
+//    
+//    
 //    //現在地を地図表示
 //    MKCoordinateRegion region = MKCoordinateRegionMake([newLocation coordinate], MKCoordinateSpanMake(0.04, 0.04));//現在地を地図の中心位置を表した値と、表示領域（地図縮尺）の値をMKCoordinateRegionクラスのインスタンスへ代入
 //    [self.mapView setRegion:region];//地図表示
@@ -153,12 +159,7 @@
 //                                                   title:@"Target"
 //                                                subtitle:@""]];
 //    
-    //60秒に一回ロケーションマネージャを立ち上げる
-    [self.locationManager stopUpdatingLocation];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
-    
-    
-}
+//}
 
 // 測位失敗時や、5位置情報の利用をユーザーが「不許可」とした場合などに呼ばれる関数
 - (void)locationManager:(CLLocationManager *)manager
