@@ -19,6 +19,8 @@
 		189D4B0C191F9C8F00498178 /* WantsToGoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4B0B191F9C8F00498178 /* WantsToGoListViewController.m */; };
 		189D4B0E191FBA8900498178 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4B0D191FBA8800498178 /* CoreLocation.framework */; };
 		189D4B11191FBAA600498178 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4B10191FBAA600498178 /* Weather.m */; };
+		87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */; };
+		87522D3E1920E88900334492 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 87522D3D1920E88900334492 /* camera.png */; };
 		87AC9663191CF98300C69813 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9662191CF98300C69813 /* Foundation.framework */; };
 		87AC9665191CF98300C69813 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9664191CF98300C69813 /* CoreGraphics.framework */; };
 		87AC9667191CF98300C69813 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9666191CF98300C69813 /* UIKit.framework */; };
@@ -33,7 +35,15 @@
 		87AC9684191CF98400C69813 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9666191CF98300C69813 /* UIKit.framework */; };
 		87AC968C191CF98400C69813 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 87AC968A191CF98400C69813 /* InfoPlist.strings */; };
 		87AC968E191CF98400C69813 /* TripShotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AC968D191CF98400C69813 /* TripShotTests.m */; };
+		87CB77D91921B49700F2AFDC /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87CB77D81921B49700F2AFDC /* CameraViewController.m */; };
+		F62A87F019208E7D001BBDDB /* image1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F62A87EF19208E7D001BBDDB /* image1.jpg */; };
+		F62A87F219208E83001BBDDB /* image2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F62A87F119208E83001BBDDB /* image2.jpg */; };
+		F62A87F419208E8B001BBDDB /* image3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F62A87F319208E8B001BBDDB /* image3.jpg */; };
+		F62A87F619208E93001BBDDB /* image4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F62A87F519208E93001BBDDB /* image4.jpg */; };
+		F62A87F9192097FF001BBDDB /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F62A87F8192097FF001BBDDB /* CustomAnnotation.m */; };
 		F66BEDBE19206029000E60E8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F66BEDBD19206029000E60E8 /* MapKit.framework */; };
+		F66BEDC119206F92000E60E8 /* AlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BEDC019206F92000E60E8 /* AlbumViewController.m */; };
+		F66BEDC419206FF7000E60E8 /* CollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BEDC319206FF7000E60E8 /* CollectionCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +79,8 @@
 		189D4B0D191FBA8800498178 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		189D4B0F191FBAA600498178 /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Weather.h; path = ../Weather.h; sourceTree = "<group>"; };
 		189D4B10191FBAA600498178 /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Weather.m; path = ../Weather.m; sourceTree = "<group>"; };
+		87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "free-textures-japanese-style-06.jpg"; sourceTree = "<group>"; };
+		87522D3D1920E88900334492 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		87AC965F191CF98300C69813 /* TripShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87AC9662191CF98300C69813 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		87AC9664191CF98300C69813 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -88,7 +100,19 @@
 		87AC9689191CF98400C69813 /* TripShotTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TripShotTests-Info.plist"; sourceTree = "<group>"; };
 		87AC968B191CF98400C69813 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		87AC968D191CF98400C69813 /* TripShotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TripShotTests.m; sourceTree = "<group>"; };
+		87CB77D71921B49700F2AFDC /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		87CB77D81921B49700F2AFDC /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		F62A87EF19208E7D001BBDDB /* image1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image1.jpg; sourceTree = "<group>"; };
+		F62A87F119208E83001BBDDB /* image2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image2.jpg; sourceTree = "<group>"; };
+		F62A87F319208E8B001BBDDB /* image3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image3.jpg; sourceTree = "<group>"; };
+		F62A87F519208E93001BBDDB /* image4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image4.jpg; sourceTree = "<group>"; };
+		F62A87F7192097FF001BBDDB /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
+		F62A87F8192097FF001BBDDB /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		F66BEDBD19206029000E60E8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		F66BEDBF19206F92000E60E8 /* AlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumViewController.h; sourceTree = "<group>"; };
+		F66BEDC019206F92000E60E8 /* AlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumViewController.m; sourceTree = "<group>"; };
+		F66BEDC219206FF7000E60E8 /* CollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionCell.h; sourceTree = "<group>"; };
+		F66BEDC319206FF7000E60E8 /* CollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +163,15 @@
 			name = DataBaseFolder;
 			sourceTree = "<group>";
 		};
+		87522D3A19208F4A00334492 /* pics */ = {
+			isa = PBXGroup;
+			children = (
+				87522D3D1920E88900334492 /* camera.png */,
+				87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */,
+			);
+			name = pics;
+			sourceTree = "<group>";
+		};
 		87AC9656191CF98300C69813 = {
 			isa = PBXGroup;
 			children = (
@@ -176,8 +209,11 @@
 		87AC9668191CF98300C69813 /* TripShot */ = {
 			isa = PBXGroup;
 			children = (
+				87522D3A19208F4A00334492 /* pics */,
 				87AC9671191CF98400C69813 /* AppDelegate.h */,
 				87AC9672191CF98400C69813 /* AppDelegate.m */,
+				87CB77D71921B49700F2AFDC /* CameraViewController.h */,
+				87CB77D81921B49700F2AFDC /* CameraViewController.m */,
 				87AC9674191CF98400C69813 /* Main.storyboard */,
 				180E0C78192146BF00399554 /* CreateListViewController.h */,
 				180E0C79192146C000399554 /* CreateListViewController.m */,
@@ -185,8 +221,16 @@
 				87AC9678191CF98400C69813 /* ViewController.m */,
 				189D4B0A191F9C8F00498178 /* WantsToGoListViewController.h */,
 				189D4B0B191F9C8F00498178 /* WantsToGoListViewController.m */,
+				F66BEDBF19206F92000E60E8 /* AlbumViewController.h */,
+				F66BEDC219206FF7000E60E8 /* CollectionCell.h */,
+				F66BEDC319206FF7000E60E8 /* CollectionCell.m */,
+				F66BEDC019206F92000E60E8 /* AlbumViewController.m */,
 				189D4B0F191FBAA600498178 /* Weather.h */,
 				189D4B10191FBAA600498178 /* Weather.m */,
+				F62A87EF19208E7D001BBDDB /* image1.jpg */,
+				F62A87F119208E83001BBDDB /* image2.jpg */,
+				F62A87F319208E8B001BBDDB /* image3.jpg */,
+				F62A87F519208E93001BBDDB /* image4.jpg */,
 				189D4AF1191D537F00498178 /* DataBaseFolder */,
 				87AC967A191CF98400C69813 /* Images.xcassets */,
 				87AC9669191CF98300C69813 /* Supporting Files */,
@@ -270,6 +314,13 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = bizan.com.mac02;
 				TargetAttributes = {
+					87AC965E191CF98300C69813 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					87AC967F191CF98400C69813 = {
 						TestTargetID = 87AC965E191CF98300C69813;
 					};
@@ -300,8 +351,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				87AC967B191CF98400C69813 /* Images.xcassets in Resources */,
+				F62A87F219208E83001BBDDB /* image2.jpg in Resources */,
+				F62A87F019208E7D001BBDDB /* image1.jpg in Resources */,
+				F62A87F419208E8B001BBDDB /* image3.jpg in Resources */,
+				F62A87F619208E93001BBDDB /* image4.jpg in Resources */,
 				87AC966D191CF98400C69813 /* InfoPlist.strings in Resources */,
+				87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */,
 				87AC9676191CF98400C69813 /* Main.storyboard in Resources */,
+				87522D3E1920E88900334492 /* camera.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,17 +377,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87CB77D91921B49700F2AFDC /* CameraViewController.m in Sources */,
 				189D4B11191FBAA600498178 /* Weather.m in Sources */,
 				87AC9679191CF98400C69813 /* ViewController.m in Sources */,
 				189D4B05191E122500498178 /* FMDatabaseQueue.m in Sources */,
 				87AC9673191CF98400C69813 /* AppDelegate.m in Sources */,
 				189D4B02191E122500498178 /* FMDatabase.m in Sources */,
+				F62A87F9192097FF001BBDDB /* CustomAnnotation.m in Sources */,
 				189D4B04191E122500498178 /* FMDatabasePool.m in Sources */,
 				189D4B06191E122500498178 /* FMResultSet.m in Sources */,
 				189D4B09191F7AFA00498178 /* TSDataBase.m in Sources */,
 				180E0C7A192146C000399554 /* CreateListViewController.m in Sources */,
 				189D4B0C191F9C8F00498178 /* WantsToGoListViewController.m in Sources */,
 				87AC966F191CF98400C69813 /* main.m in Sources */,
+				F66BEDC419206FF7000E60E8 /* CollectionCell.m in Sources */,
 				189D4B03191E122500498178 /* FMDatabaseAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
