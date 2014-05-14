@@ -181,6 +181,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
 - (IBAction)addButtonTapped:(id)sender {
     TSDataBase *db = [[TSDataBase alloc]init];
+//    [db makeDatabase];
     [db createDBData]; //あたらしい行の新規作成 メソッドはとおってるけど？
     
     [self.tableView reloadData];

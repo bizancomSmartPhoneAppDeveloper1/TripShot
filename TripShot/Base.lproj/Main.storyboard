@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -66,6 +66,17 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2AX-SB-PRh">
+                                <rect key="frame" x="114" y="465" width="93" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="仮のボタン">
+                                    <color key="titleColor" red="0.013990319290000001" green="0.0027621913239999998" blue="0.0029271332719999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="m5g-xJ-arX" kind="modal" identifier="albumToIndividualAlbum" id="Qom-2T-Bvx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -77,6 +88,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S5l-Mj-AiX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-268" y="526"/>
+        </scene>
+        <!--Individual Album View Controller-->
+        <scene sceneID="cCF-JJ-JMz">
+            <objects>
+                <viewController id="m5g-xJ-arX" customClass="IndividualAlbumViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zNH-Qt-Qrg"/>
+                        <viewControllerLayoutGuide type="bottom" id="RET-zi-wsP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gzz-WR-aiV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r1R-dg-qnU">
+                                <rect key="frame" x="25" y="26" width="271" height="272"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="myImageView" destination="r1R-dg-qnU" id="HfO-Ml-h0s"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LjG-cG-6fc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-268" y="1234"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="dfN-JF-inY">
@@ -278,6 +316,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oy2-y5-zJP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1115" y="428"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="mrd-rn-TqO">
+            <objects>
+                <viewController id="S1T-3c-Lsv" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vg5-aE-46J"/>
+                        <viewControllerLayoutGuide type="bottom" id="dTs-4x-j7Y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="YuP-H5-d4L">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O8d-XD-Qqb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="676" y="1206"/>
         </scene>
     </scenes>
     <resources>

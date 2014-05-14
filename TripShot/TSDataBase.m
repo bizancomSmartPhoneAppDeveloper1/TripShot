@@ -33,7 +33,8 @@
     
     
     /* テーブルの作成 */
-    NSString *sql = @"CREATE TABLE testTable(id INTEGER PRIMARY KEY ,place_name TEXT,latitude REAL, longitude REAL , date INTEGER , weather TEXT ,text TEXT ,pics TEXT ,went_flag INTEGER , delete_flag INTEGER , hour INTEGER , address TEXT);"; //testTableというテーブルを作成。""の中に、送りたいSQL文を記入するぉ
+    NSString *sql = @"CREATE TABLE testTable(id INTEGER PRIMARY KEY ,place_name TEXT,latitude REAL, longitude REAL , date INTEGER , picCount INTEGER,text TEXT ,pics TEXT ,went_flag INTEGER , delete_flag INTEGER , hour INTEGER , address TEXT);"; //testTableというテーブルを作成。""の中に、送りたいSQL文を記入するぉ
+                        //weatherというカラムを削除し、picsCountというカラムを作成した
     [database executeUpdate:sql];
     
     [database close];
@@ -50,7 +51,7 @@
         _dataid = 0;
     }
     
-    NSString *insert_sql = @"INSERT INTO testTable(id, place_name, latitude, longitude, date, weather, text, pics, went_flag, delete_flag , hour , address) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+    NSString *insert_sql = @"INSERT INTO testTable(id, place_name, latitude, longitude, date, picCount, text, pics, went_flag, delete_flag , hour , address) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
     //入れるデータの準備
     NSInteger date = [self getIntegerDate];
@@ -76,7 +77,7 @@
      @"えみこちゃんのおうち",
      [NSNumber numberWithDouble:lat], [NSNumber numberWithDouble:lot],
      [NSNumber numberWithInteger:date] ,//日にち6桁int
-     @"天気",
+     [NSNumber numberWithInteger:1],//天気カラムを削除し、写真の枚数カラムを追加した（石井）
      @"文章の全文",
      @"pic1.png",
      [NSNumber numberWithInteger:1],
@@ -85,7 +86,7 @@
      address
      ];
     
-    NSLog(@"記事No:%d DB書き込み完了",_dataid);
+    //NSLog(@"記事No:%d DB書き込み完了",_dataid);
     
     [database close];
     
@@ -107,6 +108,7 @@
 
     return result;
 
+
 }
 
 -(int)getIntegerHour{ //現在の時刻を取得してint型に変換
@@ -120,6 +122,7 @@
     int result = [date_str integerValue];
     return result;
 }
+
 
 
 -(NSMutableArray *)loadDBData{ //DBデータの読み込み
@@ -153,8 +156,8 @@
     NSMutableArray *lonarray = [[NSMutableArray alloc]init];
     NSMutableArray *datearray = [[NSMutableArray alloc]init];
     NSMutableArray *textarray = [[NSMutableArray alloc]init];
-    NSMutableArray *picsarray = [[NSMutableArray alloc]init];
-    NSMutableArray *weatherarray = [[NSMutableArray alloc]init];
+    NSMutableArray *picsarray = [[NSMutableArray alloc]init];//天気カラムを削除し、写真の枚数カラムを追加した（石井）
+    NSMutableArray *piccountarray = [[NSMutableArray alloc]init];
     NSMutableArray *wentflagarray = [[NSMutableArray alloc]init];
     NSMutableArray *hourarray = [[NSMutableArray alloc]init];
     NSMutableArray *addressarray = [[NSMutableArray alloc]init];
@@ -185,29 +188,30 @@
         NSString *db_pics = [results stringForColumn:@"pics"];
         [picsarray addObject:db_pics];
         
-        NSString *db_weather = [results stringForColumn:@"weather"];
-        [weatherarray addObject:db_weather];
+        int db_piccount = [results intForColumn:@"picCount"];//天気カラムを削除し、写真の枚数カラムを追加した（石井）
+        [piccountarray addObject:@(db_piccount)];
         
         int wentflag = [results intForColumn:@"went_flag"];
         [wentflagarray addObject:@(wentflag)];
         
         int db_hour = [results intForColumn:@"hour"];
-        [hourarray addObject:@(db_date)];
+        [hourarray addObject:@(db_hour)];
         
         NSString *db_address = [results stringForColumn:@"address"];
         [addressarray addObject:db_address];
         
         //        int deleteflag = [results intForColumn:@"delete_flag"];
         
+        /*
         NSLog(@"check1 %d,%@,%f,%f,%@,%d,%@,%@,%d,%d,%@"
               ,db_id,db_title,lat,lon,db_weather,db_date,db_text,db_pics,wentflag,db_hour,db_address
               );//確認表示
-        
+        */
          //最終的にresltArrayに配列がそれぞれぼこっと入る感じで。
         i++;
     }
     
-    NSLog(@"check2=====試しに配列の表示%@",weatherarray[0]);
+    //NSLog(@"check2=====試しに配列の表示%@",weatherarray[0]);
 
     [database close];
     
@@ -220,7 +224,7 @@
     [resultArray addObject:datearray];//4
     [resultArray addObject:textarray];//5
     [resultArray addObject:picsarray];//6
-    [resultArray addObject:weatherarray];//7
+    [resultArray addObject:piccountarray];//7　天気カラムを削除し、写真の枚数カラムを追加した（石井）
     [resultArray addObject:wentflagarray];//8
     [resultArray addObject:hourarray]; //9
     [resultArray addObject:addressarray]; //10
@@ -270,8 +274,9 @@
             NSDictionary *dic = [result objectAtIndex:0];
             //NSString *str2 = [dic description];
             NSDictionary *dic2 = [dic objectForKey:@"formatted_address"];
-            addressStr = [dic2 description];
-//            NSLog(@"address=%@",addressStr);
+            NSString *fullAddress = [dic2 description];
+            addressStr = [fullAddress substringFromIndex:3];
+            NSLog(@"address=%@",addressStr);
             
         }
     }
@@ -295,6 +300,131 @@
     return  _dataid;
 }
 
+
+
+
+//cameraViewでデータを上書き保存するために使う関数（石井作成）
+- (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount{
+
+    //ディレクトリのリストを取得する
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //インスタンスの作成
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+    
+    //データのupdate
+    NSInteger date = [self getIntegerDate];
+    NSInteger hour = [self getIntegerHour];
+    NSString *update_sqlDate = [NSString stringWithFormat:@"update testTable set date = %d where id = %d",date,ID];
+    NSString *update_sqlHour = [NSString stringWithFormat:@"update testTable set hour = %d where id = %d",hour,ID];
+    NSString *update_sqlText = [NSString stringWithFormat:@"update testTable set text = '%@' where id = %d",comment, ID];
+    NSString *update_sqlPics = [NSString stringWithFormat:@"update testTable set pics = '%@' where id = %d",pics, ID];
+    NSString *update_sqlPicCount = [NSString stringWithFormat:@"update testTable set picCount = %d where id = %d",picCount, ID];
+    
+    [database open];
+    
+    [database executeUpdate:update_sqlDate];
+    [database executeUpdate:update_sqlHour];
+    [database executeUpdate:update_sqlText];
+    [database executeUpdate:update_sqlPics];
+    [database executeUpdate:update_sqlPicCount];
+    
+    //NSLog(@"記事No:%d DB上書き完了",dataid);
+    [database close];
+}
+
+
+//カメラVewでDB読み込むための関数（石井作成） 引数numberはdataid
+- (NSMutableArray *)loadDBDataOnCamera:(int)number{
+    
+    //ディレクトリのリストを取得する
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //データベース接続
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+    
+    //容れ物の準備
+    NSMutableArray *resultArray = [[NSMutableArray alloc]init];
+    
+    //データベースを開く
+    [database open];
+    
+
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM testTable WHERE id = %d;",number];
+    FMResultSet *results = [database executeQuery:sql];//
+    
+    //データ取得を行うループ
+    while([results next]){ //結果が一行ずつ返されて、最後までいくとnextメソッドがnoを返す
+        int i = 0;
+        //カラム名を指定して、カラム値を取得する。
+        int db_id = [results intForColumn:@"id"];
+        [resultArray addObject:@(db_id)];
+        
+        NSString *db_title = [results stringForColumn:@"place_name"];
+        [resultArray addObject:db_title];
+        
+        double lat = [results doubleForColumn:@"latitude"];
+        [resultArray addObject:@(lat)];
+        
+        double lon = [results doubleForColumn:@"longitude"];
+        [resultArray addObject:@(lon)];
+        
+        int db_date = [results intForColumn:@"date"];
+        [resultArray addObject:@(db_date)];
+        
+        int db_piccount = [results intForColumn:@"picCount"];//天気カラムを削除し、写真の枚数カラムを追加した（石井）
+        [resultArray addObject:@(db_piccount)];
+        
+        NSString *db_text = [results stringForColumn:@"text"];
+        [resultArray addObject:db_text];
+        
+        NSString *db_pics = [results stringForColumn:@"pics"];
+        [resultArray addObject:db_pics];
+        
+        int wentflag = [results intForColumn:@"went_flag"];
+        [resultArray addObject:@(wentflag)];
+        
+        int deleteflag = [results intForColumn:@"delete_flag"];
+        [resultArray addObject:@(deleteflag)];
+        
+        int db_hour = [results intForColumn:@"hour"];
+        [resultArray addObject:@(db_hour)];
+        
+        NSString *db_address = [results stringForColumn:@"address"];
+        [resultArray addObject:db_address];
+        
+    
+        //        int deleteflag = [results intForColumn:@"delete_flag"];
+        
+        i++;
+    }
+    
+    NSLog(@"resultArray=%@",[resultArray description]);//確認表示
+    [database close];
+    return resultArray;
+}
+
+
+
+//DB削除メソッド。必要な時以外、絶対に使用しないこと！！（石井）
+- (void)dbDelete{
+    
+    //ディレクトリのリストを取得する
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //削除
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:databaseFilePath error:nil];
+    NSLog(@"delete db_file");
+    
+    
+}
 
 
 @end
