@@ -1,25 +1,28 @@
 //
-//  WantsToGoListViewController.m
+//  SearchListViewController.m
 //  TripShot
 //
-//  Created by EmikoFUjiwara on 2014/05/11.
+//  Created by EmikoFujiwara on 2014/05/13.
 //  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
 //
 
-#import "WantsToGoListViewController.h"
+#import "SearchListViewController.h"
+#import "TSDataBase.h"
 
+@interface SearchListViewController (){
 
-@interface WantsToGoListViewController ()
-@property NSMutableArray *idArray;
-@property NSMutableArray *titleArray;
-@property NSMutableArray *latArray;
-@property NSMutableArray *lotArray;
-@property NSMutableArray *addressArray;//緯度経度情報から住所を表示
+}
+
+@property NSMutableArray *items;
+@property NSMutableArray *nameArray;
 
 @end
 
-@implementation WantsToGoListViewController{
+@implementation SearchListViewController{
 }
+
+NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9MmM-";
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -30,47 +33,66 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+    //サーチバーの定義
+    _searchField.delegate = self;
+    _searchField.placeholder = @"検索したい場所を入力";
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
-    //使うデータをここで読み込む
-    TSDataBase *db = [[TSDataBase alloc]init];
     
-    [db makeDatabase];
-
-
-    
-
-    NSMutableArray *resultArray = [db loadDBData];
-    
-    //必要な項目の配列をこの中から取り出すよ（中身もNSMutableArray）
-    //必要な項目？…id0、場所1、住所（つまり緯度2経度3）
-    
-    _idArray = [[NSMutableArray alloc]init];
-    _idArray = resultArray[0];
-
-    _titleArray = [[NSMutableArray alloc]init];
-    _titleArray = resultArray[1];
-
-    _latArray = [[NSMutableArray alloc]init];
-    _latArray = resultArray[2];
-    
-    _lotArray = [[NSMutableArray alloc]init];
-    _lotArray = resultArray[3];
-    
-    _addressArray = [[NSMutableArray alloc]init];
-    _addressArray = resultArray[10];
-
-    NSLog(@"できるはずのセル個数%d",_idArray.count);
-
 }
+-(void)getJsonFromWord:(NSString *)word{
+    
+    _nameArray = [[NSMutableArray alloc]init]; //店名一覧格納
+    
+    // UTF-8でエンコード
+    NSString *encodedString = [word stringByAddingPercentEscapesUsingEncoding:
+                               NSUTF8StringEncoding];
+    
+    NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json",APIKEY,encodedString];
+    
+    
+    NSURL *url = [NSURL URLWithString:path];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    //WebAPIからNSData形式でJSONデータを取得
+    NSData *jsonData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    
+    if(jsonData){
+        
+        NSError *jsonParsingError = nil;
+        //JSONからNSDictionaryまたはNSArrayに変換
+        //JSONによって、配列ならばNSArrayになりそうでなければNSDictionaryとなる
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&jsonParsingError];
+        NSLog(@"%@",dic);
+        
+        //NSDictionaryを利用して、必要なデータを取得する
+        NSArray *arrayResult = [dic objectForKey:@"Feature"];
+        for(int i = 0 ; i < arrayResult.count ; i++){
+            NSDictionary *resultDic = [arrayResult objectAtIndex:i]; //いっこめ、ここだと広見店の情報だけがはいる
+            NSString *temp1 = [resultDic objectForKey:@"Name"];
+            
+            [_nameArray addObject:temp1];
+            
+        }
+        
+        NSLog(@"resultArray : %@",_nameArray);//店名一覧。
+        
+    }else{
+        
+        NSLog(@"the connection could not be created or if the download fails.");
+        
+    }
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -88,22 +110,16 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return _idArray.count;
+    return  _nameArray.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
-    //ここではスタンダードなsubtitleのセルをつかっている。
-    //地図を表示させたいので、これはカスタムする必要があるよ！覚えておいて！藤原さん！
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //ここでは「＞」を表示させているけど地図を。
-
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-//配列からアイテムを取得してLabelのテキストに入れる
-    cell.textLabel.text = _titleArray[indexPath.row];
-    cell.detailTextLabel.text = _addressArray[indexPath.row];
-    
+    cell.textLabel.text = _nameArray[indexPath.row];
     return cell;
 }
 
@@ -158,13 +174,24 @@
 */
 
 - (IBAction)cancelButtonTapped:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+        [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (IBAction)addButtonTapped:(id)sender {
     TSDataBase *db = [[TSDataBase alloc]init];
-    [db createDBData]; //あたらしい行の新規作成 メソッドはとおってるけど？
+//    [db makeDatabase];
+    [db createDBData];
     
     [self.tableView reloadData];
 }
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{//サーチボタンタップ時に呼ばれる
+
+    NSString *word = _searchField.text;
+    [_searchField resignFirstResponder];
+    [self getJsonFromWord:word];
+    [_TableView reloadData];//テーブルビューを更新
+
+}
+
 @end

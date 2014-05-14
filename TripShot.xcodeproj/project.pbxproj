@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180E0C7D1921BEFB00399554 /* SearchListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E0C7C1921BEFB00399554 /* SearchListViewController.m */; };
+		180E0C821921E23000399554 /* pic1.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E0C811921E23000399554 /* pic1.png */; };
 		189D4AEB191D4AA200498178 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AEA191D4AA200498178 /* libsqlite3.dylib */; };
 		189D4AF6191E105000498178 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AF5191E105000498178 /* libsqlite3.0.dylib */; };
 		189D4B02191E122500498178 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4AF8191E122500498178 /* FMDatabase.m */; };
@@ -62,6 +64,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		180E0C7B1921BEFB00399554 /* SearchListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchListViewController.h; sourceTree = "<group>"; };
+		180E0C7C1921BEFB00399554 /* SearchListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchListViewController.m; sourceTree = "<group>"; };
+		180E0C811921E23000399554 /* pic1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic1.png; sourceTree = "<group>"; };
 		189D4AEA191D4AA200498178 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		189D4AF5191E105000498178 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		189D4AF7191E122500498178 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -157,6 +162,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		180E0C831921E92900399554 /* temppics */ = {
+			isa = PBXGroup;
+			children = (
+				F62A87EF19208E7D001BBDDB /* image1.jpg */,
+				F62A87F119208E83001BBDDB /* image2.jpg */,
+				F62A87F319208E8B001BBDDB /* image3.jpg */,
+				F62A87F519208E93001BBDDB /* image4.jpg */,
+				180E0C811921E23000399554 /* pic1.png */,
+			);
+			name = temppics;
+			sourceTree = "<group>";
+		};
 		189D4AF1191D537F00498178 /* DataBaseFolder */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,10 +255,16 @@
 				87AC9678191CF98400C69813 /* ViewController.m */,
 				189D4B0A191F9C8F00498178 /* WantsToGoListViewController.h */,
 				189D4B0B191F9C8F00498178 /* WantsToGoListViewController.m */,
-				F66BEDBF19206F92000E60E8 /* AlbumViewController.h */,
+				180E0C7B1921BEFB00399554 /* SearchListViewController.h */,
+				180E0C7C1921BEFB00399554 /* SearchListViewController.m */,
 				F66BEDC219206FF7000E60E8 /* CollectionCell.h */,
 				F66BEDC319206FF7000E60E8 /* CollectionCell.m */,
+				87CB77D71921B49700F2AFDC /* CameraViewController.h */,
+				87CB77D81921B49700F2AFDC /* CameraViewController.m */,
+				F66BEDBF19206F92000E60E8 /* AlbumViewController.h */,
 				F66BEDC019206F92000E60E8 /* AlbumViewController.m */,
+				87CB77E01922FECA00F2AFDC /* IndividualAlbumViewController.h */,
+				87CB77E11922FECA00F2AFDC /* IndividualAlbumViewController.m */,
 				189D4B0F191FBAA600498178 /* Weather.h */,
 				189D4B10191FBAA600498178 /* Weather.m */,
 				F6204BC819225B4A00E4B896 /* PlaceView.h */,
@@ -339,6 +362,7 @@
 				ORGANIZATIONNAME = bizan.com.mac02;
 				TargetAttributes = {
 					87AC965E191CF98300C69813 = {
+						DevelopmentTeam = F6V5S453ZH;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -375,6 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87AC967B191CF98400C69813 /* Images.xcassets in Resources */,
+				180E0C821921E23000399554 /* pic1.png in Resources */,
 				F62A87F219208E83001BBDDB /* image2.jpg in Resources */,
 				F62A87F019208E7D001BBDDB /* image1.jpg in Resources */,
 				F62A87F419208E8B001BBDDB /* image3.jpg in Resources */,
@@ -405,6 +430,7 @@
 				F6204BD71922F31400E4B896 /* CustomAnnotationView.m in Sources */,
 				189D4B11191FBAA600498178 /* Weather.m in Sources */,
 				87AC9679191CF98400C69813 /* ViewController.m in Sources */,
+				87CB77E21922FECA00F2AFDC /* IndividualAlbumViewController.m in Sources */,
 				189D4B05191E122500498178 /* FMDatabaseQueue.m in Sources */,
 				87AC9673191CF98400C69813 /* AppDelegate.m in Sources */,
 				189D4B02191E122500498178 /* FMDatabase.m in Sources */,
@@ -545,10 +571,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TripShot/TripShot-Prefix.pch";
 				INFOPLIST_FILE = "TripShot/TripShot-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "AE50531D-A475-4206-9573-EE03EC2F70FE";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -558,10 +587,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TripShot/TripShot-Prefix.pch";
 				INFOPLIST_FILE = "TripShot/TripShot-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "AE50531D-A475-4206-9573-EE03EC2F70FE";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
