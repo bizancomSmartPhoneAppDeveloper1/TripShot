@@ -95,6 +95,62 @@
     [self saveData];
 }
 
+//緯度経度からDBにデータ追加するメソッド
+-(void)createDBDataFromLat:(double)lat andLot:(double)lot andTitle:(NSString *)title{
+    
+    _dataid = [self loadData]; //連番の取得
+    
+    /*　データの追加　*/
+    
+    if(!_dataid){
+        _dataid = 0;
+    }
+    
+    NSString *insert_sql = @"INSERT INTO testTable(id, place_name, latitude, longitude, date, picCount, text, pics, went_flag, delete_flag , hour , address) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+    
+    //入れるデータの準備
+    NSInteger date = [self getIntegerDate];
+    NSInteger hour = [self getIntegerHour];
+    NSString *address = [self getAddressFromLat:lat AndLot:lot];
+    
+    //ディレクトリのリストを取得する
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    //インスタンスの作成
+    
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+    
+    [database open];
+    
+    [database executeUpdate:insert_sql ,
+     [NSNumber numberWithInteger:_dataid],
+     title,
+     [NSNumber numberWithDouble:lat], [NSNumber numberWithDouble:lot],
+     [NSNumber numberWithInteger:date] ,//日にち6桁int
+     [NSNumber numberWithInteger:1],//天気カラムを削除し、写真の枚数カラムを追加した（石井）
+     @"文章の全文",
+     @"pic1.png",
+     [NSNumber numberWithInteger:1],
+     [NSNumber numberWithInteger:0],
+     [NSNumber numberWithInteger:hour],//時刻4桁int
+     address
+     ];
+    
+    //NSLog(@"記事No:%d DB書き込み完了",_dataid);
+    
+    [database close];
+    
+    _dataid++;
+    
+    [self saveData];
+
+    
+    
+
+}
+
+
 -(int)getIntegerDate{ //日付を取得してint型に変換
     
     //日付取得
