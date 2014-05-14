@@ -188,6 +188,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{//サーチボタンタップ時に呼ばれる
 
     NSString *word = _searchField.text;
+    [_searchField resignFirstResponder];
     [self getJsonFromWord:word];
     [_TableView reloadData];//テーブルビューを更新
 
