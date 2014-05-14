@@ -46,11 +46,8 @@
 
 //あと必要なメソッドって何がある？
 
-/*
- 
-　保存するときに画像を入れ込む？未完了
- 
- */
-
+- (NSMutableArray *)loadDBDataOnCamera:(int)number;//cameraViewで使用するメソッド
+- (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount;//cameraViewで使用するメソッド
+- (void)dbDelete;//完全削除メソッド 必要な時以外、絶対に使用しないこと！！
 
 @end
