@@ -19,6 +19,8 @@
     NSMutableArray *picsArray;
     NSString *pics;
     int picsCount;
+    
+    NSString *path;
 }
 
 
@@ -90,44 +92,63 @@
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    //カメラのusePhotoボタンがタップされた時のメソッド 引数infoはNSDictionaryクラスの辞書オブジェクト
-    //UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];  //撮影したそのままの画像データを取り出す
-    //    UIImage *editedImage = (UIImage *)[info objectForKey:UIImagePickerControllerEditedImage];  //編集済み画像データを取り出す
     
     editedImage = (UIImage *)[info objectForKey:UIImagePickerControllerEditedImage];
     
-    //self.myImageView.image = editedImage;
     
-    //self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
+    NSData *data = UIImageJPEGRepresentation(editedImage, 0.5);
+    
+    // 保存するディレクトリを指定します
+    // ここではデータを保存する為に一般的に使われるDocumentsディレクトリ
     
     
+    //50枚まで写真を撮れるようにした
+    int counter = 50;
+    while (counter >= 0) {
+        path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
+            [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage,counter];
     
-    //とりあえずカメラロールに保存されたものを使用するが、アプリ専用のフォルダに保存することを検討が必要
+    if ([[NSURL fileURLWithPath:path] checkResourceIsReachableAndReturnError:nil] == YES) {
+        path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
+                [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage,counter+1];
+        break;
+    }else{
+        path = [NSString stringWithFormat:@"%@/TSpicture%d-0.jpg",
+                [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage];
+    }
+        counter --;
+        NSLog(@"counter=%d",counter);
+    }
+    
+    // NSDataのwriteToFileメソッドを使ってファイルに書き込みます
+    // atomically=YESの場合、同名のファイルがあったら、まずは別名で作成して、その後、ファイルの上書きを行います
+    if ([data writeToFile:path atomically:YES]) {
+        NSLog(@"save OK");
+    } else {
+        NSLog(@"save NG");
+    }
+    NSLog(@"path=%@",path);
+    
+    [picsArray addObject:path];
+
+
+    //カメラロールに保存されたものを使用する
     //UIImageWriteToSavedPhotosAlbum(editedImage, nil, nil, nil);  //編集済みの画像をカメラロールに保存する
     
     [array addObject:editedImage];
     self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.myImageView.animationImages = array;
+    NSLog(@"array=%@",[array description]);
     self.myImageView.animationDuration = 3.0;
     self.myImageView.animationRepeatCount = 0;
     [self.myImageView startAnimating];
     //UIImageWriteToSavedPhotosAlbum(originalImage, nil, nil, nil);  //撮影したそのままの画像をカメラロールに保存
     
-    //pathを取得
-    //NSURL *url = (NSURL *)[info objectForKey:UIImagePickerControllerEditedImage];
-    
-    //PNG形式で0.5に圧縮してシリアライズ化
-    NSData *imageData = UIImageJPEGRepresentation(editedImage, 0.5);
-    
-    //一旦配列に保存
-    //カメラロールに保存したパスを配列として渡す場合
-    //[picsArray addObject:url];
-    //シリアライズ化した情報を配列として渡す場合
-    [picsArray addObject:imageData];
-    
+
     //カメラ機能終了
     [self dismissViewControllerAnimated:YES completion:nil];
 
+     
 }
 
 
@@ -138,27 +159,6 @@
     self.idFromMainPage = 0;
     NSMutableArray *resultArray = [tsdatabase loadDBDataOnCamera:self.idFromMainPage];
     
-    
-    /*
-     //シリアライズ化した情報を取り出して画像表示
-    pics = [resultArray objectAtIndex:6];
-    NSArray *arrayPicNotMutable = [pics componentsSeparatedByString:@","];
-    NSLog(@"%@",[arrayPicNotMutable objectAtIndex:1]);
-    NSLog(@"%d",[[resultArray objectAtIndex:7] intValue]);
-    NSData *data= [[NSData alloc]initWithData:[arrayPicNotMutable objectAtIndex:0]];
-    UIImage* image = [[UIImage alloc] initWithData:data];
-    
-     //ここから出来ない
-    for (int i=0; i<[[resultArray objectAtIndex:7] intValue]; i++) {
-         UIImage* image = [[UIImage alloc] initWithData:[arrayPicNotMutable objectAtIndex:i]];
-        [array addObject:image];
-     }
-    self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.myImageView.animationImages = array;
-    self.myImageView.animationDuration = 3.0;
-    self.myImageView.animationRepeatCount = 0;
-    [self.myImageView startAnimating];
-    */
     
     //行きたい場所リストタイトル表示
     CGRect titleRect = CGRectMake(90, 320, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
@@ -233,66 +233,6 @@
     [textField resignFirstResponder];
     return YES;
 }
-
-
-
-/* 使わない
-//住所webAPI
-- (NSString *)webAPI:(double)lat LONG:(double)lon{
-    NSDictionary *jsonObjectResults =nil;
-    NSString *urlApi1 = @"http://maps.google.com/maps/api/geocode/json?latlng=";
-    //double lat= 34.070162;
-    //double lon= 134.556246;
-    NSString *urlApi2 = @"&sensor=false";
-    NSString *urlApi = [NSString stringWithFormat:@"%@%f,%f%@",urlApi1,lat,lon,urlApi2];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlApi]cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
-    
-    //sendSynchronousRequestメソッドでURLにアクセス
-    NSHTTPURLResponse* resp;
-    NSData *json_data = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:nil];
-    
-    //通信エラーの際の処理を考える必要がある
-    if (resp.statusCode != 200){
-        [self alertViewMethod];
-    }
-    
-    //返ってきたデータをJSONObjectWithDataメソッドで解析
-    else{
-        jsonObjectResults = [NSJSONSerialization JSONObjectWithData:json_data options:NSJSONReadingAllowFragments error:nil];
-        
-        NSDictionary *status = [jsonObjectResults objectForKey:@"status"];
-        NSString *statusString = [status description];
-        
-        if ([statusString isEqualToString:@"ZERO_RESULTS"]) {
-            [self alertViewMethod];
-            NSLog(@"ZERO_RESULTS");
-        }else{
-            NSMutableArray *result = [jsonObjectResults objectForKey:@"results"];
-            //NSString *str = [result description];
-            //NSLog(@"%@",str);
-            NSDictionary *dic = [result objectAtIndex:0];
-            //NSString *str2 = [dic description];
-            NSDictionary *dic2 = [dic objectForKey:@"formatted_address"];
-            NSString *fullAddress = [dic2 description];
-            address = [fullAddress substringFromIndex:3];
-        }
-    }
-    return address;
-}
-
-//読み込み失敗時に呼ばれる関数
-- (void)alertViewMethod{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"読み込みに失敗しました"
-                                                    message:nil
-                                                   delegate:self
-                                          cancelButtonTitle:nil
-                                          otherButtonTitles:@"OK",nil];
-    [alert show];
-}
-
-*/
-
 
 
 
