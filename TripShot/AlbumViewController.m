@@ -56,11 +56,26 @@
     placeName = DBData[1];
     picture = DBData[6];
     
+    //配列のいっこめをボタンにするため仮画像追加
+    [placeName insertObject:@"追加" atIndex:0];
+    [picture insertObject:@"pic1.png" atIndex:0];
+    
 }
 
+//クリックされたら呼ばれるメソッド
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
 
+    if(indexPath.row == 0){
+        //サーチのリストビューに飛ぶ
+        UINavigationController *searchVC = [self.storyboard instantiateViewControllerWithIdentifier:@"searchVC"];
+        [self presentViewController:searchVC animated:YES completion:nil];
 
+    }else{
+        
+        NSLog(@"そのほかがおされましたぜ %d個目",indexPath.row);
+    }
 
+}
 
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView;//セクションの数を設定

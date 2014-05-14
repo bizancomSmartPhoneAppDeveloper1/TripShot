@@ -250,14 +250,15 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 */
 
 
+
+- (IBAction)cancelButtonTapped:(id)sender {
+
+    [self dismissViewControllerAnimated:YES completion:NULL];
+
+}
+
+
 ////これいるんかな？いらん気がするので一旦消す。
-//- (IBAction)cancelButtonTapped:(id)sender {
-//
-//    [self dismissViewControllerAnimated:YES completion:NULL];
-//
-//}
-//
-//
 //- (IBAction)addButtonTapped:(id)sender {
 //    TSDataBase *db = [[TSDataBase alloc]init];
 ////    [db makeDatabase];
