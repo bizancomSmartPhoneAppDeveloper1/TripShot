@@ -46,6 +46,7 @@
     //TSDataBaseのインスタンス化
     tsdatabase = [[TSDataBase alloc]init];
     
+    
     //仮にDBを作成　問題無し
     //[tsdatabase makeDatabase];
     
@@ -192,7 +193,7 @@
     CGRect addressRect = CGRectMake(90, 400, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
     //仮に入力
-    addressLabel.text = [self webAPI:[[resultArray objectAtIndex:2] doubleValue] LONG:[[resultArray objectAtIndex:3] doubleValue]];
+    addressLabel.text = [resultArray objectAtIndex:11];
     addressLabel.textColor = [UIColor blueColor];
     addressLabel.font = [UIFont boldSystemFontOfSize:14];
     [self.view addSubview:addressLabel];
@@ -234,6 +235,8 @@
 }
 
 
+
+/* 使わない
 //住所webAPI
 - (NSString *)webAPI:(double)lat LONG:(double)lon{
     NSDictionary *jsonObjectResults =nil;
@@ -288,7 +291,7 @@
     [alert show];
 }
 
-
+*/
 
 
 

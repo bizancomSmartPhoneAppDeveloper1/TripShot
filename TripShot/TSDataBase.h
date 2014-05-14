@@ -46,11 +46,8 @@
 
 //あと必要なメソッドって何がある？
 
-/*
- 
-　保存するときに画像を入れ込む？未完了
- 
- */
-
+- (NSMutableArray *)loadDBDataOnCamera:(int)number;
+- (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount;
+- (void)dbDelete;//完全削除メソッド
 
 @end
