@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
 //
 
+#import <CoreLocation/CoreLocation.h>
 #import "ViewController.h"
 #import "CustomAnnotation.h"
 
@@ -18,6 +19,8 @@
     CLRegion* distCircularRegion;
 }
 
+@property (strong, nonatomic) CustomAnnotation *annotation;
+
 @end
 
 @implementation ViewController
@@ -29,7 +32,7 @@
     
     self.locationManager = [[CLLocationManager alloc]init];
     self.locationManager.delegate = self;
-   // [self.locationManager startUpdatingLocation];
+       // [self.locationManager startUpdatingLocation];
     
     //位置情報が使えるか確認する
     [self locationAuth];
@@ -52,6 +55,7 @@
 //位置情報が通知された時
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    
     //最新の位置情報を取り出す
     CLLocation *location = [locations lastObject];
     [self.mapView setCenterCoordinate:location.coordinate animated:YES];
@@ -59,17 +63,18 @@
     //現在地を地図表示
     MKCoordinateRegion region = MKCoordinateRegionMake([location coordinate], MKCoordinateSpanMake(0.01, 0.01));//現在地を地図の中心位置を表した値と、表示領域（地図縮尺）の値をMKCoordinateRegionクラスのインスタンスへ代入
     
-    //表示座標
-    CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(34.075222, 134.554028);
+    //ピンの表示座標
+    self.mapView.delegate = self;
+
+    self.annotation = [[CustomAnnotation alloc] initWithCoordinate:CLLocationCoordinate2DMake(34.075222, 134.554028)];
+    [self.mapView addAnnotation:self.annotation];
     
-    //ピン用アノテーションを生成
-    MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
-    pin.coordinate = loc; //ピンの座標
-    
-    //ピンの設定
-    [self.mapView addAnnotation:pin];
-    
-    [self.mapView setRegion:region];//地図表示
+//    //マップRegion
+//    //MKCoordinateRegion region = self.mapView.region;
+//    region.center = self.annotation.coordinate;
+//    region.span.latitudeDelta = 0.001;
+//    region.span.longitudeDelta = 0.001;
+    [self.mapView setRegion:region animated:YES];
     
     //ジオフェンス作成
     [self createGeofence];
@@ -79,10 +84,53 @@
     //60秒に一回ロケーションマネージャを立ち上げる
     [self.locationManager stopUpdatingLocation];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
-    
-
 
 }
+-(MKAnnotationView*)mapView:(MKMapView*)mapView
+          viewForAnnotation:(id)annotation{
+    
+    static NSString *PinIdentifier = @"Pin";
+    MKPinAnnotationView *pav =
+    (MKPinAnnotationView*)
+    [self.mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
+    if(pav == nil){
+        pav = [[MKPinAnnotationView alloc]
+                initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
+        pav.animatesDrop = YES;  // アニメーションをする
+        pav.pinColor = MKPinAnnotationColorPurple;  // ピンの色を紫にする
+        pav.canShowCallout = YES;  // ピンタップ時にコールアウトを表示する
+    }
+    return pav;
+    
+}
+
+//- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+//{
+//    //Current Location Annotation
+//    if([annotation isKindOfClass:[MKUserLocation class]])
+//    {
+//        return nil;
+//    }
+//    //CustomAnnotation
+//    else if([annotation isKindOfClass:[CustomAnnotationView class]])
+//    {
+//        static NSString *PinCustomID = @"CustomIdentifier";
+//        CustomAnnotationView *pav = (CustomAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:PinCustomID];
+//        if(pav == nil)
+//        {
+//            pav = [[CustomAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:PinCustomID];
+//            pav.canShowCallout = YES;
+//            pav.pinColor = MKPinAnnotationColorGreen;
+//            pav.animatesDrop = YES;
+//        }
+//        else
+//        {
+//            pav.annotation = annotation;
+//        }
+//        return pav;
+//    }
+//    return nil;
+//}
 
 - (void)locationAuth{
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
