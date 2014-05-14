@@ -128,9 +128,9 @@
      title,
      [NSNumber numberWithDouble:lat], [NSNumber numberWithDouble:lot],
      [NSNumber numberWithInteger:date] ,//日にち6桁int
-     [NSNumber numberWithInteger:1],//天気カラムを削除し、写真の枚数カラムを追加した（石井）
-     @"文章の全文",
-     @"pic1.png",
+     [NSNumber numberWithInteger:1],//写真の枚数カラム
+     @"NODATA",//空欄、なにをいれればいいかな
+     @"NODATA",//空欄、なにを入れればいいかな
      [NSNumber numberWithInteger:1],
      [NSNumber numberWithInteger:0],
      [NSNumber numberWithInteger:hour],//時刻4桁int
@@ -295,8 +295,8 @@
 }
 
 
--(NSString *)getAddressFromLat:(double)lat AndLot:(double)lot{ //引数が緯度、経度 ***********アラートなど最終的に要チェック*********
-    
+//緯度経度から住所を取得する
+-(NSString *)getAddressFromLat:(double)lat AndLot:(double)lot{
     NSDictionary *jsonObjectResults = nil;
     NSString *urlApi1 = @"http://maps.google.com/maps/api/geocode/json?latlng=";
     NSString *urlApi2 = @"&sensor=false";
