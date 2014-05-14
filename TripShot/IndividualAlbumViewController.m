@@ -74,7 +74,7 @@
     NSLog(@"picsCount=%d",[[resultArray objectAtIndex:5] intValue]);
     
     
-    
+    if (![[resultArray objectAtIndex:5] intValue]==0) {
     NSMutableArray *arrayPics = [[NSMutableArray alloc]init];
     for (int i=0; i<2; i++) {
         NSData *dataPics = [[NSData alloc] initWithContentsOfFile:[arrayPicNotMutable objectAtIndex:i]];
@@ -88,7 +88,7 @@
     self.myImageView.animationDuration = 3.0;
     self.myImageView.animationRepeatCount = 0;
     [self.myImageView startAnimating];
-    
+    }
     
     
       
