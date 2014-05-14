@@ -97,6 +97,8 @@
 
 //緯度経度からDBにデータ追加するメソッド
 -(void)createDBDataFromLat:(double)lat andLot:(double)lot andTitle:(NSString *)title{
+
+    [self makeDatabase];
     
     _dataid = [self loadData]; //連番の取得
     
@@ -182,6 +184,7 @@
 
 
 -(NSMutableArray *)loadDBData{ //DBデータの読み込み
+    
     //ディレクトリのリストを取得する
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectry = paths[0];
@@ -197,10 +200,9 @@
     [database open];
     
     //必要なデータを取り出す（ここでは、delete_flagが0のものすべて）
-
     
     //sqlのさいごにORDER BY ID DESC　をいれるとIDの順番でソートできる
-    //できてるかな？確認
+
     
     NSString *sql = @"SELECT * FROM testTable WHERE delete_flag = '0' ORDER BY date DESC;";
     FMResultSet *results = [database executeQuery:sql];//DBの中身はresultsにはいるよ
@@ -218,6 +220,7 @@
     NSMutableArray *hourarray = [[NSMutableArray alloc]init];
     NSMutableArray *addressarray = [[NSMutableArray alloc]init];
     
+
     //データ取得を行うループ
     while([results next]){ //結果が一行ずつ返されて、最後までいくとnextメソッドがnoを返す
 
@@ -255,6 +258,7 @@
         
         NSString *db_address = [results stringForColumn:@"address"];
         [addressarray addObject:db_address];
+
         
         //        int deleteflag = [results intForColumn:@"delete_flag"];
         
@@ -265,11 +269,16 @@
         */
          //最終的にresltArrayに配列がそれぞれぼこっと入る感じで。
         i++;
+        NSLog(@"ここまでいけた3");
+
     }
     
-    //NSLog(@"check2=====試しに配列の表示%@",weatherarray[0]);
+//    NSLog(@"check2=====試しに配列の表示%@",titlearray[0]);
 
     [database close];
+
+    
+
     
     /* データ受け渡し用にぜんぶまとめてぶっこむ */
 
