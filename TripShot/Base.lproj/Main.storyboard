@@ -164,7 +164,7 @@
             </objects>
             <point key="canvasLocation" x="132" y="526"/>
         </scene>
-        <!--Search List View Controller-->
+        <!--Search List View Controller - 行きたいところ入力-->
         <scene sceneID="hCz-vd-bPd">
             <objects>
                 <tableViewController id="dc9-mh-IFs" customClass="SearchListViewController" sceneMemberID="viewController">
@@ -209,18 +209,7 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="search" id="bhj-Lt-tud"/>
-                    <navigationItem key="navigationItem" id="337-RB-E45">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Cgx-MP-DFr">
-                            <connections>
-                                <action selector="cancelButtonTapped:" destination="dc9-mh-IFs" id="hqN-H9-5Fw"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="yfJ-jT-UON">
-                            <connections>
-                                <action selector="addButtonTapped:" destination="dc9-mh-IFs" id="XAC-6v-Q2f"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="行きたいところ入力" id="337-RB-E45"/>
                     <connections>
                         <outlet property="TableView" destination="X3d-zu-BhA" id="KkN-QZ-7Dz"/>
                         <outlet property="searchDisplayController" destination="bu6-QX-yAX" id="QIa-vA-aI6"/>

@@ -21,6 +21,7 @@
 @end
 
 @implementation SearchListViewController{
+    
 }
 
 NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9MmM-";
@@ -189,9 +190,21 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
 }
 
--(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
-    _searchField.text = nil;
 
+//入力開始時
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+
+    _searchField.text = nil;
+    
+}
+
+//サーチボタンタップ時に呼ばれる
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    
+    NSString *word = _searchField.text;
+    [_searchField resignFirstResponder];
+    [self getJsonFromWord:word];
+    [_TableView reloadData];
     
 }
 
@@ -213,7 +226,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
 */
 
@@ -231,31 +244,21 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 */
 
 
-- (IBAction)cancelButtonTapped:(id)sender {
-    
-    [self dismissViewControllerAnimated:YES completion:NULL];
-
-}
-
-//これいるんかな？いらん気がする。内容要検討
-
-- (IBAction)addButtonTapped:(id)sender {
-    TSDataBase *db = [[TSDataBase alloc]init];
-//    [db makeDatabase];
-    [db createDBData];
-    
-    [_TableView reloadData];
-}
-
-//サーチボタンタップ時に呼ばれる
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-
-    NSString *word = _searchField.text;
-    [_searchField resignFirstResponder];
-    [self getJsonFromWord:word];
-    [_TableView reloadData];
-
-}
+////これいるんかな？いらん気がするので一旦消す。
+//- (IBAction)cancelButtonTapped:(id)sender {
+//
+//    [self dismissViewControllerAnimated:YES completion:NULL];
+//
+//}
+//
+//
+//- (IBAction)addButtonTapped:(id)sender {
+//    TSDataBase *db = [[TSDataBase alloc]init];
+////    [db makeDatabase];
+//    [db createDBData];
+//
+//    [_TableView reloadData];
+//}
 
 
 @end
