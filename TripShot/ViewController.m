@@ -18,6 +18,11 @@
     double targetLongitude;
     double targetLatitude;
     CLRegion* distCircularRegion;
+    
+    NSMutableArray *titleList;
+    NSMutableArray *latList;
+    NSMutableArray *lonList;
+
 }
 
 @property (strong, nonatomic) CustomAnnotation *annotation;
@@ -43,8 +48,13 @@
     
     //住所から緯度経度取得　とりあえず使わない
     //[self webAPI];
+    //ジオフェンス作成
+   // [self createGeofence];
+    //到達点についた時に分かるようにジオフェンスをスタート
+    [self.locationManager startMonitoringForRegion:distCircularRegion];
     
-
+    //DBからピンぶっさしてます
+    [self markingPinFromList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,7 +88,7 @@
     [self.mapView setRegion:region animated:YES];
     
     //ジオフェンス作成
-    [self createGeofence];
+    //[self createGeofence];
     //到達点についた時に分かるようにジオフェンスをスタート
     [self.locationManager startMonitoringForRegion:distCircularRegion];
     
@@ -302,44 +312,50 @@
     }
 }
 
-//ジオフェンス関数
--(void)createGeofence
-{
-    
-    //DBから読み込んだ緯度経度情報が必要
-    targetLatitude = 34.070162;//一時的にトモニプラザの緯度を設定
-    NSLog(@"targetLatitude=%f",targetLatitude);
-    targetLongitude =134.556246;//一時的にトモニプラザの経度を設定
-    NSLog(@"targetLongitude=%f",targetLongitude);
-    CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(targetLatitude, targetLongitude);
-    
-    distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:500
-                                                      identifier:@"targetPlace"];
-    
-    
-}
+////ジオフェンス関数
+//-(void)createGeofence
+//{
+//    
+//    //DBから読み込んだ緯度経度情報が必要
+//    targetLatitude = 34.070162;//一時的にトモニプラザの緯度を設定
+//    NSLog(@"targetLatitude=%f",targetLatitude);
+//    targetLongitude =134.556246;//一時的にトモニプラザの経度を設定
+//    NSLog(@"targetLongitude=%f",targetLongitude);
+//    CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(targetLatitude, targetLongitude);
+//    
+//    distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:500
+//                                                      identifier:@"targetPlace"];
+//    
+//    
+//}
 
 // 進入イベント 通知
 -(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    // 入った。
-    if ([region.identifier isEqualToString:@"targetPlace"]) {
-        NSLog(@"ジオフェンス領域%@に入りました",region.identifier);
+    for (int r = 0; r < titleList.count; r++)
+    {
+        // 入った。
+        if ([region.identifier isEqualToString:[NSString stringWithFormat:@"%@",titleList[r]]]) {
+            NSLog(@"ジオフェンス領域%@に入りました",titleList[r]);
+        }
+        //バックグラウンドからの通知
+        [self LocalNotificationStart];
+
     }
-    //バックグラウンドからの通知
-    [self LocalNotificationStart];
 }
 
-// 退出イベント 通知
--(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-    // 出た。
-    if ([region.identifier isEqualToString:@"targetPlace"]) {
-        NSLog(@"ジオフェンス領域%@から出ました",region.identifier);
-    }
-}
+//// 退出イベント 通知
+//-(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+//    
+//    // 出た。
+//    if ([region.identifier isEqualToString:@"targetPlace"]) {
+//        NSLog(@"ジオフェンス領域%@から出ました",region.identifier);
+//    }
+//}
 
 // ジオフェンスしっぱい。
 -(void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error {
     NSLog(@"ジオフェンス領域%@しっぱい",region.identifier);
+    NSLog(@"%d",error.code);
 }
 
 
@@ -393,13 +409,13 @@
     
 //    NSMutableArray *idList = DBData[0];
 
-    NSMutableArray *titleList = [[NSMutableArray alloc]init];
+    titleList = [[NSMutableArray alloc]init];
     titleList = DBData[1];
     
-    NSMutableArray *latList =[[NSMutableArray alloc]init];
+    latList =[[NSMutableArray alloc]init];
     latList = DBData[2];
     
-    NSMutableArray *lonList = [[NSMutableArray alloc]init];
+    lonList = [[NSMutableArray alloc]init];
     lonList = DBData[3];
 
     NSMutableArray *addressList = [[NSMutableArray alloc]init];
@@ -422,6 +438,14 @@
 
     [_mapView addAnnotation:pin];
     
+    //アノテーションを刺した場所のジオフェンスを開始
+    CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
+        
+    distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:500
+                                                          identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
+        NSLog(@"%f,%f",lat,lon);
+        NSLog(@"%@",titleList[i]);
+        NSLog(@"%d",i);
     }
     
 }
