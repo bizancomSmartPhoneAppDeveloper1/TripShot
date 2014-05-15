@@ -99,6 +99,8 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
 
 }
+
+/*
 -(MKAnnotationView*)mapView:(MKMapView*)mapView
           viewForAnnotation:(id)annotation{
     
@@ -116,6 +118,7 @@
     return pav;
     
 }
+ */
 
 //- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 //{
