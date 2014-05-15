@@ -11,6 +11,7 @@
 #import "CustomAnnotation.h"
 #import "TSDataBase.h"
 #import "TSPointAnnotation.h"
+#import "TSAnnotation.h"
 
 @interface ViewController ()
 {
@@ -23,7 +24,9 @@
     NSMutableArray *titleList;
     NSMutableArray *latList;
     NSMutableArray *lonList;
-
+    
+    TSAnnotation *myPin;
+    
 }
 
 @property (strong, nonatomic) CustomAnnotation *annotation;
@@ -99,23 +102,23 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
 
 }
--(MKAnnotationView*)mapView:(MKMapView*)mapView
-          viewForAnnotation:(id)annotation{
-    
-    static NSString *PinIdentifier = @"Pin";
-    MKPinAnnotationView *pav =
-    (MKPinAnnotationView*)
-    [self.mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
-    if(pav == nil){
-        pav = [[MKPinAnnotationView alloc]
-                initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
-        pav.animatesDrop = YES;  // アニメーションをする
-        pav.pinColor = MKPinAnnotationColorPurple;  // ピンの色を紫にする
-        pav.canShowCallout = YES;  // ピンタップ時にコールアウトを表示する
-    }
-    return pav;
-    
-}
+//-(MKAnnotationView*)mapView:(MKMapView*)mapView
+//          viewForAnnotation:(id)annotation{
+//    
+//    static NSString *PinIdentifier = @"Pin";
+//    MKPinAnnotationView *pav =
+//    (MKPinAnnotationView*)
+//    [self.mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
+//    if(pav == nil){
+//        pav = [[MKPinAnnotationView alloc]
+//                initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
+//        pav.animatesDrop = YES;  // アニメーションをする
+//        pav.pinColor = MKPinAnnotationColorPurple;  // ピンの色を紫にする
+//        pav.canShowCallout = YES;  // ピンタップ時にコールアウトを表示する
+//    }
+//    return pav;
+//    
+//}
 
 //- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 //{
@@ -430,32 +433,48 @@
         double lat = temp.doubleValue;
         temp = lonList[i];
         double lon = temp.doubleValue;
+        temp = idList[i];
         
-    //緯度経度からアノテーションをさす（ふつうのやつです）
-    CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(lat, lon);
-//    MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
-        TSPointAnnotation *pin = [[TSPointAnnotation alloc]init];
-    pin.coordinate = loc;
-    pin.title = titleList[i];
-    pin.subtitle = addressList[i];
+/* カスタムクラスでピンをさしてみるよ*/
+        
+//ピンをつくる
 
-    //pinのなんかにidをいれる
-    pin.TSPointId = (int)idList[i];
+        TSAnnotation *pin = [[TSAnnotation alloc]init];
+
+//ピンをさす
+        CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(lat, lon);
+        pin.coordinate = loc;
+        pin.title = titleList[i];
+        pin.subtitle = addressList[i];
+        pin.idnumb = (int)idList[i];//あとでつかうやつ！！
+        [_mapView addAnnotation:pin];
         
-    //ためし
-    [_mapView addAnnotation:pin];
-    
     //アノテーションを刺した場所のジオフェンスを開始
     CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
         
     distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:500
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
-        NSLog(@"%f,%f",lat,lon);
-        NSLog(@"%@",titleList[i]);
-        NSLog(@"%d",i);
+
     }
     
 }
+
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+
+    NSString *identifier = @"MyPin";
+    MKPinAnnotationView *pin = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+    
+    //ピンがなければピンをつくる
+    if(pin == nil){
+        pin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:identifier];
+        pin.animatesDrop = YES;
+        pin.pinColor = MKPinAnnotationColorRed;
+        pin.canShowCallout = YES;
+    }
+
+    return pin;
+}
+
 
 //ピンをさわったときによばれるメソッド。
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
@@ -486,10 +505,15 @@
     calloutAccessoryControlTapped:(UIControl *)control{
     
     NSLog(@"カメラがおされたお！");
-    NSLog(@"%@",view);
+    NSLog(@"%@",view.annotation);//view.annotationでどのアノテーションか判定できるらしい
+    NSLog(@"title is : %@",view.annotation.title);
+    
+//    NSLog(@"idnumb is : %d",view.annotation.idnumb);
     
     //ここで、セグエで渡すための値（ID)を変数に入れるようにする
     //int DBNumb = ******;
+    
+    /* 最悪の場合、ここで読み込んだtitleをキーワードにしてDBからデータを取り出すことにする。。*/
     
 }
 

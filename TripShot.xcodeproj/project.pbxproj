@@ -10,6 +10,7 @@
 		180E0C7D1921BEFB00399554 /* SearchListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E0C7C1921BEFB00399554 /* SearchListViewController.m */; };
 		180E0C821921E23000399554 /* pic1.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E0C811921E23000399554 /* pic1.png */; };
 		180FBCA51924809C00AFD3AC /* TSPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */; };
+		180FBCA819248CD000AFD3AC /* TSAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 180FBCA719248CD000AFD3AC /* TSAnnotation.m */; };
 		189D4AEB191D4AA200498178 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AEA191D4AA200498178 /* libsqlite3.dylib */; };
 		189D4AF6191E105000498178 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AF5191E105000498178 /* libsqlite3.0.dylib */; };
 		189D4B02191E122500498178 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4AF8191E122500498178 /* FMDatabase.m */; };
@@ -65,6 +66,8 @@
 		180E0C811921E23000399554 /* pic1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic1.png; sourceTree = "<group>"; };
 		180FBCA31924809C00AFD3AC /* TSPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSPointAnnotation.h; path = ../TSPointAnnotation.h; sourceTree = "<group>"; };
 		180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSPointAnnotation.m; path = ../TSPointAnnotation.m; sourceTree = "<group>"; };
+		180FBCA619248CD000AFD3AC /* TSAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAnnotation.h; sourceTree = "<group>"; };
+		180FBCA719248CD000AFD3AC /* TSAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAnnotation.m; sourceTree = "<group>"; };
 		189D4AEA191D4AA200498178 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		189D4AF5191E105000498178 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		189D4AF7191E122500498178 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -128,7 +131,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6204BCC19225C3F00E4B896 /* QuartzCore.framework in Frameworks */,
 				F66BEDBE19206029000E60E8 /* MapKit.framework in Frameworks */,
 				189D4B0E191FBA8900498178 /* CoreLocation.framework in Frameworks */,
 				189D4AF6191E105000498178 /* libsqlite3.0.dylib in Frameworks */,
@@ -167,6 +169,8 @@
 		180FBC9F192410A600AFD3AC /* notUseFIles */ = {
 			isa = PBXGroup;
 			children = (
+				180FBCA31924809C00AFD3AC /* TSPointAnnotation.h */,
+				180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */,
 				189D4B0F191FBAA600498178 /* Weather.h */,
 				189D4B10191FBAA600498178 /* Weather.m */,
 				189D4B0A191F9C8F00498178 /* WantsToGoListViewController.h */,
@@ -226,7 +230,6 @@
 		87AC9661191CF98300C69813 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F6204BCB19225C3F00E4B896 /* QuartzCore.framework */,
 				F66BEDBD19206029000E60E8 /* MapKit.framework */,
 				189D4B0D191FBA8800498178 /* CoreLocation.framework */,
 				189D4AF5191E105000498178 /* libsqlite3.0.dylib */,
@@ -245,17 +248,13 @@
 				87522D3A19208F4A00334492 /* pics */,
 				87AC9671191CF98400C69813 /* AppDelegate.h */,
 				87AC9672191CF98400C69813 /* AppDelegate.m */,
-				180FBCA31924809C00AFD3AC /* TSPointAnnotation.h */,
-				180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */,
 				87AC9674191CF98400C69813 /* Main.storyboard */,
 				F62A87F7192097FF001BBDDB /* CustomAnnotation.h */,
 				F62A87F8192097FF001BBDDB /* CustomAnnotation.m */,
-				F6204BD51922F31400E4B896 /* CustomAnnotationView.h */,
-				F6204BD61922F31400E4B896 /* CustomAnnotationView.m */,
 				87AC9677191CF98400C69813 /* ViewController.h */,
-				F6204BD81922F68300E4B896 /* MapView.h */,
-				F6204BD91922F68300E4B896 /* MapView.m */,
 				87AC9678191CF98400C69813 /* ViewController.m */,
+				180FBCA619248CD000AFD3AC /* TSAnnotation.h */,
+				180FBCA719248CD000AFD3AC /* TSAnnotation.m */,
 				180E0C7B1921BEFB00399554 /* SearchListViewController.h */,
 				180E0C7C1921BEFB00399554 /* SearchListViewController.m */,
 				F66BEDC219206FF7000E60E8 /* CollectionCell.h */,
@@ -396,7 +395,6 @@
 				F62A87F619208E93001BBDDB /* image4.jpg in Resources */,
 				87AC966D191CF98400C69813 /* InfoPlist.strings in Resources */,
 				87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */,
-				F6204BD4192263E600E4B896 /* InfoPlace.xib in Resources */,
 				87AC9676191CF98400C69813 /* Main.storyboard in Resources */,
 				87522D3E1920E88900334492 /* camera.png in Resources */,
 			);
@@ -424,14 +422,13 @@
 				87CB77E21922FECA00F2AFDC /* IndividualAlbumViewController.m in Sources */,
 				189D4B05191E122500498178 /* FMDatabaseQueue.m in Sources */,
 				87AC9673191CF98400C69813 /* AppDelegate.m in Sources */,
+				180FBCA819248CD000AFD3AC /* TSAnnotation.m in Sources */,
 				189D4B02191E122500498178 /* FMDatabase.m in Sources */,
 				180E0C7D1921BEFB00399554 /* SearchListViewController.m in Sources */,
 				F62A87F9192097FF001BBDDB /* CustomAnnotation.m in Sources */,
-				F6204BDA1922F68300E4B896 /* MapView.m in Sources */,
 				189D4B04191E122500498178 /* FMDatabasePool.m in Sources */,
 				189D4B06191E122500498178 /* FMResultSet.m in Sources */,
 				189D4B09191F7AFA00498178 /* TSDataBase.m in Sources */,
-				F6204BCF19225D9200E4B896 /* NSObject+Extension.m in Sources */,
 				F66BEDC119206F92000E60E8 /* AlbumViewController.m in Sources */,
 				189D4B0C191F9C8F00498178 /* WantsToGoListViewController.m in Sources */,
 				87AC966F191CF98400C69813 /* main.m in Sources */,
