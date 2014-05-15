@@ -47,6 +47,7 @@
     
     //DBからピンぶっさしてます
     [self markingPinFromList];
+    _mapView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -379,5 +380,27 @@
     
 }
 
+//アノテーションビューのタッチイベントのはず
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
+
+    NSLog(@"たっちされたお");
+    
+}
+
+//アノテーションビューが作られたときのデリゲート。addAnotationするときに呼ばれる
+- (void)mapView:(MKMapView*)mapView didAddAnnotationViews:(NSArray*)views{
+
+    // アノテーションビューを取得する
+    for (MKAnnotationView* annotationView in views) {
+        UIImage *cameraImg = [UIImage imageNamed:@"camera.png"];
+        
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(15,0,44,44)];
+        
+        [button setBackgroundImage:cameraImg forState:UIControlStateNormal];
+        
+        // コールアウトの左側のアクセサリビューにボタンを追加する
+        annotationView.leftCalloutAccessoryView = button;
+    }
+}
 
 @end
