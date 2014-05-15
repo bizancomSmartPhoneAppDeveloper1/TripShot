@@ -83,8 +83,7 @@
         [self presentViewController:searchVC animated:YES completion:nil];
 
     }else{
-        
-        //サーチのリストビューに飛ぶ
+
         NSLog(@"そのほかがおされましたぜ %d個目",indexPath.row);
         NSLog(@"idarray=%@",[idarray description]);
         NSString *pathNumber = [idarray objectAtIndex:indexPath.row-1];
