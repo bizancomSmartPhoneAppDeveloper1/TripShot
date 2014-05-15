@@ -64,6 +64,7 @@
     //メイン画面から受け渡されるID 仮に0とする。
 //    self.idFromMainPage = 0;
     NSMutableArray *resultArray = [tsdatabase loadDBDataOnCamera:self.idFromMainPage];
+    NSLog(@"idFromMainPage=%d",self.idFromMainPage);
     
     
     

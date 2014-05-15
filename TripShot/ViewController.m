@@ -55,7 +55,7 @@
     [self.locationManager startMonitoringForRegion:distCircularRegion];
     
     //DBからピンぶっさしてます
-    [self markingPinFromList];
+    //[self markingPinFromList];
     _mapView.delegate = self;
 }
 
@@ -100,23 +100,25 @@
 
 }
 
-//-(MKAnnotationView*)mapView:(MKMapView*)mapView
-//          viewForAnnotation:(id)annotation{
-//    
-//    static NSString *PinIdentifier = @"Pin";
-//    MKPinAnnotationView *pav =
-//    (MKPinAnnotationView*)
-//    [self.mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
-//    if(pav == nil){
-//        pav = [[MKPinAnnotationView alloc]
-//                initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
-//        pav.animatesDrop = YES;  // アニメーションをする
-//        pav.pinColor = MKPinAnnotationColorPurple;  // ピンの色を紫にする
-//        pav.canShowCallout = YES;  // ピンタップ時にコールアウトを表示する
-//    }
-//    return pav;
-//    
-//}
+
+-(MKAnnotationView*)mapView:(MKMapView*)mapView
+          viewForAnnotation:(id)annotation{
+    
+    static NSString *PinIdentifier = @"Pin";
+    MKPinAnnotationView *pav =
+    (MKPinAnnotationView*)
+    [self.mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
+    if(pav == nil){
+        pav = [[MKPinAnnotationView alloc]
+                initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
+        pav.animatesDrop = YES;  // アニメーションをする
+        pav.pinColor = MKPinAnnotationColorPurple;  // ピンの色を紫にする
+        pav.canShowCallout = YES;  // ピンタップ時にコールアウトを表示する
+    }
+    return pav;
+    
+}
+
 
 //- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 //{
@@ -340,11 +342,11 @@
         // 入った。
         if ([region.identifier isEqualToString:[NSString stringWithFormat:@"%@",titleList[r]]]) {
             NSLog(@"ジオフェンス領域%@に入りました",titleList[r]);
+           
+            //バックグラウンドからの通知
             [self LocalNotificationStart];
 
         }
-        //バックグラウンドからの通知
-       
     }
 }
 
@@ -405,6 +407,7 @@
 #pragma mark -
 #pragma mark ふじわら追加メソッド
 
+/*
 //DBからデータを読み込んで指定のピンをとりあえず刺しまくるメソッド まだデータの受け渡し部分未実装
 -(void)markingPinFromList{
     
@@ -437,7 +440,7 @@
     //緯度経度からアノテーションをさす（ふつうのやつです）
     CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(lat, lon);
 //    MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
-        TSPointAnnotation *pin = [[TSPointAnnotation alloc]init];
+    TSPointAnnotation *pin = [[TSPointAnnotation alloc]init];
     pin.coordinate = loc;
     pin.title = titleList[i];
     pin.subtitle = addressList[i];
@@ -459,6 +462,7 @@
     }
     
 }
+ */
 
 //ピンをさわったときによばれるメソッド。
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
