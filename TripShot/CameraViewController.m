@@ -156,7 +156,10 @@
 - (void)viewMethod{
     
     //渡されるplace_name,lat,longをビザンコムに仮にする。実際はplace_nameのみで引っ張っている
-    NSMutableArray *resultarray = [tsdatabase loadLatLonPlaceName:@"ビザンコム株式会社" LAT:34.061901111111 LON:1134.566681111111];
+//    NSMutableArray *resultarray = [tsdatabase loadLatLonPlaceName:@"ビザンコム株式会社" LAT:34.061901111111 LON:1134.566681111111];
+    NSMutableArray *resultarray = [tsdatabase loadLatLonPlaceName:_place_nameFromMainPage LAT:34.061901111111 LON:1134.566681111111];
+
+    
     int dataid = [[resultarray objectAtIndex:0] intValue];
     NSLog(@"dataid=%d",dataid);
     

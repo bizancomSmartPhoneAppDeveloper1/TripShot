@@ -10,7 +10,6 @@
 		180E0C7D1921BEFB00399554 /* SearchListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E0C7C1921BEFB00399554 /* SearchListViewController.m */; };
 		180E0C821921E23000399554 /* pic1.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E0C811921E23000399554 /* pic1.png */; };
 		180FBCA51924809C00AFD3AC /* TSPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */; };
-		180FBCA819248CD000AFD3AC /* TSAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 180FBCA719248CD000AFD3AC /* TSAnnotation.m */; };
 		189D4AEB191D4AA200498178 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AEA191D4AA200498178 /* libsqlite3.dylib */; };
 		189D4AF6191E105000498178 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AF5191E105000498178 /* libsqlite3.0.dylib */; };
 		189D4B02191E122500498178 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4AF8191E122500498178 /* FMDatabase.m */; };
@@ -71,8 +70,6 @@
 		180E0C811921E23000399554 /* pic1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic1.png; sourceTree = "<group>"; };
 		180FBCA31924809C00AFD3AC /* TSPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSPointAnnotation.h; path = ../TSPointAnnotation.h; sourceTree = "<group>"; };
 		180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSPointAnnotation.m; path = ../TSPointAnnotation.m; sourceTree = "<group>"; };
-		180FBCA619248CD000AFD3AC /* TSAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAnnotation.h; sourceTree = "<group>"; };
-		180FBCA719248CD000AFD3AC /* TSAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAnnotation.m; sourceTree = "<group>"; };
 		189D4AEA191D4AA200498178 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		189D4AF5191E105000498178 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		189D4AF7191E122500498178 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -268,8 +265,6 @@
 				F62A87F8192097FF001BBDDB /* CustomAnnotation.m */,
 				87AC9677191CF98400C69813 /* ViewController.h */,
 				87AC9678191CF98400C69813 /* ViewController.m */,
-				180FBCA619248CD000AFD3AC /* TSAnnotation.h */,
-				180FBCA719248CD000AFD3AC /* TSAnnotation.m */,
 				180E0C7B1921BEFB00399554 /* SearchListViewController.h */,
 				180E0C7C1921BEFB00399554 /* SearchListViewController.m */,
 				F66BEDC219206FF7000E60E8 /* CollectionCell.h */,
@@ -442,7 +437,6 @@
 				87CB77E21922FECA00F2AFDC /* IndividualAlbumViewController.m in Sources */,
 				189D4B05191E122500498178 /* FMDatabaseQueue.m in Sources */,
 				87AC9673191CF98400C69813 /* AppDelegate.m in Sources */,
-				180FBCA819248CD000AFD3AC /* TSAnnotation.m in Sources */,
 				189D4B02191E122500498178 /* FMDatabase.m in Sources */,
 				180E0C7D1921BEFB00399554 /* SearchListViewController.m in Sources */,
 				F62A87F9192097FF001BBDDB /* CustomAnnotation.m in Sources */,

@@ -10,8 +10,8 @@
 #import "ViewController.h"
 #import "CustomAnnotation.h"
 #import "TSDataBase.h"
-#import "TSPointAnnotation.h"
-#import "TSAnnotation.h"
+#import "CameraViewController.h"
+
 
 @interface ViewController ()
 {
@@ -24,8 +24,6 @@
     NSMutableArray *titleList;
     NSMutableArray *latList;
     NSMutableArray *lonList;
-    
-    TSAnnotation *myPin;
     
 }
 
@@ -58,7 +56,7 @@
     [self.locationManager startMonitoringForRegion:distCircularRegion];
     
     //DBからピンぶっさしてます
-    //[self markingPinFromList];
+    [self markingPinFromList];
     _mapView.delegate = self;
 }
 
@@ -408,7 +406,7 @@
 #pragma mark -
 #pragma mark ふじわら追加メソッド
 
-/*
+
 //DBからデータを読み込んで指定のピンをとりあえず刺しまくるメソッド まだデータの受け渡し部分未実装
 -(void)markingPinFromList{
     
@@ -416,7 +414,7 @@
     TSDataBase *db = [[TSDataBase alloc]init];
     NSMutableArray *DBData = [db loadDBData];
     
-    NSMutableArray *idList = DBData[0];
+//    NSMutableArray *idList = DBData[0];
 
     titleList = [[NSMutableArray alloc]init];
     titleList = DBData[1];
@@ -437,48 +435,42 @@
         double lat = temp.doubleValue;
         temp = lonList[i];
         double lon = temp.doubleValue;
-        temp = idList[i];
-        
-/* カスタムクラスでピンをさしてみるよ*/
-        
-//ピンをつくる
+//        temp = idList[i];
 
-        TSAnnotation *pin = [[TSAnnotation alloc]init];
-
-//ピンをさす
         CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(lat, lon);
+        MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
         pin.coordinate = loc;
         pin.title = titleList[i];
         pin.subtitle = addressList[i];
-        pin.idnumb = (int)idList[i];//あとでつかうやつ！！
-        [_mapView addAnnotation:pin];
         
+        [_mapView addAnnotation:pin];
+/*
     //アノテーションを刺した場所のジオフェンスを開始
     CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
         
     distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:500
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
-
+*/
     }
     
 }
- */
 
--(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
 
-    NSString *identifier = @"MyPin";
-    MKPinAnnotationView *pin = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-    
-    //ピンがなければピンをつくる
-    if(pin == nil){
-        pin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:identifier];
-        pin.animatesDrop = YES;
-        pin.pinColor = MKPinAnnotationColorRed;
-        pin.canShowCallout = YES;
-    }
-
-    return pin;
-}
+//-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+//
+//    NSString *identifier = @"MyPin";
+//    MKPinAnnotationView *pin = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+//    
+//    //ピンがなければピンをつくる
+//    if(pin == nil){
+//        pin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:identifier];
+//        pin.animatesDrop = YES;
+//        pin.pinColor = MKPinAnnotationColorRed;
+//        pin.canShowCallout = YES;
+//    }
+//
+//    return pin;
+//}
 
 
 //ピンをさわったときによばれるメソッド。
@@ -504,22 +496,17 @@
     }
 }
 
-//アクセサリーが押された時のイベントだお
+//アクセサリーが押された時のイベント
 -(void) mapView:(MKMapView *)mapView
     annotationView:(MKAnnotationView *)view
     calloutAccessoryControlTapped:(UIControl *)control{
     
-    NSLog(@"カメラがおされたお！");
     NSLog(@"%@",view.annotation);//view.annotationでどのアノテーションか判定できるらしい
     NSLog(@"title is : %@",view.annotation.title);
     
-//    NSLog(@"idnumb is : %d",view.annotation.idnumb);
-    
-    //ここで、セグエで渡すための値（ID)を変数に入れるようにする
-    //int DBNumb = ******;
-    
-    /* 最悪の場合、ここで読み込んだtitleをキーワードにしてDBからデータを取り出すことにする。。*/
-    
+    CameraViewController *cameraVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CameraVC"];
+    cameraVC.place_nameFromMainPage = view.annotation.title;
+    [self presentViewController:cameraVC animated:YES completion:nil];
 }
 
 @end
