@@ -161,6 +161,17 @@
 			name = temppics;
 			sourceTree = "<group>";
 		};
+		180FBC9F192410A600AFD3AC /* notUseFIles */ = {
+			isa = PBXGroup;
+			children = (
+				189D4B0F191FBAA600498178 /* Weather.h */,
+				189D4B10191FBAA600498178 /* Weather.m */,
+				189D4B0A191F9C8F00498178 /* WantsToGoListViewController.h */,
+				189D4B0B191F9C8F00498178 /* WantsToGoListViewController.m */,
+			);
+			name = notUseFIles;
+			sourceTree = "<group>";
+		};
 		189D4AF1191D537F00498178 /* DataBaseFolder */ = {
 			isa = PBXGroup;
 			children = (
@@ -232,6 +243,8 @@
 				87AC9671191CF98400C69813 /* AppDelegate.h */,
 				87AC9672191CF98400C69813 /* AppDelegate.m */,
 				87AC9674191CF98400C69813 /* Main.storyboard */,
+				87522D33192082E400334492 /* CameraViewController.h */,
+				87522D34192082E400334492 /* CameraViewController.m */,
 				F62A87F7192097FF001BBDDB /* CustomAnnotation.h */,
 				F62A87F8192097FF001BBDDB /* CustomAnnotation.m */,
 				F6204BD51922F31400E4B896 /* CustomAnnotationView.h */,
@@ -240,8 +253,6 @@
 				F6204BD81922F68300E4B896 /* MapView.h */,
 				F6204BD91922F68300E4B896 /* MapView.m */,
 				87AC9678191CF98400C69813 /* ViewController.m */,
-				189D4B0A191F9C8F00498178 /* WantsToGoListViewController.h */,
-				189D4B0B191F9C8F00498178 /* WantsToGoListViewController.m */,
 				180E0C7B1921BEFB00399554 /* SearchListViewController.h */,
 				180E0C7C1921BEFB00399554 /* SearchListViewController.m */,
 				F66BEDC219206FF7000E60E8 /* CollectionCell.h */,
@@ -252,10 +263,9 @@
 				F66BEDC019206F92000E60E8 /* AlbumViewController.m */,
 				87CB77E01922FECA00F2AFDC /* IndividualAlbumViewController.h */,
 				87CB77E11922FECA00F2AFDC /* IndividualAlbumViewController.m */,
-				189D4B0F191FBAA600498178 /* Weather.h */,
-				189D4B10191FBAA600498178 /* Weather.m */,
-				180E0C831921E92900399554 /* temppics */,
 				189D4AF1191D537F00498178 /* DataBaseFolder */,
+				180FBC9F192410A600AFD3AC /* notUseFIles */,
+				180E0C831921E92900399554 /* temppics */,
 				87AC967A191CF98400C69813 /* Images.xcassets */,
 				87AC9669191CF98300C69813 /* Supporting Files */,
 			);

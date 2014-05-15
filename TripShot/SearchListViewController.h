@@ -10,8 +10,8 @@
 
 @interface SearchListViewController : UITableViewController<UISearchDisplayDelegate,UISearchBarDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *TableView;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchField;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchField;
 - (IBAction)cancelButtonTapped:(id)sender;
-- (IBAction)addButtonTapped:(id)sender;
+//- (IBAction)addButtonTapped:(id)sender;
 
 @end

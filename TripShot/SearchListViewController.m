@@ -15,10 +15,13 @@
 
 @property NSMutableArray *items;
 @property NSMutableArray *nameArray;
+@property NSMutableArray *locationArray;
+@property NSMutableArray *addressArray;
 
 @end
 
 @implementation SearchListViewController{
+    
 }
 
 NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9MmM-";
@@ -52,6 +55,8 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 -(void)getJsonFromWord:(NSString *)word{
     
     _nameArray = [[NSMutableArray alloc]init]; //店名一覧格納
+    _locationArray = [[NSMutableArray alloc]init]; //緯度経度格納
+    _addressArray = [[NSMutableArray alloc]init]; //表示住所格納
     
     // UTF-8でエンコード
     NSString *encodedString = [word stringByAddingPercentEscapesUsingEncoding:
@@ -59,6 +64,11 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     
     NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json",APIKEY,encodedString];
     
+/*現在地に近い順でソートする準備 メソッドに引数２つ(nowLatとnowLon）追加してする
+    NSString *nowLat;//現在地の緯度
+    NSString *nowLon;//現在地の経度
+    NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json&lat=%@&lon=%@&sort=geo",APIKEY,encodedString,nowLat,nowLon];
+*/
     
     NSURL *url = [NSURL URLWithString:path];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -76,15 +86,37 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
         
         //NSDictionaryを利用して、必要なデータを取得する
         NSArray *arrayResult = [dic objectForKey:@"Feature"];
+        
         for(int i = 0 ; i < arrayResult.count ; i++){
-            NSDictionary *resultDic = [arrayResult objectAtIndex:i]; //いっこめ、ここだと広見店の情報だけがはいる
-            NSString *temp1 = [resultDic objectForKey:@"Name"];
             
-            [_nameArray addObject:temp1];
+            NSDictionary *resultDic = [arrayResult objectAtIndex:i];
             
+            //表示させる地点名
+            NSString *storeName = [resultDic objectForKey:@"Name"];
+            [_nameArray addObject:storeName];
+            
+            //緯度経度情報
+            NSMutableDictionary *tempgeomerty = [resultDic objectForKey:@"Geometry"];
+            NSString *geometry = [tempgeomerty objectForKey:@"Coordinates"];
+            [_locationArray addObject:geometry];
+            
+
+            //緯度経度を２つに分割する
+            NSArray *locations = [geometry componentsSeparatedByString:@","];
+            NSString *lon1 = locations[0];
+            NSString *lat1 = locations[1];
+            double lon2 = lon1.doubleValue;
+            double lat2 = lat1.doubleValue;
+            //住所に変換
+            TSDataBase *db = [[TSDataBase alloc]init];
+            NSString *address = [db getAddressFromLat:lat2 AndLot:lon2];
+            [_addressArray addObject:address];
+
         }
         
-        NSLog(@"resultArray : %@",_nameArray);//店名一覧。
+        NSLog(@"result NameArray : %@",_nameArray);//店名一覧。
+        NSLog(@"result locationArray : %@",_locationArray);//NSStringで（lat,lot)となっている。
+        NSLog(@"result addressArray : %@",_addressArray);
         
     }else{
         
@@ -117,12 +149,70 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
+//    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = _nameArray[indexPath.row];
+    cell.detailTextLabel.text = _addressArray[indexPath.row];
+
     return cell;
 }
 
+
+//セルタップ時に呼び出される
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    //必要な情報取得
+    NSString *name = [_nameArray objectAtIndex:indexPath.row];
+    NSString *location = [_locationArray objectAtIndex:indexPath.row];
+
+    NSLog(@"ちゃんと緯度経度表示されるかな：%@",location);
+    
+    //緯度経度を２つに分割する
+    NSArray *locations = [location componentsSeparatedByString:@","];
+    NSString *lon1 = locations[0];
+    NSString *lat1 = locations[1];
+    double lon2 = lon1.doubleValue;
+    double lat2 = lat1.doubleValue;
+    
+    //DBにデータを追加
+    TSDataBase *db = [[TSDataBase alloc]init];
+    [db createDBDataFromLat:lat2 andLot:lon2 andTitle:name];
+    
+    //アラート表示
+    NSString *message = [NSString stringWithFormat:@"行きたいところに%@を追加しました",name];
+    UIAlertView *alert =
+    [[UIAlertView alloc]initWithTitle:@"おしらせ"
+                              message:message
+                             delegate:nil
+                    cancelButtonTitle:nil
+                    otherButtonTitles:@"OK", nil];
+    [alert show];
+
+//画面を一旦クリアする
+    _nameArray = nil;
+    _addressArray = nil;
+    _locationArray = nil;
+    
+    [_TableView reloadData];
+
+}
+
+
+//入力開始時
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+
+    _searchField.text = nil;
+    
+}
+
+//サーチボタンタップ時に呼ばれる
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    
+    NSString *word = _searchField.text;
+    [_searchField resignFirstResponder];
+    [self getJsonFromWord:word];
+    [_TableView reloadData];
+    
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -142,25 +232,11 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
 */
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 /*
 #pragma mark - Navigation
@@ -173,25 +249,23 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 }
 */
 
+
+
 - (IBAction)cancelButtonTapped:(id)sender {
-        [self dismissViewControllerAnimated:YES completion:NULL];
-}
 
-- (IBAction)addButtonTapped:(id)sender {
-    TSDataBase *db = [[TSDataBase alloc]init];
-//    [db makeDatabase];
-    [db createDBData];
-    
-    [self.tableView reloadData];
-}
-
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{//サーチボタンタップ時に呼ばれる
-
-    NSString *word = _searchField.text;
-    [_searchField resignFirstResponder];
-    [self getJsonFromWord:word];
-    [_TableView reloadData];//テーブルビューを更新
+    [self dismissViewControllerAnimated:YES completion:NULL];
 
 }
+
+
+////これいるんかな？いらん気がするので一旦消す。
+//- (IBAction)addButtonTapped:(id)sender {
+//    TSDataBase *db = [[TSDataBase alloc]init];
+////    [db makeDatabase];
+//    [db createDBData];
+//
+//    [_TableView reloadData];
+//}
+
 
 @end
