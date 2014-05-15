@@ -313,7 +313,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="QHG-Tg-gNY"/>
         <segue reference="RBS-Fe-Fdj"/>
-        <segue reference="URt-RW-gzG"/>
     </inferredMetricsTieBreakers>
 </document>
