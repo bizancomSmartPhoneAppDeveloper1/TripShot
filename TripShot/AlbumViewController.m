@@ -13,6 +13,7 @@
 
 @interface AlbumViewController ()
 {
+    UIImageView *imageViewBackA;
     NSMutableArray *picture;
     NSMutableArray *idarray;
     NSMutableArray *placeName;
@@ -61,7 +62,9 @@
     
     //配列のいっこめをボタンにするため仮画像追加
     [placeName insertObject:@"追加" atIndex:0];
-    [picture insertObject:@"pic1.png" atIndex:0];
+    [picture insertObject:@"icon_1r_192.png" atIndex:0];
+    
+    [self viewBackground];
     
 }
 
@@ -139,6 +142,24 @@
     IndividualAlbumViewController *VC = [segue destinationViewController];
     VC.idFromMainPage = idnumb;
     }
+}
+
+-(void)viewBackground{
+    //スクリーンサイズの取得
+    CGRect screenSize = [[UIScreen mainScreen] bounds];
+    CGFloat width = screenSize.size.width;
+    CGFloat height = screenSize.size.height;
+    CGRect rect = CGRectMake(0, 0, width, height);
+    
+    UIImage *imageData = [UIImage imageNamed:@"bright_img140514103609.jpg"];
+    
+    /* 背景画像の準備*/
+    imageViewBackA = [[UIImageView alloc]initWithFrame:rect];
+    imageViewBackA.image = imageData;
+    imageViewBackA.contentMode = UIViewContentModeScaleToFill;
+    [self.view addSubview:imageViewBackA];
+    [self.view sendSubviewToBack:imageViewBackA];
+
 }
 
 @end
