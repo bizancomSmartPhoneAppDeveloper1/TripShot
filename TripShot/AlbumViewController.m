@@ -94,7 +94,12 @@
         //[self presentViewController:indiAVC animated:YES completion:nil];
         //[self presentViewController:indiAVC animated:YES completion:nil];
         
-        [self performSegueWithIdentifier:@"albumToIndividualAlbum" sender:self];//これを使う（石井）
+//        [self performSegueWithIdentifier:@"albumToIndividualAlbum" sender:self];//これを使う（石井）
+
+        IndividualAlbumViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
+        indiAVC.idFromMainPage = idnumb;
+        [self presentViewController:indiAVC animated:YES completion:nil];
+    
     }
 
 }
@@ -141,16 +146,6 @@
 
 
 #pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if([[segue identifier] isEqualToString:@"albumToIndividualAlbum"]){
-        NSLog(@"idnumb=%d",idnumb);
-    IndividualAlbumViewController *VC = [segue destinationViewController];
-    VC.idFromMainPage = idnumb;
-        
-    }
-}
 
 -(void)viewBackground{
     //スクリーンサイズの取得
