@@ -10,7 +10,7 @@
 #import "ViewController.h"
 #import "CustomAnnotation.h"
 #import "TSDataBase.h"
-//#import "TSPointAnnotation.h"
+#import "TSPointAnnotation.h"
 
 @interface ViewController ()
 {
