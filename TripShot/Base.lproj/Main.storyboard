@@ -100,6 +100,16 @@
                                 <rect key="frame" x="25" y="26" width="271" height="184"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TYS-Zf-wEe">
+                                <rect key="frame" x="25" y="416" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="戻る">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="KQW-ax-y4I" kind="modal" id="5gu-iR-pQ0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -109,7 +119,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LjG-cG-6fc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="458" y="1118"/>
+            <point key="canvasLocation" x="-256" y="740"/>
         </scene>
         <!--Camera View Controller - Item-->
         <scene sceneID="dfN-JF-inY">
@@ -313,7 +323,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="RBS-Fe-Fdj"/>
-        <segue reference="URt-RW-gzG"/>
+        <segue reference="5gu-iR-pQ0"/>
+        <segue reference="QHG-Tg-gNY"/>
     </inferredMetricsTieBreakers>
 </document>

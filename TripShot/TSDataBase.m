@@ -468,7 +468,7 @@
         i++;
     }
     
-    NSLog(@"resultArray=%@",[resultArray description]);//確認表示
+    //NSLog(@"resultArray=%@",[resultArray description]);//確認表示
     [database close];
     return resultArray;
 }
