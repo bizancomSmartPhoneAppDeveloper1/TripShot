@@ -10,7 +10,7 @@
 #import "ViewController.h"
 #import "CustomAnnotation.h"
 #import "TSDataBase.h"
-#import "TSPointAnnotation.h"
+//#import "TSPointAnnotation.h"
 
 @interface ViewController ()
 {
@@ -55,7 +55,7 @@
     [self.locationManager startMonitoringForRegion:distCircularRegion];
     
     //DBからピンぶっさしてます
-    [self markingPinFromList];
+    //[self markingPinFromList];
     _mapView.delegate = self;
 }
 
@@ -405,6 +405,7 @@
 #pragma mark -
 #pragma mark ふじわら追加メソッド
 
+/*
 //DBからデータを読み込んで指定のピンをとりあえず刺しまくるメソッド まだデータの受け渡し部分未実装
 -(void)markingPinFromList{
     
@@ -459,6 +460,7 @@
     }
     
 }
+ */
 
 //ピンをさわったときによばれるメソッド。
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
