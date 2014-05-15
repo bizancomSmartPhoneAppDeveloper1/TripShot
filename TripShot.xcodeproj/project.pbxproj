@@ -128,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6204BCC19225C3F00E4B896 /* QuartzCore.framework in Frameworks */,
 				F66BEDBE19206029000E60E8 /* MapKit.framework in Frameworks */,
 				189D4B0E191FBA8900498178 /* CoreLocation.framework in Frameworks */,
 				189D4AF6191E105000498178 /* libsqlite3.0.dylib in Frameworks */,
@@ -225,6 +226,7 @@
 		87AC9661191CF98300C69813 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F6204BCB19225C3F00E4B896 /* QuartzCore.framework */,
 				F66BEDBD19206029000E60E8 /* MapKit.framework */,
 				189D4B0D191FBA8800498178 /* CoreLocation.framework */,
 				189D4AF5191E105000498178 /* libsqlite3.0.dylib */,
@@ -248,7 +250,11 @@
 				87AC9674191CF98400C69813 /* Main.storyboard */,
 				F62A87F7192097FF001BBDDB /* CustomAnnotation.h */,
 				F62A87F8192097FF001BBDDB /* CustomAnnotation.m */,
+				F6204BD51922F31400E4B896 /* CustomAnnotationView.h */,
+				F6204BD61922F31400E4B896 /* CustomAnnotationView.m */,
 				87AC9677191CF98400C69813 /* ViewController.h */,
+				F6204BD81922F68300E4B896 /* MapView.h */,
+				F6204BD91922F68300E4B896 /* MapView.m */,
 				87AC9678191CF98400C69813 /* ViewController.m */,
 				180E0C7B1921BEFB00399554 /* SearchListViewController.h */,
 				180E0C7C1921BEFB00399554 /* SearchListViewController.m */,
@@ -390,6 +396,7 @@
 				F62A87F619208E93001BBDDB /* image4.jpg in Resources */,
 				87AC966D191CF98400C69813 /* InfoPlist.strings in Resources */,
 				87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */,
+				F6204BD4192263E600E4B896 /* InfoPlace.xib in Resources */,
 				87AC9676191CF98400C69813 /* Main.storyboard in Resources */,
 				87522D3E1920E88900334492 /* camera.png in Resources */,
 			);
@@ -420,9 +427,11 @@
 				189D4B02191E122500498178 /* FMDatabase.m in Sources */,
 				180E0C7D1921BEFB00399554 /* SearchListViewController.m in Sources */,
 				F62A87F9192097FF001BBDDB /* CustomAnnotation.m in Sources */,
+				F6204BDA1922F68300E4B896 /* MapView.m in Sources */,
 				189D4B04191E122500498178 /* FMDatabasePool.m in Sources */,
 				189D4B06191E122500498178 /* FMResultSet.m in Sources */,
 				189D4B09191F7AFA00498178 /* TSDataBase.m in Sources */,
+				F6204BCF19225D9200E4B896 /* NSObject+Extension.m in Sources */,
 				F66BEDC119206F92000E60E8 /* AlbumViewController.m in Sources */,
 				189D4B0C191F9C8F00498178 /* WantsToGoListViewController.m in Sources */,
 				87AC966F191CF98400C69813 /* main.m in Sources */,
@@ -558,7 +567,7 @@
 				GCC_PREFIX_HEADER = "TripShot/TripShot-Prefix.pch";
 				INFOPLIST_FILE = "TripShot/TripShot-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AE50531D-A475-4206-9573-EE03EC2F70FE";
+				PROVISIONING_PROFILE = "DC084357-8CD3-4CE7-A790-4A5A5F8B2445";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -574,7 +583,7 @@
 				GCC_PREFIX_HEADER = "TripShot/TripShot-Prefix.pch";
 				INFOPLIST_FILE = "TripShot/TripShot-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AE50531D-A475-4206-9573-EE03EC2F70FE";
+				PROVISIONING_PROFILE = "DC084357-8CD3-4CE7-A790-4A5A5F8B2445";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

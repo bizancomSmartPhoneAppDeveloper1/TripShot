@@ -84,8 +84,11 @@
         //サーチのリストビューに飛ぶ
         NSLog(@"そのほかがおされましたぜ %d個目",indexPath.row);
         idnumb = (int)idarray[indexPath.row];
+        
         UIViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
         [self presentViewController:indiAVC animated:YES completion:nil];
+        
+        //[self performSegueWithIdentifier:@"albumToIndividualAlbum" sender:self];
     }
 
 }
@@ -136,8 +139,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([[segue identifier] isEqualToString:@"albumToIndividualAlbum"]){
+        NSLog(@"idnumb=%d",idnumb);
     IndividualAlbumViewController *VC = [segue destinationViewController];
     VC.idFromMainPage = idnumb;
+        
     }
 }
 

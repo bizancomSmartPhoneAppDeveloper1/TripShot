@@ -7,28 +7,28 @@
 //
 
 #import "CustomAnnotation.h"
+#import "NSObject+Extension.h"
 
 @implementation CustomAnnotation
-@synthesize coordinate;
-@synthesize annotationTitle;
-@synthesize annotationSubtitle;
 
-- (NSString *)title {
-    return annotationTitle;
-}
-
-- (NSString *)subtitle {
-    return annotationSubtitle;
-}
-
-//取得した位置情報を代入することにより初期化する関数
-- (id)initWithLocationCoordinate:(CLLocationCoordinate2D) _coordinate
-                           title:(NSString *)_annotationTitle subtitle:(NSString *)_annotationSubtitle
+-(id)initWithCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    self.coordinate = _coordinate; //取得した位置情報をCLLocationCoordinate2Dクラスのcoordinateプロパティへ代入する
-    self.annotationTitle = _annotationTitle;
-    self.annotationSubtitle = _annotationSubtitle;
+    self = [super init];
+    if(self)
+    {
+        self.coordinate = coordinate;
+        self.annotationTitle = @"Sample\nLocation";
+        self.annotationSubtitle = @"";
+        self.cameraName = @"image1.jpg";
+        self.mainColor = MYCOLOR(0xFF9966, 1.0);
+    }
     return self;
 }
+
+- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate
+{
+    _coordinate = newCoordinate;
+}
+
 
 @end

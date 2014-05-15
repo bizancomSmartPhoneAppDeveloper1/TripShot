@@ -9,19 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
+
 @interface CustomAnnotation : NSObject<MKAnnotation>
-{
-    CLLocationCoordinate2D coodinate;
-    NSString *annotationTitle;
-    NSString *annotationSubtitle;
-}
 
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
-@property (nonatomic, retain) NSString *annotationTitle;
-@property (nonatomic, retain) NSString *annotationSubtitle;
-- (id)initWithLocationCoordinate:(CLLocationCoordinate2D) _coordinate
-                           title:(NSString *)_annotationTitle subtitle:(NSString *)_annotationannSubtitle;
-- (NSString *)title;
-- (NSString *)subtitle;
+@property (nonatomic, copy) NSString *annotationTitle;
+@property (nonatomic, copy) NSString *annotationSubtitle;
+@property (nonatomic, copy) NSString *cameraName;
+@property (nonatomic, copy) UIColor *mainColor;
+
+-(id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;
+-(void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
 
 @end
