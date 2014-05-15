@@ -325,5 +325,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="NCH-Mv-HYK"/>
         <segue reference="RBS-Fe-Fdj"/>
+        <segue reference="NCH-Mv-HYK"/>
     </inferredMetricsTieBreakers>
 </document>
