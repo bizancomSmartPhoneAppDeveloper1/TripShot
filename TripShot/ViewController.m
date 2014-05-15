@@ -36,7 +36,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
+
     self.locationManager = [[CLLocationManager alloc]init];
     self.locationManager.delegate = self;
        // [self.locationManager startUpdatingLocation];
@@ -79,8 +79,8 @@
     //ピンの表示座標
     
 
-    self.annotation = [[CustomAnnotation alloc] initWithCoordinate:CLLocationCoordinate2DMake(34.075222, 134.554028)];
-    [self.mapView addAnnotation:self.annotation];
+   // self.annotation = [[CustomAnnotation alloc] initWithCoordinate:CLLocationCoordinate2DMake(34.075222, 134.554028)];
+    //[self.mapView addAnnotation:self.annotation];
     
 //    //マップRegion
 //    //MKCoordinateRegion region = self.mapView.region;
@@ -99,23 +99,24 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
 
 }
--(MKAnnotationView*)mapView:(MKMapView*)mapView
-          viewForAnnotation:(id)annotation{
-    
-    static NSString *PinIdentifier = @"Pin";
-    MKPinAnnotationView *pav =
-    (MKPinAnnotationView*)
-    [self.mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
-    if(pav == nil){
-        pav = [[MKPinAnnotationView alloc]
-                initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
-        pav.animatesDrop = YES;  // アニメーションをする
-        pav.pinColor = MKPinAnnotationColorPurple;  // ピンの色を紫にする
-        pav.canShowCallout = YES;  // ピンタップ時にコールアウトを表示する
-    }
-    return pav;
-    
-}
+
+//-(MKAnnotationView*)mapView:(MKMapView*)mapView
+//          viewForAnnotation:(id)annotation{
+//    
+//    static NSString *PinIdentifier = @"Pin";
+//    MKPinAnnotationView *pav =
+//    (MKPinAnnotationView*)
+//    [self.mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
+//    if(pav == nil){
+//        pav = [[MKPinAnnotationView alloc]
+//                initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
+//        pav.animatesDrop = YES;  // アニメーションをする
+//        pav.pinColor = MKPinAnnotationColorPurple;  // ピンの色を紫にする
+//        pav.canShowCallout = YES;  // ピンタップ時にコールアウトを表示する
+//    }
+//    return pav;
+//    
+//}
 
 //- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 //{
@@ -333,15 +334,17 @@
 
 // 進入イベント 通知
 -(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+   
     for (int r = 0; r < titleList.count; r++)
     {
         // 入った。
         if ([region.identifier isEqualToString:[NSString stringWithFormat:@"%@",titleList[r]]]) {
             NSLog(@"ジオフェンス領域%@に入りました",titleList[r]);
+            [self LocalNotificationStart];
+
         }
         //バックグラウンドからの通知
-        [self LocalNotificationStart];
-
+       
     }
 }
 
@@ -389,7 +392,7 @@
     
     notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:3]; //3秒後にメッセ時が表示されるよう設定
     notification.repeatInterval = NSCalendarUnitDay;  //毎日通知させる設定
-    notification.alertBody = @"ジオフェンス領域に入りました";  //メッセージの内容
+    notification.alertBody = [NSString stringWithFormat:@"行きたい場所が近くです＾＾"];  //メッセージの内容
     notification.timeZone = [NSTimeZone defaultTimeZone];  //タイムゾーンの設定 その端末にあるローケーションに合わせる
     notification.soundName = UILocalNotificationDefaultSoundName;  //効果音
     notification.applicationIconBadgeNumber = 1;  //通知された時のアイコンバッジの右肩の数字
