@@ -20,13 +20,13 @@
 		189D4B0C191F9C8F00498178 /* WantsToGoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4B0B191F9C8F00498178 /* WantsToGoListViewController.m */; };
 		189D4B0E191FBA8900498178 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4B0D191FBA8800498178 /* CoreLocation.framework */; };
 		189D4B11191FBAA600498178 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4B10191FBAA600498178 /* Weather.m */; };
-		18F4B7A7192464D200F4C8BB /* bright_img140514103609.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7A6192464D200F4C8BB /* bright_img140514103609.jpg */; };
-		18F4B7A9192464EB00F4C8BB /* kinari_img140514103609.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7A8192464EB00F4C8BB /* kinari_img140514103609.jpg */; };
-		18F4B7AB1924651700F4C8BB /* subtitle1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7AA1924651700F4C8BB /* subtitle1.png */; };
-		18F4B7AD1924652600F4C8BB /* subtitle2.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7AC1924652600F4C8BB /* subtitle2.png */; };
 		18F4B7AF1924653D00F4C8BB /* cameraaka.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7AE1924653D00F4C8BB /* cameraaka.png */; };
 		18F4B7B11924654500F4C8BB /* camerakon.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7B01924654500F4C8BB /* camerakon.png */; };
-		18F4B7B51924A0CE00F4C8BB /* icon_1r_192.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7B41924A0CE00F4C8BB /* icon_1r_192.png */; };
+		18F4B7B71924A3F700F4C8BB /* subtitle2.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7B61924A3F700F4C8BB /* subtitle2.png */; };
+		18F4B7B91924A41F00F4C8BB /* subtitle1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7B81924A41F00F4C8BB /* subtitle1.png */; };
+		18F4B7BB1924A42D00F4C8BB /* kinari_img140514103609.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7BA1924A42D00F4C8BB /* kinari_img140514103609.jpg */; };
+		18F4B7BD1924A43A00F4C8BB /* bright_img140514103609.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7BC1924A43A00F4C8BB /* bright_img140514103609.jpg */; };
+		18F4B7BF1924A45B00F4C8BB /* icon_1r_192.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7BE1924A45B00F4C8BB /* icon_1r_192.png */; };
 		87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */; };
 		87522D3E1920E88900334492 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 87522D3D1920E88900334492 /* camera.png */; };
 		87AC9663191CF98300C69813 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9662191CF98300C69813 /* Foundation.framework */; };
@@ -89,13 +89,13 @@
 		189D4B0D191FBA8800498178 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		189D4B0F191FBAA600498178 /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Weather.h; path = ../Weather.h; sourceTree = "<group>"; };
 		189D4B10191FBAA600498178 /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Weather.m; path = ../Weather.m; sourceTree = "<group>"; };
-		18F4B7A6192464D200F4C8BB /* bright_img140514103609.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bright_img140514103609.jpg; path = "../../粋画像/bright_img140514103609.jpg"; sourceTree = "<group>"; };
-		18F4B7A8192464EB00F4C8BB /* kinari_img140514103609.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = kinari_img140514103609.jpg; path = "../../粋画像/kinari_img140514103609.jpg"; sourceTree = "<group>"; };
-		18F4B7AA1924651700F4C8BB /* subtitle1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = subtitle1.png; path = "../../粋画像/subtitle1.png"; sourceTree = "<group>"; };
-		18F4B7AC1924652600F4C8BB /* subtitle2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = subtitle2.png; path = "../../粋画像/subtitle2.png"; sourceTree = "<group>"; };
 		18F4B7AE1924653D00F4C8BB /* cameraaka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cameraaka.png; path = "../../粋画像/cameraaka.png"; sourceTree = "<group>"; };
 		18F4B7B01924654500F4C8BB /* camerakon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camerakon.png; path = "../../粋画像/camerakon.png"; sourceTree = "<group>"; };
-		18F4B7B41924A0CE00F4C8BB /* icon_1r_192.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_1r_192.png; path = "../../粋画像/icon_1r_192.png"; sourceTree = "<group>"; };
+		18F4B7B61924A3F700F4C8BB /* subtitle2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = subtitle2.png; sourceTree = "<group>"; };
+		18F4B7B81924A41F00F4C8BB /* subtitle1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = subtitle1.png; sourceTree = "<group>"; };
+		18F4B7BA1924A42D00F4C8BB /* kinari_img140514103609.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = kinari_img140514103609.jpg; sourceTree = "<group>"; };
+		18F4B7BC1924A43A00F4C8BB /* bright_img140514103609.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bright_img140514103609.jpg; sourceTree = "<group>"; };
+		18F4B7BE1924A45B00F4C8BB /* icon_1r_192.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_1r_192.png; sourceTree = "<group>"; };
 		87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "free-textures-japanese-style-06.jpg"; sourceTree = "<group>"; };
 		87522D3D1920E88900334492 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		87AC965F191CF98300C69813 /* TripShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,13 +208,13 @@
 		87522D3A19208F4A00334492 /* pics */ = {
 			isa = PBXGroup;
 			children = (
-				18F4B7B41924A0CE00F4C8BB /* icon_1r_192.png */,
+				18F4B7BE1924A45B00F4C8BB /* icon_1r_192.png */,
 				18F4B7B01924654500F4C8BB /* camerakon.png */,
 				18F4B7AE1924653D00F4C8BB /* cameraaka.png */,
-				18F4B7AC1924652600F4C8BB /* subtitle2.png */,
-				18F4B7AA1924651700F4C8BB /* subtitle1.png */,
-				18F4B7A8192464EB00F4C8BB /* kinari_img140514103609.jpg */,
-				18F4B7A6192464D200F4C8BB /* bright_img140514103609.jpg */,
+				18F4B7B61924A3F700F4C8BB /* subtitle2.png */,
+				18F4B7B81924A41F00F4C8BB /* subtitle1.png */,
+				18F4B7BA1924A42D00F4C8BB /* kinari_img140514103609.jpg */,
+				18F4B7BC1924A43A00F4C8BB /* bright_img140514103609.jpg */,
 				87522D3D1920E88900334492 /* camera.png */,
 				87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */,
 			);
@@ -399,22 +399,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				87AC967B191CF98400C69813 /* Images.xcassets in Resources */,
+				18F4B7BB1924A42D00F4C8BB /* kinari_img140514103609.jpg in Resources */,
+				18F4B7BF1924A45B00F4C8BB /* icon_1r_192.png in Resources */,
 				18F4B7B11924654500F4C8BB /* camerakon.png in Resources */,
-				18F4B7A9192464EB00F4C8BB /* kinari_img140514103609.jpg in Resources */,
+				18F4B7B71924A3F700F4C8BB /* subtitle2.png in Resources */,
 				18F4B7AF1924653D00F4C8BB /* cameraaka.png in Resources */,
 				180E0C821921E23000399554 /* pic1.png in Resources */,
 				F62A87F219208E83001BBDDB /* image2.jpg in Resources */,
-				18F4B7AB1924651700F4C8BB /* subtitle1.png in Resources */,
 				F62A87F019208E7D001BBDDB /* image1.jpg in Resources */,
 				F62A87F419208E8B001BBDDB /* image3.jpg in Resources */,
 				F62A87F619208E93001BBDDB /* image4.jpg in Resources */,
-				18F4B7B51924A0CE00F4C8BB /* icon_1r_192.png in Resources */,
 				87AC966D191CF98400C69813 /* InfoPlist.strings in Resources */,
-				18F4B7A7192464D200F4C8BB /* bright_img140514103609.jpg in Resources */,
-				18F4B7AD1924652600F4C8BB /* subtitle2.png in Resources */,
 				87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */,
 				87AC9676191CF98400C69813 /* Main.storyboard in Resources */,
+				18F4B7BD1924A43A00F4C8BB /* bright_img140514103609.jpg in Resources */,
 				87522D3E1920E88900334492 /* camera.png in Resources */,
+				18F4B7B91924A41F00F4C8BB /* subtitle1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
