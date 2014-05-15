@@ -305,6 +305,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="NCH-Mv-HYK"/>
+        <segue reference="RBS-Fe-Fdj"/>
+        <segue reference="URt-RW-gzG"/>
     </inferredMetricsTieBreakers>
 </document>
