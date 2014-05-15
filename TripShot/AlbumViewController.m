@@ -8,13 +8,15 @@
 
 #import "AlbumViewController.h"
 #import "CollectionCell.h"
+#import "IndividualAlbumViewController.h"
 #import "TSDataBase.h"
 
 @interface AlbumViewController ()
 {
     NSMutableArray *picture;
-//    NSMutableArray *date;
+    NSMutableArray *idarray;
     NSMutableArray *placeName;
+    int idnumb;
 }
 @end
 
@@ -55,11 +57,18 @@
  */
     placeName = DBData[1];
     picture = DBData[6];
+    idarray = DBData[0];
     
     //配列のいっこめをボタンにするため仮画像追加
     [placeName insertObject:@"追加" atIndex:0];
     [picture insertObject:@"pic1.png" atIndex:0];
     
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+
+
+
 }
 
 //クリックされたら呼ばれるメソッド
@@ -72,7 +81,11 @@
 
     }else{
         
+        //サーチのリストビューに飛ぶ
         NSLog(@"そのほかがおされましたぜ %d個目",indexPath.row);
+        idnumb = (int)idarray[indexPath.row];
+        UIViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
+        [self presentViewController:indiAVC animated:YES completion:nil];
     }
 
 }
@@ -100,9 +113,12 @@
     static NSString *CellIdentifier =@"Cell";
     CollectionCell *cell = [collectionView
                             dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+    if([picture[indexPath.item] isEqualToString:@"NODATA"]){
+        [[cell pictureView] setImage:[UIImage imageNamed:@"image1.jpg"]];
 
-    [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
-
+    }else{
+        [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
+    }
     [[cell pictureDate] setText:[placeName objectAtIndex:indexPath.item]];
 
     return cell;
@@ -114,15 +130,15 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if([[segue identifier] isEqualToString:@"albumToIndividualAlbum"]){
+    IndividualAlbumViewController *VC = [segue destinationViewController];
+    VC.idFromMainPage = idnumb;
+    }
 }
-*/
 
 @end
