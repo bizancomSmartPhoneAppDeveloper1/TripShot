@@ -36,7 +36,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
+
     self.locationManager = [[CLLocationManager alloc]init];
     self.locationManager.delegate = self;
        // [self.locationManager startUpdatingLocation];
@@ -79,8 +79,8 @@
     //ピンの表示座標
     
 
-    self.annotation = [[CustomAnnotation alloc] initWithCoordinate:CLLocationCoordinate2DMake(34.075222, 134.554028)];
-    [self.mapView addAnnotation:self.annotation];
+   // self.annotation = [[CustomAnnotation alloc] initWithCoordinate:CLLocationCoordinate2DMake(34.075222, 134.554028)];
+    //[self.mapView addAnnotation:self.annotation];
     
 //    //マップRegion
 //    //MKCoordinateRegion region = self.mapView.region;
@@ -336,15 +336,17 @@
 
 // 進入イベント 通知
 -(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+   
     for (int r = 0; r < titleList.count; r++)
     {
         // 入った。
         if ([region.identifier isEqualToString:[NSString stringWithFormat:@"%@",titleList[r]]]) {
             NSLog(@"ジオフェンス領域%@に入りました",titleList[r]);
-        }
-        //バックグラウンドからの通知
-        [self LocalNotificationStart];
+           
+            //バックグラウンドからの通知
+            [self LocalNotificationStart];
 
+        }
     }
 }
 
@@ -392,7 +394,7 @@
     
     notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:3]; //3秒後にメッセ時が表示されるよう設定
     notification.repeatInterval = NSCalendarUnitDay;  //毎日通知させる設定
-    notification.alertBody = @"ジオフェンス領域に入りました";  //メッセージの内容
+    notification.alertBody = [NSString stringWithFormat:@"行きたい場所が近くです＾＾"];  //メッセージの内容
     notification.timeZone = [NSTimeZone defaultTimeZone];  //タイムゾーンの設定 その端末にあるローケーションに合わせる
     notification.soundName = UILocalNotificationDefaultSoundName;  //効果音
     notification.applicationIconBadgeNumber = 1;  //通知された時のアイコンバッジの右肩の数字
@@ -437,7 +439,7 @@
     //緯度経度からアノテーションをさす（ふつうのやつです）
     CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(lat, lon);
 //    MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
-        TSPointAnnotation *pin = [[TSPointAnnotation alloc]init];
+    TSPointAnnotation *pin = [[TSPointAnnotation alloc]init];
     pin.coordinate = loc;
     pin.title = titleList[i];
     pin.subtitle = addressList[i];
