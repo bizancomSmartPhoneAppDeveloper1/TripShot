@@ -456,23 +456,6 @@
 }
 
 
-//-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
-//
-//    NSString *identifier = @"MyPin";
-//    MKPinAnnotationView *pin = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-//    
-//    //ピンがなければピンをつくる
-//    if(pin == nil){
-//        pin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:identifier];
-//        pin.animatesDrop = YES;
-//        pin.pinColor = MKPinAnnotationColorRed;
-//        pin.canShowCallout = YES;
-//    }
-//
-//    return pin;
-//}
-
-
 //ピンをさわったときによばれるメソッド。
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
 
