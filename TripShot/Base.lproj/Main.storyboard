@@ -203,6 +203,7 @@
                         <barButtonItem key="leftBarButtonItem" title="戻る" id="Chi-mi-v0X">
                             <connections>
                                 <action selector="cancelButtonTapped:" destination="dc9-mh-IFs" id="7zy-C3-8FR"/>
+                                <segue destination="KQW-ax-y4I" kind="modal" id="6EX-Ie-F5r"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -245,7 +246,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="recents" id="5cP-tI-SaA"/>
                     <connections>
-                        <outlet property="mapView" destination="Man-Q1-MmQ" id="YNx-GE-F49"/>
+                        <outlet property="mapView" destination="Man-Q1-MmQ" id="OUe-gd-sQX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

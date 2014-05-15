@@ -6,9 +6,11 @@
 //  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
 //
 
+#import <CoreLocation/CoreLocation.h>
 #import "ViewController.h"
 #import "CustomAnnotation.h"
 #import "TSDataBase.h"
+#import "TSPointAnnotation.h"
 
 @interface ViewController ()
 {
@@ -17,7 +19,14 @@
     double targetLongitude;
     double targetLatitude;
     CLRegion* distCircularRegion;
+    
+    NSMutableArray *titleList;
+    NSMutableArray *latList;
+    NSMutableArray *lonList;
+
 }
+
+@property (strong, nonatomic) CustomAnnotation *annotation;
 
 @end
 
@@ -30,7 +39,7 @@
     
     self.locationManager = [[CLLocationManager alloc]init];
     self.locationManager.delegate = self;
-    [self.locationManager startUpdatingLocation];
+       // [self.locationManager startUpdatingLocation];
     
     //位置情報が使えるか確認する
     [self locationAuth];
@@ -41,12 +50,13 @@
     //住所から緯度経度取得　とりあえず使わない
     //[self webAPI];
     //ジオフェンス作成
-    [self createGeofence];
+   // [self createGeofence];
     //到達点についた時に分かるようにジオフェンスをスタート
     [self.locationManager startMonitoringForRegion:distCircularRegion];
     
     //DBからピンぶっさしてます
     [self markingPinFromList];
+    _mapView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,6 +68,7 @@
 //位置情報が通知された時
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    
     //最新の位置情報を取り出す
     CLLocation *location = [locations lastObject];
     [self.mapView setCenterCoordinate:location.coordinate animated:YES];
@@ -65,21 +76,77 @@
     //現在地を地図表示
     MKCoordinateRegion region = MKCoordinateRegionMake([location coordinate], MKCoordinateSpanMake(0.01, 0.01));//現在地を地図の中心位置を表した値と、表示領域（地図縮尺）の値をMKCoordinateRegionクラスのインスタンスへ代入
     
-    //表示座標
-    CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(34.075222, 134.554028);
+    //ピンの表示座標
     
-    //ピン用アノテーションを生成
-    MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
-    pin.coordinate = loc; //ピンの座標
+
+    self.annotation = [[CustomAnnotation alloc] initWithCoordinate:CLLocationCoordinate2DMake(34.075222, 134.554028)];
+    [self.mapView addAnnotation:self.annotation];
     
+//    //マップRegion
+//    //MKCoordinateRegion region = self.mapView.region;
+//    region.center = self.annotation.coordinate;
+//    region.span.latitudeDelta = 0.001;
+//    region.span.longitudeDelta = 0.001;
+    [self.mapView setRegion:region animated:YES];
     
+    //ジオフェンス作成
+    //[self createGeofence];
+    //到達点についた時に分かるようにジオフェンスをスタート
+    [self.locationManager startMonitoringForRegion:distCircularRegion];
     
-    //ピンの設定
-    [self.mapView addAnnotation:pin];
-    
-    [self.mapView setRegion:region];//地図表示
+    //60秒に一回ロケーションマネージャを立ち上げる
+    [self.locationManager stopUpdatingLocation];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
 
 }
+
+/*
+-(MKAnnotationView*)mapView:(MKMapView*)mapView
+          viewForAnnotation:(id)annotation{
+    
+    static NSString *PinIdentifier = @"Pin";
+    MKPinAnnotationView *pav =
+    (MKPinAnnotationView*)
+    [self.mapView dequeueReusableAnnotationViewWithIdentifier:PinIdentifier];
+    if(pav == nil){
+        pav = [[MKPinAnnotationView alloc]
+                initWithAnnotation:annotation reuseIdentifier:PinIdentifier];
+        pav.animatesDrop = YES;  // アニメーションをする
+        pav.pinColor = MKPinAnnotationColorPurple;  // ピンの色を紫にする
+        pav.canShowCallout = YES;  // ピンタップ時にコールアウトを表示する
+    }
+    return pav;
+    
+}
+ */
+
+//- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+//{
+//    //Current Location Annotation
+//    if([annotation isKindOfClass:[MKUserLocation class]])
+//    {
+//        return nil;
+//    }
+//    //CustomAnnotation
+//    else if([annotation isKindOfClass:[CustomAnnotationView class]])
+//    {
+//        static NSString *PinCustomID = @"CustomIdentifier";
+//        CustomAnnotationView *pav = (CustomAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:PinCustomID];
+//        if(pav == nil)
+//        {
+//            pav = [[CustomAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:PinCustomID];
+//            pav.canShowCallout = YES;
+//            pav.pinColor = MKPinAnnotationColorGreen;
+//            pav.animatesDrop = YES;
+//        }
+//        else
+//        {
+//            pav.annotation = annotation;
+//        }
+//        return pav;
+//    }
+//    return nil;
+//}
 
 - (void)locationAuth{
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
@@ -126,21 +193,21 @@
     
 }
 
-// 位置情報更新関数
-- (void)locationManager:(CLLocationManager *)manager//引数managerはシステムからの情報か？CLLocationManagerクラスにある位置情報を取得するlocationManagerメソッド
-    didUpdateToLocation:(CLLocation *)newLocation
-           fromLocation:(CLLocation *)oldLocation {
-    
-    //更新された緯度・経度を出力
-    NSLog(@"didUpdateToLocation latitude=%f, longitude=%f",
-          [newLocation coordinate].latitude,//didUpdateToLocationクラスのcoordinateプロパティに緯度情報を代入
-          [newLocation coordinate].longitude);//didUpdateToLocationクラスのcoordinateプロパティに経度情報を代入
-    
-    longitude = [newLocation coordinate].longitude;
-    latitude = [newLocation coordinate].latitude;
-    
-    
-    
+//// 位置情報更新関数
+//- (void)locationManager:(CLLocationManager *)manager//引数managerはシステムからの情報か？CLLocationManagerクラスにある位置情報を取得するlocationManagerメソッド
+//    didUpdateToLocation:(CLLocation *)newLocation
+//           fromLocation:(CLLocation *)oldLocation {
+//    
+//    //更新された緯度・経度を出力
+//    NSLog(@"didUpdateToLocation latitude=%f, longitude=%f",
+//          [newLocation coordinate].latitude,//didUpdateToLocationクラスのcoordinateプロパティに緯度情報を代入
+//          [newLocation coordinate].longitude);//didUpdateToLocationクラスのcoordinateプロパティに経度情報を代入
+//    
+//    longitude = [newLocation coordinate].longitude;
+//    latitude = [newLocation coordinate].latitude;
+//    
+//    
+//    
 //    //現在地を地図表示
 //    MKCoordinateRegion region = MKCoordinateRegionMake([newLocation coordinate], MKCoordinateSpanMake(0.04, 0.04));//現在地を地図の中心位置を表した値と、表示領域（地図縮尺）の値をMKCoordinateRegionクラスのインスタンスへ代入
 //    [self.mapView setRegion:region];//地図表示
@@ -156,12 +223,7 @@
 //                                                   title:@"Target"
 //                                                subtitle:@""]];
 //    
-    //60秒に一回ロケーションマネージャを立ち上げる
-    [self.locationManager stopUpdatingLocation];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
-    
-    
-}
+//}
 
 // 測位失敗時や、5位置情報の利用をユーザーが「不許可」とした場合などに呼ばれる関数
 - (void)locationManager:(CLLocationManager *)manager
@@ -255,44 +317,50 @@
     }
 }
 
-//ジオフェンス関数
--(void)createGeofence
-{
-    
-    //DBから読み込んだ緯度経度情報が必要
-    targetLatitude = 34.070162;//一時的にトモニプラザの緯度を設定
-    NSLog(@"targetLatitude=%f",targetLatitude);
-    targetLongitude =134.556246;//一時的にトモニプラザの経度を設定
-    NSLog(@"targetLongitude=%f",targetLongitude);
-    CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(targetLatitude, targetLongitude);
-    
-    distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:500
-                                                      identifier:@"targetPlace"];
-    
-    
-}
+////ジオフェンス関数
+//-(void)createGeofence
+//{
+//    
+//    //DBから読み込んだ緯度経度情報が必要
+//    targetLatitude = 34.070162;//一時的にトモニプラザの緯度を設定
+//    NSLog(@"targetLatitude=%f",targetLatitude);
+//    targetLongitude =134.556246;//一時的にトモニプラザの経度を設定
+//    NSLog(@"targetLongitude=%f",targetLongitude);
+//    CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(targetLatitude, targetLongitude);
+//    
+//    distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:500
+//                                                      identifier:@"targetPlace"];
+//    
+//    
+//}
 
 // 進入イベント 通知
 -(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    // 入った。
-    if ([region.identifier isEqualToString:@"targetPlace"]) {
-        NSLog(@"ジオフェンス領域%@に入りました",region.identifier);
+    for (int r = 0; r < titleList.count; r++)
+    {
+        // 入った。
+        if ([region.identifier isEqualToString:[NSString stringWithFormat:@"%@",titleList[r]]]) {
+            NSLog(@"ジオフェンス領域%@に入りました",titleList[r]);
+        }
+        //バックグラウンドからの通知
+        [self LocalNotificationStart];
+
     }
-    //バックグラウンドからの通知
-    [self LocalNotificationStart];
 }
 
-// 退出イベント 通知
--(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-    // 出た。
-    if ([region.identifier isEqualToString:@"targetPlace"]) {
-        NSLog(@"ジオフェンス領域%@から出ました",region.identifier);
-    }
-}
+//// 退出イベント 通知
+//-(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+//    
+//    // 出た。
+//    if ([region.identifier isEqualToString:@"targetPlace"]) {
+//        NSLog(@"ジオフェンス領域%@から出ました",region.identifier);
+//    }
+//}
 
 // ジオフェンスしっぱい。
 -(void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error {
     NSLog(@"ジオフェンス領域%@しっぱい",region.identifier);
+    NSLog(@"%d",error.code);
 }
 
 
@@ -344,15 +412,15 @@
     TSDataBase *db = [[TSDataBase alloc]init];
     NSMutableArray *DBData = [db loadDBData];
     
-//    NSMutableArray *idList = DBData[0];
+    NSMutableArray *idList = DBData[0];
 
-    NSMutableArray *titleList = [[NSMutableArray alloc]init];
+    titleList = [[NSMutableArray alloc]init];
     titleList = DBData[1];
     
-    NSMutableArray *latList =[[NSMutableArray alloc]init];
+    latList =[[NSMutableArray alloc]init];
     latList = DBData[2];
     
-    NSMutableArray *lonList = [[NSMutableArray alloc]init];
+    lonList = [[NSMutableArray alloc]init];
     lonList = DBData[3];
 
     NSMutableArray *addressList = [[NSMutableArray alloc]init];
@@ -368,16 +436,64 @@
         
     //緯度経度からアノテーションをさす（ふつうのやつです）
     CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(lat, lon);
-    MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
+//    MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
+        TSPointAnnotation *pin = [[TSPointAnnotation alloc]init];
     pin.coordinate = loc;
     pin.title = titleList[i];
     pin.subtitle = addressList[i];
 
+    //pinのなんかにidをいれる
+    pin.TSPointId = (int)idList[i];
+        
+    //ためし
     [_mapView addAnnotation:pin];
     
+    //アノテーションを刺した場所のジオフェンスを開始
+    CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
+        
+    distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:500
+                                                          identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
+        NSLog(@"%f,%f",lat,lon);
+        NSLog(@"%@",titleList[i]);
+        NSLog(@"%d",i);
     }
     
 }
 
+//ピンをさわったときによばれるメソッド。
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
+
+    NSLog(@"たっちされたお");
+    
+}
+
+//アノテーションビューが作られたときのデリゲート。addAnotationするときに呼ばれる
+- (void)mapView:(MKMapView*)mapView didAddAnnotationViews:(NSArray*)views{
+
+    // アノテーションビューを取得する
+    for (MKAnnotationView* annotationView in views) {
+        UIImage *cameraImg = [UIImage imageNamed:@"camera.png"];
+        
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(5,0,44,44)];
+        
+        [button setBackgroundImage:cameraImg forState:UIControlStateNormal];
+        
+        // コールアウトの左側のアクセサリビューにボタンを追加する
+        annotationView.leftCalloutAccessoryView = button;
+    }
+}
+
+//アクセサリーが押された時のイベントだお
+-(void) mapView:(MKMapView *)mapView
+    annotationView:(MKAnnotationView *)view
+    calloutAccessoryControlTapped:(UIControl *)control{
+    
+    NSLog(@"カメラがおされたお！");
+    NSLog(@"%@",view);
+    
+    //ここで、セグエで渡すための値（ID)を変数に入れるようにする
+    //int DBNumb = ******;
+    
+}
 
 @end

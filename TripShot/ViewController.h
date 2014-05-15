@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MapKit/MapKit.h>
-#import <CoreLocation/CoreLocation.h>
+#import "MapView.h"
 
-@interface ViewController : UIViewController<CLLocationManagerDelegate>
+@interface ViewController : UIViewController<CLLocationManagerDelegate,MKMapViewDelegate>
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) IBOutlet MapView *mapView;
+
 @property NSUserDefaults *mydefault;
 @property NSTimer* timer;
 
