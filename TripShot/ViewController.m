@@ -336,9 +336,13 @@
         // 入った。
         if ([region.identifier isEqualToString:[NSString stringWithFormat:@"%@",titleList[r]]]) {
             NSLog(@"ジオフェンス領域%@に入りました",titleList[r]);
+        
         }
         //バックグラウンドからの通知
-        [self LocalNotificationStart];
+        [self LocalNotificationStart:r];
+            
+        
+       
 
     }
 }
@@ -379,7 +383,7 @@
 }
 
 //バックグラウンド状態の時に通知する
--(void)LocalNotificationStart{
+-(void)LocalNotificationStart:(int)list{
     
     [[UIApplication sharedApplication] cancelAllLocalNotifications];  //設定する前に、設定済みの通知をキャンセルする
     UILocalNotification *notification = [[UILocalNotification alloc]init];  //ローカル通知させる時のインスタンス作成
@@ -387,7 +391,7 @@
     
     notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:3]; //3秒後にメッセ時が表示されるよう設定
     notification.repeatInterval = NSCalendarUnitDay;  //毎日通知させる設定
-    notification.alertBody = @"ジオフェンス領域に入りました";  //メッセージの内容
+    notification.alertBody = [NSString stringWithFormat:@"%@の近くに来ています",titleList[list]];  //メッセージの内容
     notification.timeZone = [NSTimeZone defaultTimeZone];  //タイムゾーンの設定 その端末にあるローケーションに合わせる
     notification.soundName = UILocalNotificationDefaultSoundName;  //効果音
     notification.applicationIconBadgeNumber = 1;  //通知された時のアイコンバッジの右肩の数字
