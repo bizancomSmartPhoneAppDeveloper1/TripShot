@@ -451,7 +451,7 @@
     //アノテーションを刺した場所のジオフェンスを開始
     CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
         
-    distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:500
+    distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
         NSLog(@"%f,%f",lat,lon);
         NSLog(@"%@",titleList[i]);
