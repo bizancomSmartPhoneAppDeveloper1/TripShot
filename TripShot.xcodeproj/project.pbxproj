@@ -243,8 +243,6 @@
 				87AC9671191CF98400C69813 /* AppDelegate.h */,
 				87AC9672191CF98400C69813 /* AppDelegate.m */,
 				87AC9674191CF98400C69813 /* Main.storyboard */,
-				87522D33192082E400334492 /* CameraViewController.h */,
-				87522D34192082E400334492 /* CameraViewController.m */,
 				F62A87F7192097FF001BBDDB /* CustomAnnotation.h */,
 				F62A87F8192097FF001BBDDB /* CustomAnnotation.m */,
 				F6204BD51922F31400E4B896 /* CustomAnnotationView.h */,
@@ -563,7 +561,7 @@
 				GCC_PREFIX_HEADER = "TripShot/TripShot-Prefix.pch";
 				INFOPLIST_FILE = "TripShot/TripShot-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AE50531D-A475-4206-9573-EE03EC2F70FE";
+				PROVISIONING_PROFILE = "DC084357-8CD3-4CE7-A790-4A5A5F8B2445";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -579,7 +577,7 @@
 				GCC_PREFIX_HEADER = "TripShot/TripShot-Prefix.pch";
 				INFOPLIST_FILE = "TripShot/TripShot-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AE50531D-A475-4206-9573-EE03EC2F70FE";
+				PROVISIONING_PROFILE = "DC084357-8CD3-4CE7-A790-4A5A5F8B2445";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
