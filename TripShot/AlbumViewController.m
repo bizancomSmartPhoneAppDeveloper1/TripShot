@@ -85,10 +85,10 @@
         NSLog(@"そのほかがおされましたぜ %d個目",indexPath.row);
         idnumb = (int)idarray[indexPath.row];
         
-        UIViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
-        [self presentViewController:indiAVC animated:YES completion:nil];
+        //UIViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
+        //[self presentViewController:indiAVC animated:YES completion:nil];
         
-        //[self performSegueWithIdentifier:@"albumToIndividualAlbum" sender:self];
+        [self performSegueWithIdentifier:@"albumToIndividualAlbum" sender:self];
     }
 
 }
