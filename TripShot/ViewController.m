@@ -100,7 +100,7 @@
 
 }
 
-/*
+
 -(MKAnnotationView*)mapView:(MKMapView*)mapView
           viewForAnnotation:(id)annotation{
     
@@ -118,7 +118,7 @@
     return pav;
     
 }
- */
+
 
 //- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 //{

@@ -73,7 +73,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="AlbumCollection" destination="nMM-EM-mmn" id="bTZ-sX-iGc"/>
-                        <segue destination="m5g-xJ-arX" kind="modal" identifier="albumToIndividualAlbum" id="3B3-hM-Xwh"/>
+                        <segue destination="m5g-xJ-arX" kind="modal" identifier="albumToIndividualAlbum" id="mQv-rP-II9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S5l-Mj-AiX" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -86,7 +86,7 @@
         idnumb = (int)idarray[indexPath.row];
         
         //UIViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
-        //indiAVC.idFromMainPage = idnumb;
+        //[self presentViewController:indiAVC animated:YES completion:nil];
         
         //[self presentViewController:indiAVC animated:YES completion:nil];
         
