@@ -43,6 +43,11 @@
 
 -(void)deleteData;//削除フラグをたてるだけだけどね 未完了
 
+//緯度経度からDBにデータ追加するメソッド
+-(void)createDBDataFromLat:(double)lat andLot:(double)lot andTitle:(NSString *)title; //SeachListViewControllerで使用
+    
+
+
 
 //あと必要なメソッドって何がある？
 

@@ -2,15 +2,16 @@
 //  SearchListViewController.h
 //  TripShot
 //
-//  Created by bizan.com.mac05 on 2014/05/13.
+//  Created by EmikoFujiwara on 2014/05/13.
 //  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface SearchListViewController : UITableViewController
-@property (weak, nonatomic) IBOutlet UISearchBar *searchField;
+@interface SearchListViewController : UITableViewController<UISearchDisplayDelegate,UISearchBarDelegate>
+@property (strong, nonatomic) IBOutlet UITableView *TableView;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchField;
 - (IBAction)cancelButtonTapped:(id)sender;
-- (IBAction)addButtonTapped:(id)sender;
+//- (IBAction)addButtonTapped:(id)sender;
 
 @end

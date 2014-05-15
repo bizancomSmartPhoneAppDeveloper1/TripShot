@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "CustomAnnotation.h"
+#import "TSDataBase.h"
 
 @interface ViewController ()
 {
@@ -43,7 +44,9 @@
     [self createGeofence];
     //到達点についた時に分かるようにジオフェンスをスタート
     [self.locationManager startMonitoringForRegion:distCircularRegion];
-
+    
+    //DBからピンぶっさしてます
+    [self markingPinFromList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -330,5 +333,51 @@
     [[UIApplication sharedApplication]scheduleLocalNotification:notification];  //ローカル通知の登録
     
 }
+
+#pragma mark -
+#pragma mark ふじわら追加メソッド
+
+//DBからデータを読み込んで指定のピンをとりあえず刺しまくるメソッド まだデータの受け渡し部分未実装
+-(void)markingPinFromList{
+    
+    //DBと接続
+    TSDataBase *db = [[TSDataBase alloc]init];
+    NSMutableArray *DBData = [db loadDBData];
+    
+//    NSMutableArray *idList = DBData[0];
+
+    NSMutableArray *titleList = [[NSMutableArray alloc]init];
+    titleList = DBData[1];
+    
+    NSMutableArray *latList =[[NSMutableArray alloc]init];
+    latList = DBData[2];
+    
+    NSMutableArray *lonList = [[NSMutableArray alloc]init];
+    lonList = DBData[3];
+
+    NSMutableArray *addressList = [[NSMutableArray alloc]init];
+    addressList = DBData[10];
+    NSString *temp;
+    
+    //こっから刺しまくりんぐ
+    for(int i = 0; i < titleList.count ; i++){
+        temp = latList[i];
+        double lat = temp.doubleValue;
+        temp = lonList[i];
+        double lon = temp.doubleValue;
+        
+    //緯度経度からアノテーションをさす（ふつうのやつです）
+    CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(lat, lon);
+    MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
+    pin.coordinate = loc;
+    pin.title = titleList[i];
+    pin.subtitle = addressList[i];
+
+    [_mapView addAnnotation:pin];
+    
+    }
+    
+}
+
 
 @end
