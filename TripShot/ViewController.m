@@ -20,7 +20,10 @@
     double targetLatitude;
     CLRegion* distCircularRegion;
     
-    int DBnumb;
+    NSMutableArray *titleList;
+    NSMutableArray *latList;
+    NSMutableArray *lonList;
+
 }
 
 @property (strong, nonatomic) CustomAnnotation *annotation;
