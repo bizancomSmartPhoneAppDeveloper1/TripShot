@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "CustomAnnotation.h"
 #import "TSDataBase.h"
+#import "TSPointAnnotation.h"
 
 @interface ViewController ()
 {
@@ -17,6 +18,8 @@
     double targetLongitude;
     double targetLatitude;
     CLRegion* distCircularRegion;
+    
+    int DBnumb;
 }
 
 @end
@@ -345,7 +348,7 @@
     TSDataBase *db = [[TSDataBase alloc]init];
     NSMutableArray *DBData = [db loadDBData];
     
-//    NSMutableArray *idList = DBData[0];
+    NSMutableArray *idList = DBData[0];
 
     NSMutableArray *titleList = [[NSMutableArray alloc]init];
     titleList = DBData[1];
@@ -369,18 +372,23 @@
         
     //緯度経度からアノテーションをさす（ふつうのやつです）
     CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(lat, lon);
-    MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
+//    MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
+        TSPointAnnotation *pin = [[TSPointAnnotation alloc]init];
     pin.coordinate = loc;
     pin.title = titleList[i];
     pin.subtitle = addressList[i];
 
+    //pinのなんかにidをいれる
+    pin.TSPointId = (int)idList[i];
+        
+    //ためし
     [_mapView addAnnotation:pin];
     
     }
     
 }
 
-//アノテーションビューのタッチイベントのはず
+//ピンをさわったときによばれるメソッド。
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
 
     NSLog(@"たっちされたお");
@@ -394,13 +402,26 @@
     for (MKAnnotationView* annotationView in views) {
         UIImage *cameraImg = [UIImage imageNamed:@"camera.png"];
         
-        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(15,0,44,44)];
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(5,0,44,44)];
         
         [button setBackgroundImage:cameraImg forState:UIControlStateNormal];
         
         // コールアウトの左側のアクセサリビューにボタンを追加する
         annotationView.leftCalloutAccessoryView = button;
     }
+}
+
+//アクセサリーが押された時のイベントだお
+-(void) mapView:(MKMapView *)mapView
+    annotationView:(MKAnnotationView *)view
+    calloutAccessoryControlTapped:(UIControl *)control{
+    
+    NSLog(@"カメラがおされたお！");
+    NSLog(@"%@",view);
+    
+    //ここで、セグエで渡すための値（ID)を変数に入れるようにする
+    //int DBNumb = ******;
+    
 }
 
 @end
