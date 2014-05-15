@@ -10,6 +10,8 @@
 #import "TSDataBase.h"
 
 @interface SearchListViewController (){
+    
+    UIImageView *imageViewBackB;
 
 }
 
@@ -51,6 +53,8 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    [self viewBackground];
+    [self initNavigationBar];
 }
 -(void)getJsonFromWord:(NSString *)word{
     
@@ -171,8 +175,9 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     NSString *lon1 = locations[0];
     NSString *lat1 = locations[1];
     double lon2 = lon1.doubleValue;
+    NSLog(@"lon=%f",lon2);
     double lat2 = lat1.doubleValue;
-    
+    NSLog(@"lat=%f",lat2);
     //DBにデータを追加
     TSDataBase *db = [[TSDataBase alloc]init];
     [db createDBDataFromLat:lat2 andLot:lon2 andTitle:name];
@@ -266,6 +271,30 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 //
 //    [_TableView reloadData];
 //}
+-(void)viewBackground{
+    //スクリーンサイズの取得
+    CGRect screenSize = [[UIScreen mainScreen] bounds];
+    CGFloat width = screenSize.size.width;
+    CGFloat height = screenSize.size.height;
+    CGRect rect = CGRectMake(0, 0, width, height);
+    
+    UIImage *imageData = [UIImage imageNamed:@"kinari_img140514103609.jpg"];
+    
+    /* 背景画像の準備*/
+    imageViewBackB = [[UIImageView alloc]initWithFrame:rect];
+    imageViewBackB.image = imageData;
+    imageViewBackB.contentMode = UIViewContentModeScaleToFill;
+    [self.view addSubview:imageViewBackB];
+    [self.view sendSubviewToBack:imageViewBackB];
+    
+}
+
+-(void)initNavigationBar{
+    //ナビゲーションバーのタイトル変更
+    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"subtitle2.png"]];
+    self.navigationItem.titleView = navigationTitle;
+    
+}
 
 
 @end

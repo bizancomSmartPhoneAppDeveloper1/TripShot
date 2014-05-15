@@ -468,7 +468,7 @@
         i++;
     }
     
-    NSLog(@"resultArray=%@",[resultArray description]);//確認表示
+    //NSLog(@"resultArray=%@",[resultArray description]);//確認表示
     [database close];
     return resultArray;
 }
@@ -490,6 +490,50 @@
     
     
 }
+
+
+- (NSMutableArray *)loadLatLonPlaceName:(NSString *)place_name LAT:(double)latitude LON:(double)longitude{
+    
+    //ディレクトリのリストを取得する
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //データベース接続
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+    
+    //容れ物の準備
+    NSMutableArray *resultArray = [[NSMutableArray alloc]init];
+    
+    //データベースを開く
+    [database open];
+    //NSString *sql = [NSString stringWithFormat:@"SELECT * FROM testTable WHERE id = 1"];
+    //NSString *sql = [NSString stringWithFormat:@"SELECT id FROM testTable WHERE place_name = '%@' and latitude = %f and longitude = %f;",place_name,latitude,longitude];
+    
+    //NSString *sql = [NSString stringWithFormat:@"SELECT id FROM testTable WHERE latitude = %f and longitude = %f;",latitude,longitude];
+
+    NSString *sql = [NSString stringWithFormat:@"SELECT id FROM testTable WHERE place_name = '%@'",place_name];
+    //NSString *sql = [NSString stringWithFormat:@"SELECT id FROM testTable WHERE latitude = %f",latitude];
+    
+    FMResultSet *results = [database executeQuery:sql];
+
+    while([results next]){ //結果が一行ずつ返されて、最後までいくとnextメソッドがnoを返す
+        int i = 0;
+        //カラム名を指定して、カラム値を取得する。
+        
+        int db_id = [results intForColumn:@"id"];
+        [resultArray addObject:@(db_id)];
+
+        i++;
+    }
+    
+    //NSLog(@"resultArray=%@",[resultArray description]);//確認表示
+    [database close];
+    NSLog(@"reslutarray=%@",[resultArray description]);
+    return resultArray;
+}
+
+
 
 
 @end
