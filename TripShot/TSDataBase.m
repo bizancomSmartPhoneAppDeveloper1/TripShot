@@ -130,7 +130,7 @@
      title,
      [NSNumber numberWithDouble:lat], [NSNumber numberWithDouble:lot],
      [NSNumber numberWithInteger:date] ,//日にち6桁int
-     [NSNumber numberWithInteger:1],//写真の枚数カラム
+     [NSNumber numberWithInteger:0],//写真の枚数カラム
      @"NODATA",//空欄、なにをいれればいいかな
      @"NODATA",//空欄、なにを入れればいいかな
      [NSNumber numberWithInteger:1],
