@@ -49,8 +49,6 @@
     //各表示
     [self viewMethod];
 
-    
-    
 }
 
 - (void)didReceiveMemoryWarning

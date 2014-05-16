@@ -182,6 +182,10 @@
 		180FBC9F192410A600AFD3AC /* notUseFIles */ = {
 			isa = PBXGroup;
 			children = (
+				F62A87F7192097FF001BBDDB /* CustomAnnotation.h */,
+				F62A87F8192097FF001BBDDB /* CustomAnnotation.m */,
+				180FBCA31924809C00AFD3AC /* TSPointAnnotation.h */,
+				180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */,
 				189D4B0F191FBAA600498178 /* Weather.h */,
 				189D4B10191FBAA600498178 /* Weather.m */,
 				189D4B0A191F9C8F00498178 /* WantsToGoListViewController.h */,
@@ -267,11 +271,7 @@
 				87522D3A19208F4A00334492 /* pics */,
 				87AC9671191CF98400C69813 /* AppDelegate.h */,
 				87AC9672191CF98400C69813 /* AppDelegate.m */,
-				180FBCA31924809C00AFD3AC /* TSPointAnnotation.h */,
-				180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */,
 				87AC9674191CF98400C69813 /* Main.storyboard */,
-				F62A87F7192097FF001BBDDB /* CustomAnnotation.h */,
-				F62A87F8192097FF001BBDDB /* CustomAnnotation.m */,
 				87AC9677191CF98400C69813 /* ViewController.h */,
 				87AC9678191CF98400C69813 /* ViewController.m */,
 				180E0C7B1921BEFB00399554 /* SearchListViewController.h */,

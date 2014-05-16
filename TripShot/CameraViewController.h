@@ -14,6 +14,7 @@
     UIImage *editedImage;
 }
 @property int idFromMainPage;//メイン画面でピンを選択した時にcameraViewに対して渡されるDBのID
+@property NSString *place_nameFromMainPage;
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
 
 -(void)startCamera;
