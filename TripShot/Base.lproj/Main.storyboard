@@ -148,7 +148,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uCV-rR-dBj">
-                                <rect key="frame" x="37" y="474" width="56" height="55"/>
+                                <rect key="frame" x="31" y="372" width="56" height="55"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="camera.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -323,8 +323,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="NCH-Mv-HYK"/>
         <segue reference="RBS-Fe-Fdj"/>
-        <segue reference="NCH-Mv-HYK"/>
+        <segue reference="QHG-Tg-gNY"/>
     </inferredMetricsTieBreakers>
 </document>
