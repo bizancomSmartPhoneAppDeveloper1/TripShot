@@ -148,19 +148,19 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uCV-rR-dBj">
-                                <rect key="frame" x="31" y="372" width="56" height="55"/>
+                                <rect key="frame" x="46" y="387" width="56" height="55"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="camera.png">
+                                <state key="normal" image="camera60.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="takePhoto:" destination="PDs-5O-UB4" eventType="touchUpInside" id="irS-Yg-1Pn"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8Q-4e-lbv">
-                                <rect key="frame" x="194" y="385" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8Q-4e-lbv">
+                                <rect key="frame" x="209" y="385" width="60" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button">
+                                <state key="normal" image="return60.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -323,7 +323,6 @@
     </scenes>
     <resources>
         <image name="albumTabicon" width="30" height="30"/>
-        <image name="camera.png" width="128" height="128"/>
         <image name="camera60.png" width="60" height="60"/>
         <image name="mapTabicon" width="30" height="30"/>
         <image name="return60.png" width="60" height="60"/>
@@ -336,7 +335,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="5gu-iR-pQ0"/>
         <segue reference="QHG-Tg-gNY"/>
+        <segue reference="5gu-iR-pQ0"/>
     </inferredMetricsTieBreakers>
 </document>
