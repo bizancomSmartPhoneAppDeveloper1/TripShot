@@ -10,9 +10,9 @@
 		180E0C7D1921BEFB00399554 /* SearchListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E0C7C1921BEFB00399554 /* SearchListViewController.m */; };
 		180E0C821921E23000399554 /* pic1.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E0C811921E23000399554 /* pic1.png */; };
 		180FBCA51924809C00AFD3AC /* TSPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */; };
-		182359001925AAC900C644E3 /* return30.png in Resources */ = {isa = PBXBuildFile; fileRef = 182358FF1925AAC900C644E3 /* return30.png */; };
-		182359021925AAE700C644E3 /* return60.png in Resources */ = {isa = PBXBuildFile; fileRef = 182359011925AAE700C644E3 /* return60.png */; };
-		182359041925AAF900C644E3 /* camera60.png in Resources */ = {isa = PBXBuildFile; fileRef = 182359031925AAF900C644E3 /* camera60.png */; };
+		182359081925AFC700C644E3 /* camera60.png in Resources */ = {isa = PBXBuildFile; fileRef = 182359051925AFC700C644E3 /* camera60.png */; };
+		182359091925AFC700C644E3 /* return30.png in Resources */ = {isa = PBXBuildFile; fileRef = 182359061925AFC700C644E3 /* return30.png */; };
+		1823590A1925AFC700C644E3 /* return60.png in Resources */ = {isa = PBXBuildFile; fileRef = 182359071925AFC700C644E3 /* return60.png */; };
 		189D4AEB191D4AA200498178 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AEA191D4AA200498178 /* libsqlite3.dylib */; };
 		189D4AF6191E105000498178 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AF5191E105000498178 /* libsqlite3.0.dylib */; };
 		189D4B02191E122500498178 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4AF8191E122500498178 /* FMDatabase.m */; };
@@ -73,9 +73,9 @@
 		180E0C811921E23000399554 /* pic1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic1.png; sourceTree = "<group>"; };
 		180FBCA31924809C00AFD3AC /* TSPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSPointAnnotation.h; path = ../TSPointAnnotation.h; sourceTree = "<group>"; };
 		180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSPointAnnotation.m; path = ../TSPointAnnotation.m; sourceTree = "<group>"; };
-		182358FF1925AAC900C644E3 /* return30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = return30.png; path = "アイコンデザイン/return30.png"; sourceTree = "<group>"; };
-		182359011925AAE700C644E3 /* return60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = return60.png; path = "アイコンデザイン/return60.png"; sourceTree = "<group>"; };
-		182359031925AAF900C644E3 /* camera60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera60.png; path = "アイコンデザイン/camera60.png"; sourceTree = "<group>"; };
+		182359051925AFC700C644E3 /* camera60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera60.png; path = "アイコンデザイン/camera60.png"; sourceTree = "<group>"; };
+		182359061925AFC700C644E3 /* return30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = return30.png; path = "アイコンデザイン/return30.png"; sourceTree = "<group>"; };
+		182359071925AFC700C644E3 /* return60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = return60.png; path = "アイコンデザイン/return60.png"; sourceTree = "<group>"; };
 		189D4AEA191D4AA200498178 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		189D4AF5191E105000498178 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		189D4AF7191E122500498178 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -213,9 +213,9 @@
 		87522D3A19208F4A00334492 /* pics */ = {
 			isa = PBXGroup;
 			children = (
-				182358FF1925AAC900C644E3 /* return30.png */,
-				182359011925AAE700C644E3 /* return60.png */,
-				182359031925AAF900C644E3 /* camera60.png */,
+				182359051925AFC700C644E3 /* camera60.png */,
+				182359061925AFC700C644E3 /* return30.png */,
+				182359071925AFC700C644E3 /* return60.png */,
 				18F4B7BE1924A45B00F4C8BB /* icon_1r_192.png */,
 				18F4B7B61924A3F700F4C8BB /* subtitle2.png */,
 				18F4B7B81924A41F00F4C8BB /* subtitle1.png */,
@@ -411,7 +411,9 @@
 				18F4B7BF1924A45B00F4C8BB /* icon_1r_192.png in Resources */,
 				18F4B7B71924A3F700F4C8BB /* subtitle2.png in Resources */,
 				180E0C821921E23000399554 /* pic1.png in Resources */,
+				182359091925AFC700C644E3 /* return30.png in Resources */,
 				F62A87F219208E83001BBDDB /* image2.jpg in Resources */,
+				1823590A1925AFC700C644E3 /* return60.png in Resources */,
 				F62A87F019208E7D001BBDDB /* image1.jpg in Resources */,
 				F62A87F419208E8B001BBDDB /* image3.jpg in Resources */,
 				F62A87F619208E93001BBDDB /* image4.jpg in Resources */,
@@ -419,10 +421,8 @@
 				87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */,
 				87AC9676191CF98400C69813 /* Main.storyboard in Resources */,
 				18F4B7BD1924A43A00F4C8BB /* bright_img140514103609.jpg in Resources */,
-				182359041925AAF900C644E3 /* camera60.png in Resources */,
-				182359021925AAE700C644E3 /* return60.png in Resources */,
-				182359001925AAC900C644E3 /* return30.png in Resources */,
 				87522D3E1920E88900334492 /* camera.png in Resources */,
+				182359081925AFC700C644E3 /* camera60.png in Resources */,
 				18F4B7B91924A41F00F4C8BB /* subtitle1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
