@@ -42,6 +42,10 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//    UIBarButtonItem *backitem = [[UIBarButtonItem alloc]initWithTitle:@"もどる" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
+//    self.navigationItem.leftBarButtonItem = backitem;
+    
 
     //サーチバーの定義
     _searchField.delegate = self;
@@ -258,8 +262,9 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
 - (IBAction)cancelButtonTapped:(id)sender {
 
-    [self dismissViewControllerAnimated:YES completion:NULL];
-
+//    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 
