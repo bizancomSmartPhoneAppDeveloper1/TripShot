@@ -7,28 +7,27 @@
 //
 
 #import "CustomAnnotation.h"
-#import "NSObject+Extension.h"
 
 @implementation CustomAnnotation
 
--(id)initWithCoordinate:(CLLocationCoordinate2D)coordinate
-{
-    self = [super init];
-    if(self)
-    {
-        self.coordinate = coordinate;
-        self.annotationTitle = @"Sample\nLocation";
-        self.annotationSubtitle = @"";
-        self.cameraName = @"image1.jpg";
-        self.mainColor = MYCOLOR(0xFF9966, 1.0);
-    }
-    return self;
-}
-
-- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate
-{
-    _coordinate = newCoordinate;
-}
+//-(id)initWithCoordinate:(CLLocationCoordinate2D)coordinate
+//{
+//    self = [super init];
+//    if(self)
+//    {
+//        self.coordinate = coordinate;
+//        self.annotationTitle = @"Sample\nLocation";
+//        self.annotationSubtitle = @"";
+//        self.cameraName = @"image1.jpg";
+//        self.mainColor = MYCOLOR(0xFF9966, 1.0);
+//    }
+//    return self;
+//}
+//
+//- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate
+//{
+//    _coordinate = newCoordinate;
+//}
 
 
 @end

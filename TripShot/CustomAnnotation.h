@@ -12,13 +12,13 @@
 
 @interface CustomAnnotation : NSObject<MKAnnotation>
 
-@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
-@property (nonatomic, copy) NSString *annotationTitle;
-@property (nonatomic, copy) NSString *annotationSubtitle;
-@property (nonatomic, copy) NSString *cameraName;
-@property (nonatomic, copy) UIColor *mainColor;
-
--(id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;
--(void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
-
+//@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+//@property (nonatomic, copy) NSString *annotationTitle;
+//@property (nonatomic, copy) NSString *annotationSubtitle;
+//@property (nonatomic, copy) NSString *cameraName;
+//@property (nonatomic, copy) UIColor *mainColor;
+//
+//-(id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;
+//-(void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
+//
 @end
