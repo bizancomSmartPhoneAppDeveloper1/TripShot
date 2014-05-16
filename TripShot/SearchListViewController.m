@@ -290,9 +290,11 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 }
 
 -(void)initNavigationBar{
-    //ナビゲーションバーのタイトル変更
+    //ナビゲーションバー
     UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"subtitle2.png"]];
     self.navigationItem.titleView = navigationTitle;
+    [UINavigationBar appearance].tintColor = [UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0];
+    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
 }
 
