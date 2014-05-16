@@ -86,14 +86,20 @@
         
         //サーチのリストビューに飛ぶ
         NSLog(@"そのほかがおされましたぜ %d個目",indexPath.row);
-        idnumb = (int)idarray[indexPath.row];
+        NSLog(@"idarray=%@",[idarray description]);
+        NSString *pathNumber = [idarray objectAtIndex:indexPath.row-1];
+        idnumb = [pathNumber intValue];
         
         //UIViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
         //[self presentViewController:indiAVC animated:YES completion:nil];
-        
         //[self presentViewController:indiAVC animated:YES completion:nil];
         
-        [self performSegueWithIdentifier:@"albumToIndividualAlbum" sender:self];
+//        [self performSegueWithIdentifier:@"albumToIndividualAlbum" sender:self];//これを使う（石井）
+
+        IndividualAlbumViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
+        indiAVC.idFromMainPage = idnumb;
+        [self presentViewController:indiAVC animated:YES completion:nil];
+    
     }
 
 }
@@ -140,16 +146,6 @@
 
 
 #pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if([[segue identifier] isEqualToString:@"albumToIndividualAlbum"]){
-        NSLog(@"idnumb=%d",idnumb);
-    IndividualAlbumViewController *VC = [segue destinationViewController];
-    VC.idFromMainPage = idnumb;
-        
-    }
-}
 
 -(void)viewBackground{
     //スクリーンサイズの取得
