@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MapView.h"
+#import <AudioToolbox/AudioToolbox.h>
+
 
 @interface ViewController : UIViewController<CLLocationManagerDelegate,MKMapViewDelegate>
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) IBOutlet MapView *mapView;
+
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 
 @property NSUserDefaults *mydefault;
 @property NSTimer* timer;
