@@ -32,7 +32,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="CkY-Fo-a3W" customClass="CollectionCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="88" height="108"/>
+                                        <rect key="frame" x="0.0" y="-88" width="88" height="108"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="88" height="108"/>
@@ -63,7 +63,7 @@
                                 <rect key="frame" x="0.0" y="-88" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem title="Item" id="jJH-DT-CmW">
+                                    <barButtonItem image="camera60.png" id="jJH-DT-CmW">
                                         <connections>
                                             <segue destination="vXZ-lx-hvc" kind="modal" id="URt-RW-gzG"/>
                                         </connections>
@@ -73,7 +73,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" image="albumTabicon1" id="elA-Sv-wax"/>
+                    <tabBarItem key="tabBarItem" image="albumTabicon" id="elA-Sv-wax"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="AlbumCollection" destination="nMM-EM-mmn" id="bTZ-sX-iGc"/>
@@ -100,10 +100,10 @@
                                 <rect key="frame" x="25" y="26" width="271" height="184"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TYS-Zf-wEe">
-                                <rect key="frame" x="25" y="416" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TYS-Zf-wEe">
+                                <rect key="frame" x="28" y="413" width="44" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="戻る">
+                                <state key="normal" image="return60.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -215,7 +215,7 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="search" id="bhj-Lt-tud"/>
                     <navigationItem key="navigationItem" id="337-RB-E45">
-                        <barButtonItem key="leftBarButtonItem" image="modoruTabicon" id="Chi-mi-v0X">
+                        <barButtonItem key="leftBarButtonItem" image="returnTabicon" id="Chi-mi-v0X">
                             <connections>
                                 <action selector="cancelButtonTapped:" destination="dc9-mh-IFs" id="7zy-C3-8FR"/>
                                 <segue destination="KQW-ax-y4I" kind="modal" id="6EX-Ie-F5r"/>
@@ -259,7 +259,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="recents" id="5cP-tI-SaA"/>
+                    <tabBarItem key="tabBarItem" image="mapTabicon" id="5cP-tI-SaA"/>
                     <connections>
                         <outlet property="mapView" destination="Man-Q1-MmQ" id="OUe-gd-sQX"/>
                     </connections>
@@ -312,9 +312,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="albumTabicon1" width="30" height="30"/>
+        <image name="albumTabicon" width="30" height="30"/>
         <image name="camera.png" width="128" height="128"/>
-        <image name="modoruTabicon" width="30" height="30"/>
+        <image name="camera60.png" width="60" height="60"/>
+        <image name="mapTabicon" width="30" height="30"/>
+        <image name="return60.png" width="60" height="60"/>
+        <image name="returnTabicon" width="30" height="30"/>
         <image name="subtitle1.png" width="640" height="44"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -323,7 +326,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="RBS-Fe-Fdj"/>
-        <segue reference="QHG-Tg-gNY"/>
+        <segue reference="6EX-Ie-F5r"/>
+        <segue reference="URt-RW-gzG"/>
     </inferredMetricsTieBreakers>
 </document>
