@@ -598,7 +598,7 @@
 				GCC_PREFIX_HEADER = "TripShot/TripShot-Prefix.pch";
 				INFOPLIST_FILE = "TripShot/TripShot-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0A039A79-1A6C-495A-A465-47CC74E3579D";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -614,7 +614,7 @@
 				GCC_PREFIX_HEADER = "TripShot/TripShot-Prefix.pch";
 				INFOPLIST_FILE = "TripShot/TripShot-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0A039A79-1A6C-495A-A465-47CC74E3579D";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
