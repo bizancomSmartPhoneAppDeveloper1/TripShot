@@ -2,8 +2,8 @@
 //  AppDelegate.m
 //  TripShot
 //
-//  Created by bizan.com.mac02 on 2014/05/09.
-//  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
+//  Created by YuzuruIShii on 2014/05/09.
+//  Copyright (c) 2014年 team -IKI- All rights reserved.
 //
 
 #import "AppDelegate.h"

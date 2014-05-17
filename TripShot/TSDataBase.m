@@ -80,7 +80,7 @@
      [NSNumber numberWithInteger:0],//天気カラムを削除し、写真の枚数カラムを追加した（石井）
      @"文章の全文",
      @"pic1.png",
-     [NSNumber numberWithInteger:1],
+     [NSNumber numberWithInteger:1],//went_flagを最初は1に設定。行った後はフラグを0にする（石井）
      [NSNumber numberWithInteger:0],
      [NSNumber numberWithInteger:hour],//時刻4桁int
      address
@@ -133,7 +133,7 @@
      [NSNumber numberWithInteger:0],//写真の枚数カラム
      @"NODATA",//空欄、なにをいれればいいかな
      @"NODATA",//空欄、なにを入れればいいかな
-     [NSNumber numberWithInteger:1],
+     [NSNumber numberWithInteger:1],//went_flagを最初は1に設定。行った後はフラグを0にする（石井）
      [NSNumber numberWithInteger:0],
      [NSNumber numberWithInteger:hour],//時刻4桁int
      address
@@ -369,7 +369,7 @@
 
 
 //cameraViewでデータを上書き保存するために使う関数（石井作成）
-- (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount{
+- (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount WENTFLAG:(int)went_flag{
 
     //ディレクトリのリストを取得する
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -387,6 +387,7 @@
     NSString *update_sqlText = [NSString stringWithFormat:@"update testTable set text = '%@' where id = %d",comment, ID];
     NSString *update_sqlPics = [NSString stringWithFormat:@"update testTable set pics = '%@' where id = %d",pics, ID];
     NSString *update_sqlPicCount = [NSString stringWithFormat:@"update testTable set picCount = %d where id = %d",picCount, ID];
+    NSString *update_sqlWentFlag = [NSString stringWithFormat:@"update testTable set went_flag = %d where id = %d",went_flag, ID];
     
     [database open];
     
@@ -395,6 +396,7 @@
     [database executeUpdate:update_sqlText];
     [database executeUpdate:update_sqlPics];
     [database executeUpdate:update_sqlPicCount];
+    [database executeUpdate:update_sqlWentFlag];
     
     //NSLog(@"記事No:%d DB上書き完了",dataid);
     [database close];
@@ -492,7 +494,7 @@
 }
 
 
-- (NSMutableArray *)loadLatLonPlaceName:(NSString *)place_name LAT:(double)latitude LON:(double)longitude{
+- (NSMutableArray *)loadLatLonPlaceName:(NSString *)place_name{
     
     //ディレクトリのリストを取得する
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -533,6 +535,23 @@
     return resultArray;
 }
 
+- (void)updateText:(int)ID TEXT:(NSString *)comment{
+    
+    //ディレクトリのリストを取得する
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //インスタンスの作成
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+    
+    //データのupdate
+    NSString *update_sqlText = [NSString stringWithFormat:@"update testTable set text = '%@' where id = %d",comment, ID];
+    
+    [database open];
+    [database executeUpdate:update_sqlText];
+    [database close];
+}
 
 
 

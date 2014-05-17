@@ -2,8 +2,8 @@
 //  ViewController.m
 //  TripShot
 //
-//  Created by bizan.com.mac02 on 2014/05/09.
-//  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
+//  Created by IkumaKomaya on 2014/05/09.
+//  Copyright (c) 2014年 team -IKI- All rights reserved.
 //
 
 #import <CoreLocation/CoreLocation.h>
@@ -24,6 +24,7 @@
     NSMutableArray *titleList;
     NSMutableArray *latList;
     NSMutableArray *lonList;
+    NSMutableArray *wentFlagList;
     
 }
 
@@ -429,6 +430,9 @@
     
     lonList = [[NSMutableArray alloc]init];
     lonList = DBData[3];
+    
+    wentFlagList = [[NSMutableArray alloc]init];//行っていない場所にだけジオフェンスをセットするために、wentFlagList作成（石井）
+    wentFlagList = DBData[8];//行っていない場所にだけジオフェンスをセットするために、wentFlagList作成（石井）
 
     NSMutableArray *addressList = [[NSMutableArray alloc]init];
     addressList = DBData[10];
@@ -449,13 +453,17 @@
         pin.subtitle = addressList[i];
         
         [_mapView addAnnotation:pin];
-/*
+
+    /*
     //アノテーションを刺した場所のジオフェンスを開始
+    //行っていない場所にだけジオフェンスをセットするために、if文を追加（石井）
+    if ([[wentFlagList objectAtIndex:i] intValue]==1) {
+ 
     CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
         
     distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:500
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
-*/
+    }*/
     }
     
 }
