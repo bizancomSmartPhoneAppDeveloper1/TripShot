@@ -3,7 +3,7 @@
 //  TripShot
 //
 //  Created by EmikoFujiwara on 2014/05/13.
-//  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
+//  Copyright (c) 2014年 team -IKI- All rights reserved.
 //
 
 #import "SearchListViewController.h"
@@ -42,6 +42,10 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//    UIBarButtonItem *backitem = [[UIBarButtonItem alloc]initWithTitle:@"もどる" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
+//    self.navigationItem.leftBarButtonItem = backitem;
+    
 
     //サーチバーの定義
     _searchField.delegate = self;
@@ -258,8 +262,9 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
 - (IBAction)cancelButtonTapped:(id)sender {
 
-    [self dismissViewControllerAnimated:YES completion:NULL];
-
+//    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 
@@ -290,9 +295,11 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 }
 
 -(void)initNavigationBar{
-    //ナビゲーションバーのタイトル変更
+    //ナビゲーションバー
     UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"subtitle2.png"]];
     self.navigationItem.titleView = navigationTitle;
+    [UINavigationBar appearance].tintColor = [UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0];
+    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
 }
 

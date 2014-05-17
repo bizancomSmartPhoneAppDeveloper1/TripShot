@@ -26,8 +26,15 @@
 		18F4B7BB1924A42D00F4C8BB /* kinari_img140514103609.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7BA1924A42D00F4C8BB /* kinari_img140514103609.jpg */; };
 		18F4B7BD1924A43A00F4C8BB /* bright_img140514103609.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7BC1924A43A00F4C8BB /* bright_img140514103609.jpg */; };
 		18F4B7BF1924A45B00F4C8BB /* icon_1r_192.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F4B7BE1924A45B00F4C8BB /* icon_1r_192.png */; };
+		87354C771927794B00EF8FC2 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 87354C761927794B00EF8FC2 /* facebook.png */; };
+		87354C7919277D7000EF8FC2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87354C7819277D7000EF8FC2 /* Social.framework */; };
 		87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */; };
 		87522D3E1920E88900334492 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 87522D3D1920E88900334492 /* camera.png */; };
+		8777B2711925BC1B002126BA /* camera60.png in Resources */ = {isa = PBXBuildFile; fileRef = 8777B2701925BC1B002126BA /* camera60.png */; };
+		8777B2731925BC28002126BA /* return60.png in Resources */ = {isa = PBXBuildFile; fileRef = 8777B2721925BC28002126BA /* return60.png */; };
+		8777B2751925BC3A002126BA /* return30.png in Resources */ = {isa = PBXBuildFile; fileRef = 8777B2741925BC3A002126BA /* return30.png */; };
+		8777B2771925BC93002126BA /* map60.png in Resources */ = {isa = PBXBuildFile; fileRef = 8777B2761925BC93002126BA /* map60.png */; };
+		8777B2791925BCA0002126BA /* map30.png in Resources */ = {isa = PBXBuildFile; fileRef = 8777B2781925BCA0002126BA /* map30.png */; };
 		87AC9663191CF98300C69813 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9662191CF98300C69813 /* Foundation.framework */; };
 		87AC9665191CF98300C69813 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9664191CF98300C69813 /* CoreGraphics.framework */; };
 		87AC9667191CF98300C69813 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AC9666191CF98300C69813 /* UIKit.framework */; };
@@ -95,8 +102,15 @@
 		18F4B7BA1924A42D00F4C8BB /* kinari_img140514103609.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = kinari_img140514103609.jpg; sourceTree = "<group>"; };
 		18F4B7BC1924A43A00F4C8BB /* bright_img140514103609.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bright_img140514103609.jpg; sourceTree = "<group>"; };
 		18F4B7BE1924A45B00F4C8BB /* icon_1r_192.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_1r_192.png; sourceTree = "<group>"; };
+		87354C761927794B00EF8FC2 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
+		87354C7819277D7000EF8FC2 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "free-textures-japanese-style-06.jpg"; sourceTree = "<group>"; };
 		87522D3D1920E88900334492 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		8777B2701925BC1B002126BA /* camera60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera60.png; sourceTree = "<group>"; };
+		8777B2721925BC28002126BA /* return60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = return60.png; sourceTree = "<group>"; };
+		8777B2741925BC3A002126BA /* return30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = return30.png; sourceTree = "<group>"; };
+		8777B2761925BC93002126BA /* map60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map60.png; sourceTree = "<group>"; };
+		8777B2781925BCA0002126BA /* map30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map30.png; sourceTree = "<group>"; };
 		87AC965F191CF98300C69813 /* TripShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87AC9662191CF98300C69813 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		87AC9664191CF98300C69813 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -138,6 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87354C7919277D7000EF8FC2 /* Social.framework in Frameworks */,
 				F66BEDBE19206029000E60E8 /* MapKit.framework in Frameworks */,
 				189D4B0E191FBA8900498178 /* CoreLocation.framework in Frameworks */,
 				189D4AF6191E105000498178 /* libsqlite3.0.dylib in Frameworks */,
@@ -211,6 +226,12 @@
 		87522D3A19208F4A00334492 /* pics */ = {
 			isa = PBXGroup;
 			children = (
+				87354C761927794B00EF8FC2 /* facebook.png */,
+				8777B2781925BCA0002126BA /* map30.png */,
+				8777B2761925BC93002126BA /* map60.png */,
+				8777B2741925BC3A002126BA /* return30.png */,
+				8777B2721925BC28002126BA /* return60.png */,
+				8777B2701925BC1B002126BA /* camera60.png */,
 				18F4B7BE1924A45B00F4C8BB /* icon_1r_192.png */,
 				18F4B7B61924A3F700F4C8BB /* subtitle2.png */,
 				18F4B7B81924A41F00F4C8BB /* subtitle1.png */,
@@ -244,6 +265,7 @@
 		87AC9661191CF98300C69813 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				87354C7819277D7000EF8FC2 /* Social.framework */,
 				F66BEDBD19206029000E60E8 /* MapKit.framework */,
 				189D4B0D191FBA8800498178 /* CoreLocation.framework */,
 				189D4AF5191E105000498178 /* libsqlite3.0.dylib */,
@@ -398,19 +420,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				87AC967B191CF98400C69813 /* Images.xcassets in Resources */,
+				8777B2771925BC93002126BA /* map60.png in Resources */,
 				18F4B7BB1924A42D00F4C8BB /* kinari_img140514103609.jpg in Resources */,
 				18F4B7BF1924A45B00F4C8BB /* icon_1r_192.png in Resources */,
 				18F4B7B71924A3F700F4C8BB /* subtitle2.png in Resources */,
 				180E0C821921E23000399554 /* pic1.png in Resources */,
+				8777B2731925BC28002126BA /* return60.png in Resources */,
 				F62A87F219208E83001BBDDB /* image2.jpg in Resources */,
 				F62A87F019208E7D001BBDDB /* image1.jpg in Resources */,
 				F62A87F419208E8B001BBDDB /* image3.jpg in Resources */,
+				87354C771927794B00EF8FC2 /* facebook.png in Resources */,
 				F62A87F619208E93001BBDDB /* image4.jpg in Resources */,
 				87AC966D191CF98400C69813 /* InfoPlist.strings in Resources */,
 				87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */,
+				8777B2791925BCA0002126BA /* map30.png in Resources */,
 				87AC9676191CF98400C69813 /* Main.storyboard in Resources */,
 				18F4B7BD1924A43A00F4C8BB /* bright_img140514103609.jpg in Resources */,
 				87522D3E1920E88900334492 /* camera.png in Resources */,
+				8777B2711925BC1B002126BA /* camera60.png in Resources */,
+				8777B2751925BC3A002126BA /* return30.png in Resources */,
 				18F4B7B91924A41F00F4C8BB /* subtitle1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -578,7 +606,7 @@
 				GCC_PREFIX_HEADER = "TripShot/TripShot-Prefix.pch";
 				INFOPLIST_FILE = "TripShot/TripShot-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DC084357-8CD3-4CE7-A790-4A5A5F8B2445";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -594,7 +622,7 @@
 				GCC_PREFIX_HEADER = "TripShot/TripShot-Prefix.pch";
 				INFOPLIST_FILE = "TripShot/TripShot-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DC084357-8CD3-4CE7-A790-4A5A5F8B2445";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

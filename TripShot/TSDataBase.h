@@ -3,7 +3,7 @@
 //  TripShot
 //
 //  Created by EmikoFujiwara on 2014/05/11.
-//  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
+//  Copyright (c) 2014年 team -IKI- All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -52,10 +52,10 @@
 //あと必要なメソッドって何がある？
 
 - (NSMutableArray *)loadDBDataOnCamera:(int)number;//cameraViewで使用するメソッド
-- (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount;//cameraViewで使用するメソッド
+- (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount WENTFLAG:(int)went_flag;//cameraViewで使用するメソッド
 - (void)dbDelete;//完全削除メソッド 必要な時以外、絶対に使用しないこと！！
 
-- (NSMutableArray *)loadLatLonPlaceName:(NSString *)place_name LAT:(double)latitude LON:(double)longitude;//緯度経度行きたい場所でidを検索するメソッド
-
+- (NSMutableArray *)loadLatLonPlaceName:(NSString *)place_name;//緯度経度行きたい場所でidを検索するメソッド
+- (void)updateText:(int)ID TEXT:(NSString *)comment;
 
 @end

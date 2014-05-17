@@ -3,7 +3,7 @@
 //  TripShot
 //
 //  Created by Komaya & Fujiwara on 2014/05/12.
-//  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
+//  Copyright (c) 2014年 team -IKI- All rights reserved.
 //
 
 #import "AlbumViewController.h"
