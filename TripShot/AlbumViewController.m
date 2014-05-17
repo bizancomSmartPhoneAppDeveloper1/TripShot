@@ -39,23 +39,18 @@
     [[self AlbumCollection]setDataSource:self];
     [[self AlbumCollection]setDelegate:self];
     
-//    picture = [[NSArray alloc]initWithObjects:@"image1.jpg",@"image2.jpg",@"image3.jpg",@"image4.jpg", nil];
-//    date = [[NSArray alloc]initWithObjects:@"5/3",@"5/4",@"5/5",@"5/6", nil];
+
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+
+    [self.navigationController setNavigationBarHidden:YES];
+    self.tabBarController.tabBar.hidden = NO;
     
     TSDataBase *db = [[TSDataBase alloc]init];
     NSMutableArray *DBData = [db loadDBData];
-
-
-/*  dateに、BDData[]の文字列をintからstringに変換して入れる。
-    date = [[NSMutableArray alloc]init];
-    NSMutableArray *temp = DBData[4];
-    for(int i = 0 ; i<=DBData.count ; i++){
-        
-        date[i] = [NSString stringWithFormat:@"%@",temp[i]];//数字をそのまま変換してstringにした
-        //最終的にyyyy年mm月dd日、という表記にしたい
-    }
- 
- */
+    
+    
     placeName = DBData[1];
     picture = DBData[6];
     idarray = DBData[0];
@@ -65,13 +60,8 @@
     [picture insertObject:@"icon_1r_192.png" atIndex:0];
     
     [self viewBackground];
+    [_AlbumCollection reloadData];
 
-}
-
--(void)viewWillAppear:(BOOL)animated{
-
-    [self.navigationController setNavigationBarHidden:YES];
-        self.tabBarController.tabBar.hidden = NO;
 
 }
 
@@ -85,14 +75,9 @@
 
     }else{
 
-        NSLog(@"そのほかがおされましたぜ %d個目",indexPath.row);
         NSLog(@"idarray=%@",[idarray description]);
         NSString *pathNumber = [idarray objectAtIndex:indexPath.row-1];
         idnumb = [pathNumber intValue];
-        
-        //UIViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
-        //[self presentViewController:indiAVC animated:YES completion:nil];
-        //[self presentViewController:indiAVC animated:YES completion:nil];
         
 //        [self performSegueWithIdentifier:@"albumToIndividualAlbum" sender:self];//これを使う（石井）
 
@@ -100,9 +85,7 @@
         indiAVC.idFromMainPage = idnumb;
         [self.navigationController pushViewController:indiAVC animated:YES];
 
-    
     }
-
 }
 
 
@@ -128,12 +111,22 @@
     static NSString *CellIdentifier =@"Cell";
     CollectionCell *cell = [collectionView
                             dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    if([picture[indexPath.item] isEqualToString:@"NODATA"]){
+    if([picture[indexPath.item] isEqualToString:@"icon_1r_192.png"]){
+      [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
+    
+    
+    }else if ([picture[indexPath.item] isEqualToString:@"NODATA"]){
+        
         [[cell pictureView] setImage:[UIImage imageNamed:@"image1.jpg"]];
 
-    }else{
-        [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
+    }else{ //要注意（石井さんにきくこと）
+        
+        NSData *dt = [NSData dataWithContentsOfURL:[NSURL URLWithString:picture[indexPath.item]]];
+        UIImage *image = [[UIImage alloc]initWithData:dt];
+        
+        [[cell pictureView]setImage:image];
     }
+    
     [[cell pictureDate] setText:[placeName objectAtIndex:indexPath.item]];
 
     return cell;

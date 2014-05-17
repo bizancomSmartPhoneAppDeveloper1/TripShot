@@ -19,6 +19,8 @@
 @property NSMutableArray *nameArray;
 @property NSMutableArray *locationArray;
 @property NSMutableArray *addressArray;
+@property NSString *savedLat;
+@property NSString *savedLon;
 
 @end
 
@@ -49,7 +51,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
     //サーチバーの定義
     _searchField.delegate = self;
-    _searchField.placeholder = @"検索したい場所を入力";
+    _searchField.placeholder = @"行きたい場所を入力してね！";
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -59,7 +61,9 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     
     [self viewBackground];
     [self initNavigationBar];
+    [self loadLocationData];
 }
+
 -(void)getJsonFromWord:(NSString *)word{
     
     _nameArray = [[NSMutableArray alloc]init]; //店名一覧格納
@@ -70,14 +74,9 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     NSString *encodedString = [word stringByAddingPercentEscapesUsingEncoding:
                                NSUTF8StringEncoding];
     
-    NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json",APIKEY,encodedString];
-    
-/*現在地に近い順でソートする準備 メソッドに引数２つ(nowLatとnowLon）追加してする
-    NSString *nowLat;//現在地の緯度
-    NSString *nowLon;//現在地の経度
-    NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json&lat=%@&lon=%@&sort=geo",APIKEY,encodedString,nowLat,nowLon];
-*/
-    
+    //現在地に近い順でソートする 現時点では遠いところは表示されないみたい
+    NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json&lat=%@&lon=%@&sort=geo",APIKEY,encodedString,_savedLat,_savedLon];
+
     NSURL *url = [NSURL URLWithString:path];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -88,11 +87,9 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
         
         NSError *jsonParsingError = nil;
         //JSONからNSDictionaryまたはNSArrayに変換
-        //JSONによって、配列ならばNSArrayになりそうでなければNSDictionaryとなる
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&jsonParsingError];
         NSLog(@"%@",dic);
         
-        //NSDictionaryを利用して、必要なデータを取得する
         NSArray *arrayResult = [dic objectForKey:@"Feature"];
         
         for(int i = 0 ; i < arrayResult.count ; i++){
@@ -108,18 +105,17 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
             NSString *geometry = [tempgeomerty objectForKey:@"Coordinates"];
             [_locationArray addObject:geometry];
             
-
             //緯度経度を２つに分割する
             NSArray *locations = [geometry componentsSeparatedByString:@","];
             NSString *lon1 = locations[0];
             NSString *lat1 = locations[1];
             double lon2 = lon1.doubleValue;
             double lat2 = lat1.doubleValue;
+            
             //住所に変換
             TSDataBase *db = [[TSDataBase alloc]init];
             NSString *address = [db getAddressFromLat:lat2 AndLot:lon2];
             [_addressArray addObject:address];
-
         }
         
         NSLog(@"result NameArray : %@",_nameArray);//店名一覧。
@@ -157,7 +153,6 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
-//    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = _nameArray[indexPath.row];
     cell.detailTextLabel.text = _addressArray[indexPath.row];
 
@@ -219,9 +214,21 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     NSString *word = _searchField.text;
     [_searchField resignFirstResponder];
     [self getJsonFromWord:word];
+
+    //検索結果がからっぽだったとき(JSONDataのResultInfoのCountが0のとき）
+    //の処理をここにかく。
+    
     [_TableView reloadData];
     
 }
+
+-(void)loadLocationData{
+    NSUserDefaults *savedata = [NSUserDefaults standardUserDefaults];
+    _savedLat = [savedata stringForKey:@"latFromMainPage"];
+    _savedLon = [savedata stringForKey:@"lonFromMainPage"];
+
+}
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -262,20 +269,13 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
 - (IBAction)cancelButtonTapped:(id)sender {
 
-//    [self dismissViewControllerAnimated:YES completion:NULL];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+
+    NSLog(@"もどるぼたん");
     
 }
+#pragma mark - ナビゲーションバー設定
 
-
-////これいるんかな？いらん気がするので一旦消す。
-//- (IBAction)addButtonTapped:(id)sender {
-//    TSDataBase *db = [[TSDataBase alloc]init];
-////    [db makeDatabase];
-//    [db createDBData];
-//
-//    [_TableView reloadData];
-//}
 -(void)viewBackground{
     //スクリーンサイズの取得
     CGRect screenSize = [[UIScreen mainScreen] bounds];

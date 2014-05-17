@@ -269,11 +269,9 @@
         */
          //最終的にresltArrayに配列がそれぞれぼこっと入る感じで。
         i++;
-        NSLog(@"ここまでいけた3");
 
     }
     
-//    NSLog(@"check2=====試しに配列の表示%@",titlearray[0]);
 
     [database close];
 

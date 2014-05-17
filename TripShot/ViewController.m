@@ -56,26 +56,14 @@
     //到達点についた時に分かるようにジオフェンスをスタート
     [self.locationManager startMonitoringForRegion:distCircularRegion];
     
-    //DBからピンぶっさしてます
-    [self markingPinFromList];
-    _mapView.delegate = self;
     
     //tabバーのアイコンの色設定
     [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
-    
-    
-    
 }
 
--(void)viewDidAppear:(BOOL)animated{
-
-    [self.navigationController setNavigationBarHidden:YES];
-    self.tabBarController.tabBar.hidden = NO;
-
-}
 
 
 
@@ -92,6 +80,8 @@
     //最新の位置情報を取り出す
     CLLocation *location = [locations lastObject];
     [self.mapView setCenterCoordinate:location.coordinate animated:YES];
+    
+    [self saveLocation:location];//値受け渡し用メソッド追加（藤原）
     
     //現在地を地図表示
     MKCoordinateRegion region = MKCoordinateRegionMake([location coordinate], MKCoordinateSpanMake(0.01, 0.01));//現在地を地図の中心位置を表した値と、表示領域（地図縮尺）の値をMKCoordinateRegionクラスのインスタンスへ代入
@@ -425,16 +415,26 @@
 #pragma mark -
 #pragma mark ふじわら追加メソッド
 
+-(void)viewDidAppear:(BOOL)animated{
+    
+    [self.navigationController setNavigationBarHidden:YES];
+    self.tabBarController.tabBar.hidden = NO;
+    
+    //DBからピンぶっさしてます
+    [self markingPinFromList];
+    _mapView.delegate = self;
 
-//DBからデータを読み込んで指定のピンをとりあえず刺しまくるメソッド まだデータの受け渡し部分未実装
+
+}
+
+
+//DBからデータを読み込んで指定のピンをとりあえず刺しまくる
 -(void)markingPinFromList{
     
     //DBと接続
     TSDataBase *db = [[TSDataBase alloc]init];
     NSMutableArray *DBData = [db loadDBData];
     
-//    NSMutableArray *idList = DBData[0];
-
     titleList = [[NSMutableArray alloc]init];
     titleList = DBData[1];
     
@@ -451,13 +451,12 @@
     addressList = DBData[10];
     NSString *temp;
     
-    //こっから刺しまくりんぐ
+    //こっから刺しまくり
     for(int i = 0; i < titleList.count ; i++){
         temp = latList[i];
         double lat = temp.doubleValue;
         temp = lonList[i];
         double lon = temp.doubleValue;
-//        temp = idList[i];
 
         CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(lat, lon);
         MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
@@ -481,15 +480,7 @@
     
 }
 
-
-//ピンをさわったときによばれるメソッド。
--(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
-
-    NSLog(@"たっちされたお");
-    
-}
-
-//アノテーションビューが作られたときのデリゲート。addAnotationするときに呼ばれる
+//アノテーションビューが作られたとき
 - (void)mapView:(MKMapView*)mapView didAddAnnotationViews:(NSArray*)views{
 
     // アノテーションビューを取得する
@@ -510,7 +501,7 @@
     annotationView:(MKAnnotationView *)view
     calloutAccessoryControlTapped:(UIControl *)control{
     
-    NSLog(@"%@",view.annotation);//view.annotationでどのアノテーションか判定できるらしい
+    NSLog(@"%@",view.annotation);
     NSLog(@"title is : %@",view.annotation.title);
     
     CameraViewController *cameraVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CameraVC"];
@@ -518,5 +509,17 @@
 
     [self.navigationController pushViewController:cameraVC animated:YES];
 }
+
+//緯度経度保存
+-(void)saveLocation:(CLLocation *)lastLocation{
+
+    NSString *latString = [NSString stringWithFormat:@"%f",lastLocation.coordinate.latitude];
+    NSString *lonString = [NSString stringWithFormat:@"%f",lastLocation.coordinate.longitude];
+    NSUserDefaults *savedata = [NSUserDefaults standardUserDefaults];
+    [savedata setObject:latString forKey:@"latFromMainPage"];
+    [savedata setObject:lonString forKey:@"lonFromMainPage"];
+
+}
+
 
 @end
