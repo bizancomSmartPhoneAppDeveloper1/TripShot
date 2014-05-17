@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="XsK-rt-U8t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="XsK-rt-U8t">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Album View Controller - Item-->
+        <!--Album View Controller-->
         <scene sceneID="4Gn-7z-VBQ">
             <objects>
                 <viewController id="KQW-ax-y4I" customClass="AlbumViewController" sceneMemberID="viewController">
@@ -65,7 +65,7 @@
                                 <items>
                                     <barButtonItem image="camera60.png" id="jJH-DT-CmW">
                                         <connections>
-                                            <segue destination="vXZ-lx-hvc" kind="modal" id="URt-RW-gzG"/>
+                                            <segue destination="OTV-ts-BVk" kind="modal" id="URt-RW-gzG"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -73,8 +73,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="Faf-HF-gDF"/>
-                    <navigationItem key="navigationItem" id="zkT-cr-QVi"/>
+                    <navigationItem key="navigationItem" id="occ-pR-dQZ"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="AlbumCollection" destination="nMM-EM-mmn" id="bTZ-sX-iGc"/>
@@ -83,7 +82,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S5l-Mj-AiX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-492" y="720"/>
+            <point key="canvasLocation" x="-190" y="428"/>
         </scene>
         <!--Individual Album View Controller-->
         <scene sceneID="cCF-JJ-JMz">
@@ -97,17 +96,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r1R-dg-qnU">
-                                <rect key="frame" x="25" y="26" width="271" height="184"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TYS-Zf-wEe">
-                                <rect key="frame" x="25" y="416" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="戻る">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yw1-KM-wH8">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1nA-FJ-V7U">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </scrollView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQM-Fo-RDb">
+                                        <rect key="frame" x="28" y="413" width="44" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="return60.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="wo6-80-wNV" kind="modal" id="ZAm-TO-3A6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQC-li-sOw">
+                                        <rect key="frame" x="28" y="371" width="44" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button" image="facebook.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="buttonFacebook:" destination="m5g-xJ-arX" eventType="touchUpInside" id="cbR-bN-i8A"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -118,12 +136,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LjG-cG-6fc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1058" y="1020"/>
+            <point key="canvasLocation" x="518" y="908"/>
         </scene>
         <!--Camera View Controller - Item-->
         <scene sceneID="dfN-JF-inY">
             <objects>
-                <viewController storyboardIdentifier="CameraVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PDs-5O-UB4" customClass="CameraViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CameraVC" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PDs-5O-UB4" customClass="CameraViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Tqx-NQ-uLX"/>
                         <viewControllerLayoutGuide type="bottom" id="luq-3W-2fm"/>
@@ -153,7 +171,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="vXZ-lx-hvc" kind="modal" identifier="cameraViewToMainView" id="RUU-Ok-4rd"/>
+                                            <segue destination="OTV-ts-BVk" kind="modal" identifier="cameraViewToMainView" id="RUU-Ok-4rd"/>
                                         </connections>
                                     </button>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jAV-rN-EYK">
@@ -183,12 +201,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n4X-jA-tNC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1888" y="1002"/>
+            <point key="canvasLocation" x="1068" y="523"/>
         </scene>
         <!--Search List View Controller-->
         <scene sceneID="hCz-vd-bPd">
             <objects>
-                <tableViewController storyboardIdentifier="searchVC" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dc9-mh-IFs" customClass="SearchListViewController" sceneMemberID="viewController">
+                <tableViewController id="dc9-mh-IFs" customClass="SearchListViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="X3d-zu-BhA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -229,6 +247,7 @@
                             <outlet property="delegate" destination="dc9-mh-IFs" id="XH9-Wx-ps7"/>
                         </connections>
                     </tableView>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="bhj-Lt-tud"/>
                     <navigationItem key="navigationItem" id="337-RB-E45">
                         <barButtonItem key="leftBarButtonItem" image="returnTabicon" id="Chi-mi-v0X">
                             <connections>
@@ -252,12 +271,12 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-1205" y="548"/>
+            <point key="canvasLocation" x="2167" y="428"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -273,14 +292,37 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" image="mapTabicon" id="5cP-tI-SaA"/>
+                    <navigationItem key="navigationItem" id="OSx-66-EUQ"/>
                     <connections>
                         <outlet property="mapView" destination="Man-Q1-MmQ" id="OUe-gd-sQX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="154" y="337"/>
+            <point key="canvasLocation" x="970" y="-291"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="D1Q-6e-ulU">
+            <objects>
+                <navigationController storyboardIdentifier="searchVC" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oEl-JI-kXf" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="search" id="i52-BY-OG8"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="R1K-f3-OQz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Qbg-GO-fYD">
+                        <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="dc9-mh-IFs" kind="relationship" relationship="rootViewController" id="kSS-JE-VmJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oy2-y5-zJP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1641" y="428"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="T4J-v3-Iol">
@@ -293,9 +335,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="viewControllers" id="NCH-Mv-HYK"/>
-                        <segue destination="KQW-ax-y4I" kind="relationship" relationship="viewControllers" id="YNS-EU-UoH"/>
-                        <segue destination="cix-x9-W2X" kind="relationship" relationship="viewControllers" id="G0I-O7-JbT"/>
+                        <segue destination="OTV-ts-BVk" kind="relationship" relationship="viewControllers" id="NCH-Mv-HYK"/>
+                        <segue destination="wo6-80-wNV" kind="relationship" relationship="viewControllers" id="RBS-Fe-Fdj"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3gy-3G-PY0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -303,28 +344,51 @@
             <point key="canvasLocation" x="-1145" y="-609"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="tmS-bG-G7z">
+        <scene sceneID="mbI-sv-VYe">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cix-x9-W2X" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="bhj-Lt-tud"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wo6-80-wNV" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" image="albumTabicon" id="elA-Sv-wax"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eXM-1U-jNh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pqo-Wa-w7x">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="dc9-mh-IFs" kind="relationship" relationship="rootViewController" id="LjK-mP-BsH"/>
+                        <segue destination="KQW-ax-y4I" kind="relationship" relationship="rootViewController" id="JXO-Mc-KT6"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6Fm-nV-ees" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XDL-4Q-dDd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1731" y="548"/>
+            <point key="canvasLocation" x="-716" y="428"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="4uE-ro-xSg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OTV-ts-BVk" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" image="mapTabicon" id="5cP-tI-SaA"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="U2E-Bv-Z7O">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="DKQ-LT-IEb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="758-hX-gzq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="444" y="-291"/>
         </scene>
     </scenes>
     <resources>
-        <image name="camera.png" width="128" height="128"/>
-        <image name="modoruTabicon" width="30" height="30"/>
+        <image name="albumTabicon" width="30" height="30"/>
+        <image name="camera60.png" width="60" height="60"/>
+        <image name="facebook.png" width="50" height="50"/>
+        <image name="mapTabicon" width="30" height="30"/>
+        <image name="return60.png" width="60" height="60"/>
+        <image name="returnTabicon" width="30" height="30"/>
         <image name="subtitle1.png" width="640" height="44"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -333,6 +397,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="NCH-Mv-HYK"/>
+        <segue reference="URt-RW-gzG"/>
+        <segue reference="ZAm-TO-3A6"/>
     </inferredMetricsTieBreakers>
 </document>

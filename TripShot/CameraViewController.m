@@ -53,6 +53,15 @@
     
     //各表示
     [self viewSet];
+    
+    
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+
+    [self.navigationController setNavigationBarHidden:NO];
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 

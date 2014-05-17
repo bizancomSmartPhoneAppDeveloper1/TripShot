@@ -64,7 +64,20 @@
     [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
+    
+    
+    
+    
 }
+
+-(void)viewDidAppear:(BOOL)animated{
+
+    [self.navigationController setNavigationBarHidden:YES];
+    self.tabBarController.tabBar.hidden = NO;
+
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -502,7 +515,8 @@
     
     CameraViewController *cameraVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CameraVC"];
     cameraVC.place_nameFromMainPage = view.annotation.title;
-    [self presentViewController:cameraVC animated:YES completion:nil];
+
+    [self.navigationController pushViewController:cameraVC animated:YES];
 }
 
 @end

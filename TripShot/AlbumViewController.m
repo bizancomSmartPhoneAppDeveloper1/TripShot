@@ -65,12 +65,13 @@
     [picture insertObject:@"icon_1r_192.png" atIndex:0];
     
     [self viewBackground];
-    
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
 
-
+    [self.navigationController setNavigationBarHidden:YES];
+        self.tabBarController.tabBar.hidden = NO;
 
 }
 
@@ -97,7 +98,8 @@
 
         IndividualAlbumViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
         indiAVC.idFromMainPage = idnumb;
-        [self presentViewController:indiAVC animated:YES completion:nil];
+        [self.navigationController pushViewController:indiAVC animated:YES];
+
     
     }
 

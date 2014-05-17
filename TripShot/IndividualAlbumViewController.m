@@ -50,6 +50,9 @@
     
     //各表示
     [self viewSet];
+    
+    [self.navigationController setNavigationBarHidden:NO];
+    self.tabBarController.tabBar.hidden = YES;
 
 }
 
