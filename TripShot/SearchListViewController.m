@@ -3,7 +3,7 @@
 //  TripShot
 //
 //  Created by EmikoFujiwara on 2014/05/13.
-//  Copyright (c) 2014年 bizan.com.mac02. All rights reserved.
+//  Copyright (c) 2014年 team -IKI- All rights reserved.
 //
 
 #import "SearchListViewController.h"
