@@ -128,7 +128,7 @@
     CollectionCell *cell = [collectionView
                             dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     if([picture[indexPath.item] isEqualToString:@"NODATA"]){
-        [[cell pictureView] setImage:[UIImage imageNamed:@"image1.jpg"]];
+        [[cell pictureView] setImage:[UIImage imageNamed:@"makimono.jpg"]];
 
     }else{
         [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
