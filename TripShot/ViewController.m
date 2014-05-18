@@ -62,6 +62,7 @@
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
+    
 }
 
 
