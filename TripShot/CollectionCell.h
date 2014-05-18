@@ -11,5 +11,6 @@
 @interface CollectionCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *pictureView;
 @property (weak, nonatomic) IBOutlet UILabel *pictureDate;
+@property (weak, nonatomic) IBOutlet UIImageView *cellFrameView;
 
 @end

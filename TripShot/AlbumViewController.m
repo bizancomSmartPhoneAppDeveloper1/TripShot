@@ -39,6 +39,8 @@
     [[self AlbumCollection]setDataSource:self];
     [[self AlbumCollection]setDelegate:self];
     
+    
+    [self viewBackground];
 
 }
 
@@ -58,10 +60,7 @@
     //配列のいっこめをボタンにするため仮画像追加
     [placeName insertObject:@"追加" atIndex:0];
     [picture insertObject:@"icon_1r_192.png" atIndex:0];
-    
-    [self viewBackground];
     [_AlbumCollection reloadData];
-
 
 }
 
@@ -80,7 +79,7 @@
         idnumb = [pathNumber intValue];
         
 //        [self performSegueWithIdentifier:@"albumToIndividualAlbum" sender:self];//これを使う（石井）
-
+        
         IndividualAlbumViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
         indiAVC.idFromMainPage = idnumb;
         [self.navigationController pushViewController:indiAVC animated:YES];
@@ -96,7 +95,6 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section;
 
-//セクションに応じたセルの数を返す。
 {
 
     return placeName.count;
@@ -111,15 +109,15 @@
     static NSString *CellIdentifier =@"Cell";
     CollectionCell *cell = [collectionView
                             dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    if([picture[indexPath.item] isEqualToString:@"icon_1r_192.png"]){
+    if([picture[indexPath.item] isEqualToString:@"icon_1r_192.png"]){//追加ボタンのぶん
+        
       [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
     
-    
-    }else if ([picture[indexPath.item] isEqualToString:@"NODATA"]){
+    }else if ([picture[indexPath.item] isEqualToString:@"NODATA"]){//データが空のとき
         
         [[cell pictureView] setImage:[UIImage imageNamed:@"image1.jpg"]];
 
-    }else{ //要注意（石井さんにきくこと）
+    }else{ //通常時。要注意。配列画像の画像の一枚目を表示する。（石井さんにきくこと）
         
         NSData *dt = [NSData dataWithContentsOfURL:[NSURL URLWithString:picture[indexPath.item]]];
         UIImage *image = [[UIImage alloc]initWithData:dt];

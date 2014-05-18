@@ -57,6 +57,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
+                                            <outlet property="cellFrameView" destination="ePy-G3-Sh3" id="iEA-9w-p5O"/>
                                             <outlet property="pictureDate" destination="f86-dM-sYI" id="hbt-4P-4bu"/>
                                             <outlet property="pictureView" destination="6cP-vG-IXZ" id="XWV-RX-Azc"/>
                                         </connections>
