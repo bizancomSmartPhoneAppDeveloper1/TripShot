@@ -30,6 +30,10 @@
 		87354C7919277D7000EF8FC2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87354C7819277D7000EF8FC2 /* Social.framework */; };
 		87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */; };
 		87522D3E1920E88900334492 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 87522D3D1920E88900334492 /* camera.png */; };
+		876B60D21928A0BB006E7A67 /* makimono.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 876B60D11928A0BB006E7A67 /* makimono.jpg */; };
+		876B60D61928A0D0006E7A67 /* TripShotIcon58.png in Resources */ = {isa = PBXBuildFile; fileRef = 876B60D31928A0D0006E7A67 /* TripShotIcon58.png */; };
+		876B60D71928A0D0006E7A67 /* TripShotIcon80.png in Resources */ = {isa = PBXBuildFile; fileRef = 876B60D41928A0D0006E7A67 /* TripShotIcon80.png */; };
+		876B60D81928A0D0006E7A67 /* TripShotIcon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 876B60D51928A0D0006E7A67 /* TripShotIcon120.png */; };
 		8777B2711925BC1B002126BA /* camera60.png in Resources */ = {isa = PBXBuildFile; fileRef = 8777B2701925BC1B002126BA /* camera60.png */; };
 		8777B2731925BC28002126BA /* return60.png in Resources */ = {isa = PBXBuildFile; fileRef = 8777B2721925BC28002126BA /* return60.png */; };
 		8777B2751925BC3A002126BA /* return30.png in Resources */ = {isa = PBXBuildFile; fileRef = 8777B2741925BC3A002126BA /* return30.png */; };
@@ -106,6 +110,10 @@
 		87354C7819277D7000EF8FC2 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		87522D3B19208F5600334492 /* free-textures-japanese-style-06.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "free-textures-japanese-style-06.jpg"; sourceTree = "<group>"; };
 		87522D3D1920E88900334492 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		876B60D11928A0BB006E7A67 /* makimono.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = makimono.jpg; sourceTree = "<group>"; };
+		876B60D31928A0D0006E7A67 /* TripShotIcon58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TripShotIcon58.png; sourceTree = "<group>"; };
+		876B60D41928A0D0006E7A67 /* TripShotIcon80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TripShotIcon80.png; sourceTree = "<group>"; };
+		876B60D51928A0D0006E7A67 /* TripShotIcon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TripShotIcon120.png; sourceTree = "<group>"; };
 		8777B2701925BC1B002126BA /* camera60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera60.png; sourceTree = "<group>"; };
 		8777B2721925BC28002126BA /* return60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = return60.png; sourceTree = "<group>"; };
 		8777B2741925BC3A002126BA /* return30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = return30.png; sourceTree = "<group>"; };
@@ -226,6 +234,10 @@
 		87522D3A19208F4A00334492 /* pics */ = {
 			isa = PBXGroup;
 			children = (
+				876B60D31928A0D0006E7A67 /* TripShotIcon58.png */,
+				876B60D41928A0D0006E7A67 /* TripShotIcon80.png */,
+				876B60D51928A0D0006E7A67 /* TripShotIcon120.png */,
+				876B60D11928A0BB006E7A67 /* makimono.jpg */,
 				87354C761927794B00EF8FC2 /* facebook.png */,
 				8777B2781925BCA0002126BA /* map30.png */,
 				8777B2761925BC93002126BA /* map60.png */,
@@ -430,7 +442,9 @@
 				F62A87F019208E7D001BBDDB /* image1.jpg in Resources */,
 				F62A87F419208E8B001BBDDB /* image3.jpg in Resources */,
 				87354C771927794B00EF8FC2 /* facebook.png in Resources */,
+				876B60D71928A0D0006E7A67 /* TripShotIcon80.png in Resources */,
 				F62A87F619208E93001BBDDB /* image4.jpg in Resources */,
+				876B60D21928A0BB006E7A67 /* makimono.jpg in Resources */,
 				87AC966D191CF98400C69813 /* InfoPlist.strings in Resources */,
 				87522D3C19208F5600334492 /* free-textures-japanese-style-06.jpg in Resources */,
 				8777B2791925BCA0002126BA /* map30.png in Resources */,
@@ -438,6 +452,8 @@
 				18F4B7BD1924A43A00F4C8BB /* bright_img140514103609.jpg in Resources */,
 				87522D3E1920E88900334492 /* camera.png in Resources */,
 				8777B2711925BC1B002126BA /* camera60.png in Resources */,
+				876B60D61928A0D0006E7A67 /* TripShotIcon58.png in Resources */,
+				876B60D81928A0D0006E7A67 /* TripShotIcon120.png in Resources */,
 				8777B2751925BC3A002126BA /* return30.png in Resources */,
 				18F4B7B91924A41F00F4C8BB /* subtitle1.png in Resources */,
 			);
