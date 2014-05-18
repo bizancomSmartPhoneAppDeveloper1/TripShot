@@ -38,11 +38,22 @@
     
     [[self AlbumCollection]setDataSource:self];
     [[self AlbumCollection]setDelegate:self];
-    
+
+//
+//    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+//
     
     [self viewBackground];
-
+    
+    //長押しで削除するようにする
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPressGesture)];
+    longPressGestureRecognizer.minimumPressDuration = 0.8;
+    longPressGestureRecognizer.delegate = self;
+    [_AlbumCollection addGestureRecognizer:longPressGestureRecognizer];
+        
 }
+
+
 
 -(void)viewDidAppear:(BOOL)animated{
 
@@ -57,18 +68,19 @@
     picture = DBData[6];
     idarray = DBData[0];
     
-    //配列のいっこめをボタンにするため仮画像追加
+    //配列のいっこめをボタンにする
     [placeName insertObject:@"追加" atIndex:0];
     [picture insertObject:@"icon_1r_192.png" atIndex:0];
+    
     [_AlbumCollection reloadData];
 
 }
 
-//クリックされたら呼ばれるメソッド
+//セルをクリックされたら呼ばれるメソッド
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
 
+    //サーチのリストビューに飛ぶ
     if(indexPath.row == 0){
-        //サーチのリストビューに飛ぶ
         UINavigationController *searchVC = [self.storyboard instantiateViewControllerWithIdentifier:@"searchVC"];
         [self presentViewController:searchVC animated:YES completion:nil];
 
@@ -88,7 +100,7 @@
 }
 
 
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView;//セクションの数を設定
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView;
 {
     return 1;
 }
@@ -107,9 +119,11 @@
 {
     // スタイルを指定したセル生成
     static NSString *CellIdentifier =@"Cell";
+    
     CollectionCell *cell = [collectionView
                             dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    if([picture[indexPath.item] isEqualToString:@"icon_1r_192.png"]){//追加ボタンのぶん
+    
+    if([picture[indexPath.item] isEqualToString:@"icon_1r_192.png"]){//追加ボタン
         
       [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
     
@@ -136,8 +150,33 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - EditCells
 
-#pragma mark - Navigation
+-(void)handleLongPressGesture{
+    
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
+                                                   message:@"削除しますか"
+                                                  delegate:self
+                                         cancelButtonTitle:@"キャンセル"
+                                         otherButtonTitles:@"はい", nil];
+    [alert show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    switch(buttonIndex){
+        case 0:
+            break;
+            
+        case 1://「はい」のとき。
+            //ここにデータの削除処理を書く
+            break;
+            
+    }
+}
+
+
+#pragma mark - Navigation (Arita)
 
 -(void)initNavigationBar{ //念のため用意した
     //ナビゲーションバー
@@ -148,8 +187,6 @@
     [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
 }
-
-
 
 -(void)viewBackground{
     //スクリーンサイズの取得

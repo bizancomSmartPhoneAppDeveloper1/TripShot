@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AlbumViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@interface AlbumViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *AlbumCollection;
 

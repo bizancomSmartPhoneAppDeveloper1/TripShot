@@ -75,6 +75,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
                                NSUTF8StringEncoding];
     
     //現在地に近い順でソートする 現時点では遠いところは表示されないみたい
+    
 //    NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json&lat=%@&lon=%@&sort=geo",APIKEY,encodedString,_savedLat,_savedLon];
     
     NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json",APIKEY,encodedString];
@@ -110,14 +111,14 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
             
             //緯度経度を２つに分割する
             NSArray *locations = [geometry componentsSeparatedByString:@","];
-            NSString *lon1 = locations[0];
-            NSString *lat1 = locations[1];
-            double lon2 = lon1.doubleValue;
-            double lat2 = lat1.doubleValue;
+            NSString *stringLon = locations[0];
+            NSString *stringLat = locations[1];
+            double doubleLon = stringLon.doubleValue;
+            double doubleLat = stringLat.doubleValue;
             
             //住所に変換
             TSDataBase *db = [[TSDataBase alloc]init];
-            NSString *address = [db getAddressFromLat:lat2 AndLot:lon2];
+            NSString *address = [db getAddressFromLat:doubleLat AndLot:doubleLon];
             [_addressArray addObject:address];
         }
         
@@ -200,7 +201,6 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     _locationArray = nil;
     
     [_TableView reloadData];
-
 }
 
 
@@ -223,12 +223,21 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     
     [_TableView reloadData];
     
+    
 }
 
 -(void)loadLocationData{
     NSUserDefaults *savedata = [NSUserDefaults standardUserDefaults];
     _savedLat = [savedata stringForKey:@"latFromMainPage"];
     _savedLon = [savedata stringForKey:@"lonFromMainPage"];
+
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    UIColor *backcolor = [UIColor whiteColor];
+    UIColor *alpha = [backcolor colorWithAlphaComponent:0.0];
+    cell.backgroundColor = alpha;
 
 }
 

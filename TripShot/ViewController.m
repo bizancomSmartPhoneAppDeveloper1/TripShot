@@ -413,8 +413,7 @@
     
 }
 
-#pragma mark -
-#pragma mark ふじわら追加メソッド
+#pragma mark - ふじわら追加メソッド
 
 -(void)viewDidAppear:(BOOL)animated{
     
@@ -428,8 +427,6 @@
 
 }
 
-
-//DBからデータを読み込んで指定のピンをとりあえず刺しまくる
 -(void)markingPinFromList{
     
     //DBと接続
@@ -452,7 +449,6 @@
     addressList = DBData[10];
     NSString *temp;
     
-    //こっから刺しまくり
     for(int i = 0; i < titleList.count ; i++){
         temp = latList[i];
         double lat = temp.doubleValue;
