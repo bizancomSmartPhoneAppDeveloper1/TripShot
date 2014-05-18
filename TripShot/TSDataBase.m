@@ -9,6 +9,7 @@
 #import "TSDataBase.h"
 @interface TSDataBase()
 @property NSInteger dataid;
+@property int dataCount;
 @end
 
 @implementation TSDataBase{
@@ -182,8 +183,8 @@
 }
 
 
-
--(NSMutableArray *)loadDBData{ //DBデータの読み込み
+//DBデータをIDの大きい順に配列に格納
+-(NSMutableArray *)loadDBData{
     
     //ディレクトリのリストを取得する
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -199,12 +200,12 @@
     //データベースを開く
     [database open];
     
-    //必要なデータを取り出す（ここでは、delete_flagが0のものすべて）
-    
+    //必要なデータを取り出す（ここでは、delete_flagが0のものすべて）    
     //sqlのさいごにORDER BY ID DESC　をいれるとIDの順番でソートできる
-
     
-    NSString *sql = @"SELECT * FROM testTable WHERE delete_flag = '0' ORDER BY date DESC;";
+//    NSString *sql = @"SELECT * FROM testTable WHERE delete_flag = '0' ORDER BY date DESC;";
+    NSString *sql = @"SELECT * FROM testTable WHERE delete_flag = '0' ORDER BY ID DESC;";
+    
     FMResultSet *results = [database executeQuery:sql];//DBの中身はresultsにはいるよ
 
     //要素のいれものをつくる
@@ -297,8 +298,28 @@
     
 
 }
--(void)deleteData{ //削除フラグをたてるだけだけどね 未完了
+
+ //到達フラグをたてる
+-(void)wentFlagFromDataId:(int)dataId{
     
+    //ディレクトリのリストを取得する
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //インスタンスの作成
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+    
+    //データのupdate
+    NSString *update_sqlWentFlag = [NSString stringWithFormat:@"update testTable set went_flag = 1 where id = %d",dataId];
+    
+    [database open];
+    
+    [database executeUpdate:update_sqlWentFlag];
+    
+    //NSLog(@"記事No:%d DB上書き完了",dataid);
+    [database close];
+
 }
 
 
@@ -363,6 +384,33 @@
     return  _dataid;
 }
 
+//現在のデータ総数を確認する
+-(int)CountNowData{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+    
+    [database open];
+    
+    NSString *sql = @"SELECT COUNT(*) AS COUNT FROM testTable;";
+    
+    FMResultSet *results = [database executeQuery:sql];//DBの中身はresultsにはいるよ
+    NSLog(@"%@",results);
+    
+    while([results next]){
+        
+        _dataCount = [results intForColumn:@"COUNT"];
+
+    }
+ 
+    [database close];
+
+    return _dataCount;
+
+}
 
 
 

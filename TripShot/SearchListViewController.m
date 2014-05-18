@@ -52,12 +52,6 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     //サーチバーの定義
     _searchField.delegate = self;
     _searchField.placeholder = @"行きたい場所を入力してね！";
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [self viewBackground];
     [self initNavigationBar];
@@ -74,9 +68,8 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     NSString *encodedString = [word stringByAddingPercentEscapesUsingEncoding:
                                NSUTF8StringEncoding];
     
-    //現在地に近い順でソートする 現時点では遠いところは表示されないみたい
-    
-//    NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json&lat=%@&lon=%@&sort=geo",APIKEY,encodedString,_savedLat,_savedLon];
+    //現在地に近い順でソートする 現時点では遠いところは表示されないみたいなのでいったんコメントアウト
+    //NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json&lat=%@&lon=%@&sort=geo",APIKEY,encodedString,_savedLat,_savedLon];
     
     NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json",APIKEY,encodedString];
 
@@ -170,8 +163,6 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     //必要な情報取得
     NSString *name = [_nameArray objectAtIndex:indexPath.row];
     NSString *location = [_locationArray objectAtIndex:indexPath.row];
-
-    NSLog(@"ちゃんと緯度経度表示されるかな：%@",location);
     
     //緯度経度を２つに分割する
     NSArray *locations = [location componentsSeparatedByString:@","];
@@ -186,7 +177,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     [db createDBDataFromLat:lat2 andLot:lon2 andTitle:name];
     
     //アラート表示
-    NSString *message = [NSString stringWithFormat:@"行きたいところに%@を追加しました",name];
+    NSString *message = [NSString stringWithFormat:@"行きたいところに\n%@\nを追加しました",name];
     UIAlertView *alert =
     [[UIAlertView alloc]initWithTitle:@"おしらせ"
                               message:message
@@ -209,6 +200,19 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
     _searchField.text = nil;
     
+    //20件になったら警告
+    TSDataBase *db = [[TSDataBase alloc]init];
+    int count = [db CountNowData];
+    
+    if(count >= 20){
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
+                                                       message:@"これ以上登録できません"
+                                                      delegate:nil
+                                             cancelButtonTitle:@"戻る"
+                                             otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    
 }
 
 //サーチボタンタップ時に呼ばれる
@@ -218,7 +222,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     [_searchField resignFirstResponder];
     [self getJsonFromWord:word];
 
-    //検索結果がからっぽだったとき(JSONDataのResultInfoのCountが0のとき）
+    //検索結果がからっぽだったとき(JSONDataのResultInfoのCountが0のとき）-------------------------
     //の処理をここにかく。
     
     [_TableView reloadData];
@@ -240,44 +244,6 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     cell.backgroundColor = alpha;
 
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-}
-*/
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-
 
 - (IBAction)cancelButtonTapped:(id)sender {
 

@@ -41,7 +41,8 @@
 -(void)saveData;//通し番号セーブ（記事作成後に必ず）
 -(int)loadData;//通し番号読み込み（記事作成前に必ず）通し番号がかえってくる
 
--(void)deleteData;//削除フラグをたてるだけだけどね 未完了
+-(void)wentFlagFromDataId:(int)dataId;//到達フラグをたてる
+-(int)CountNowData;//現在のデータ総数を確認する
 
 //緯度経度からDBにデータ追加するメソッド
 -(void)createDBDataFromLat:(double)lat andLot:(double)lot andTitle:(NSString *)title; //SeachListViewControllerで使用

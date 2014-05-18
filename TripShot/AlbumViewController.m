@@ -76,28 +76,6 @@
 
 }
 
-//セルをクリックされたら呼ばれるメソッド
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-
-    //サーチのリストビューに飛ぶ
-    if(indexPath.row == 0){
-        UINavigationController *searchVC = [self.storyboard instantiateViewControllerWithIdentifier:@"searchVC"];
-        [self presentViewController:searchVC animated:YES completion:nil];
-
-    }else{
-
-        NSLog(@"idarray=%@",[idarray description]);
-        NSString *pathNumber = [idarray objectAtIndex:indexPath.row-1];
-        idnumb = [pathNumber intValue];
-        
-//        [self performSegueWithIdentifier:@"albumToIndividualAlbum" sender:self];//これを使う（石井）
-        
-        IndividualAlbumViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
-        indiAVC.idFromMainPage = idnumb;
-        [self.navigationController pushViewController:indiAVC animated:YES];
-
-    }
-}
 
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView;
@@ -112,6 +90,53 @@
     return placeName.count;
 
 }
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+
+
+//セルをクリックされたら呼ばれるメソッド
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    //追加ボタンをおした時
+    if(indexPath.row == 0){
+        
+        TSDataBase *db = [[TSDataBase alloc]init];
+        int count = [db CountNowData];
+        
+        if(count >= 20){
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
+                                                           message:@"これ以上登録できません"
+                                                          delegate:nil
+                                                 cancelButtonTitle:@"戻る"
+                                                 otherButtonTitles:nil, nil];
+            [alert show];
+        }else{
+        
+        UINavigationController *searchVC = [self.storyboard instantiateViewControllerWithIdentifier:@"searchVC"];
+        [self presentViewController:searchVC animated:YES completion:nil];
+        }
+        
+    }else{
+        
+        NSLog(@"idarray=%@",[idarray description]);
+        NSString *pathNumber = [idarray objectAtIndex:indexPath.row-1];
+        idnumb = [pathNumber intValue];
+        
+        //        [self performSegueWithIdentifier:@"albumToIndividualAlbum" sender:self];//これを使う（石井）
+        
+        IndividualAlbumViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
+        indiAVC.idFromMainPage = idnumb;
+        [self.navigationController pushViewController:indiAVC animated:YES];
+        
+    }
+}
+
 
 //collectionView:cellForItemAtIndexPath:メソッドでセルの編集をする
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -144,11 +169,6 @@
     return cell;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - EditCells
 
