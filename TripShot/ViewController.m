@@ -57,6 +57,15 @@
 //    //到達点についた時に分かるようにジオフェンスをスタート
 //    [self.locationManager startMonitoringForRegion:distCircularRegion];
     
+    //位置情報が使えるか確認する
+    [self locationAuth];
+    
+    //バックグラウンド通信ができるか確認する
+    [self backgroundCheck];
+    
+    //到達点についた時に分かるようにジオフェンスをスタート
+    [self.locationManager startMonitoringForRegion:distCircularRegion];
+    
     
     
 }
