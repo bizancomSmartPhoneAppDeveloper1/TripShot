@@ -45,12 +45,11 @@
     
     [self viewBackground];
     
-    //長押しで削除するようにする
-    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPressGesture)];
-    longPressGestureRecognizer.minimumPressDuration = 0.8;
-    longPressGestureRecognizer.delegate = self;
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+//    longPressGestureRecognizer.minimumPressDuration = 0.3;
+//    longPressGestureRecognizer.delegate = self;
     [_AlbumCollection addGestureRecognizer:longPressGestureRecognizer];
-        
+
 }
 
 
@@ -172,15 +171,21 @@
 
 #pragma mark - EditCells
 
--(void)handleLongPressGesture{
-    
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
-                                                   message:@"削除しますか"
-                                                  delegate:self
-                                         cancelButtonTitle:@"キャンセル"
-                                         otherButtonTitles:@"はい", nil];
-    [alert show];
+-  (void)handleLongPress:(UILongPressGestureRecognizer*)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+
+    }
+    else if (sender.state == UIGestureRecognizerStateBegan){
+
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
+                                                       message:@"削除しますか"
+                                                      delegate:self
+                                             cancelButtonTitle:@"キャンセル"
+                                             otherButtonTitles:@"はい", nil];
+        [alert show];
+    }
 }
+
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
