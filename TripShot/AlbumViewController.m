@@ -50,6 +50,9 @@
 //    longPressGestureRecognizer.minimumPressDuration = 0.3;
 //    longPressGestureRecognizer.delegate = self;
     [_AlbumCollection addGestureRecognizer:longPressGestureRecognizer];
+    
+    //データ保存用のディレクトリを作成する
+    [self makeDirForAppContents];
 
 }
 
@@ -165,9 +168,6 @@
         NSData *dataPics = [[NSData alloc] initWithContentsOfFile:[arrayPicNotMutable objectAtIndex:0]];
         UIImage* image = [[UIImage alloc] initWithData:dataPics];
         
-        //NSData *dt = [NSData dataWithContentsOfURL:[NSURL URLWithString:picture[indexPath.item]]];
-        //UIImage *image = [[UIImage alloc]initWithData:dt];
-        
         [[cell pictureView]setImage:image];
     }
     
@@ -260,5 +260,40 @@
     [self.view sendSubviewToBack:imageViewBackA];
 
 }
+
+
+//Documentsフォルダにデータ保存用のフォルダを作成する関数
+- (BOOL)makeDirForAppContents
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *baseDir = [self myDocumentsPath];
+    
+    BOOL exists = [fileManager fileExistsAtPath:baseDir];
+    if (!exists) {
+        NSError *error;
+        BOOL created = [fileManager createDirectoryAtPath:baseDir withIntermediateDirectories:YES attributes:nil error:&error];
+        if (!created) {
+            NSLog(@"ディレクトリ作成失敗");
+            return NO;
+        }
+    } else {
+        //作成済みの場合はNO
+        return NO;
+    }
+    return YES;
+}
+
+
+//データ保存用のフォルダのパスを返す関数
+- (NSString *)myDocumentsPath
+{
+    //アプリのドキュメントフォルダのパスを検索
+    NSString *documentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    //追加するディレクトリ名を指定
+    NSString *picsFolderPath = [documentsPath stringByAppendingPathComponent:@"PicsFolder"];
+    NSLog(@"PicsFolderPass=%@",picsFolderPath);
+    return picsFolderPath;
+}
+
 
 @end

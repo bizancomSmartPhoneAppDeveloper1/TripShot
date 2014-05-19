@@ -17,5 +17,8 @@
 
 @property NSUserDefaults *mydefault;
 @property NSTimer* timer;
+@property BOOL mapFlag;//ユーザーの現在位置を地図の中心に持ってくるフラグ
+
+- (IBAction)goUserLocation:(UIButton *)sender;
 
 @end
