@@ -34,11 +34,16 @@
 
 @implementation ViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    //フラグを初期化
+    self.mapFlag = NO;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-
+    
     self.locationManager = [[CLLocationManager alloc]init];
     self.locationManager.delegate = self;
        // [self.locationManager startUpdatingLocation];
@@ -75,14 +80,21 @@
     
     //最新の位置情報を取り出す
     CLLocation *location = [locations lastObject];
-    [self.mapView setCenterCoordinate:location.coordinate animated:YES];
+    
+    //[self.mapView setCenterCoordinate:location.coordinate animated:YES];
     
     [self saveLocation:location];//値受け渡し用メソッド追加（藤原）
     
-    //現在地を地図表示
-    MKCoordinateRegion region = MKCoordinateRegionMake([location coordinate], MKCoordinateSpanMake(0.01, 0.01));//現在地を地図の中心位置を表した値と、表示領域（地図縮尺）の値をMKCoordinateRegionクラスのインスタンスへ代入
-    
-    [self.mapView setRegion:region animated:YES];
+    //最初だけユーザーの位置を中心に地図表示
+    if (self.mapFlag == NO)
+    {
+        //現在地を地図表示
+        MKCoordinateRegion region = MKCoordinateRegionMake([location coordinate], MKCoordinateSpanMake(0.01, 0.01));//現在地を地図の中心位置を表した値と、表示領域（地図縮尺）の値をMKCoordinateRegionクラスのインスタンスへ代入
+        
+        [self.mapView setRegion:region animated:YES];
+        
+        self.mapFlag = YES;
+    }
     
     //到達点についた時に分かるようにジオフェンスをスタート
     [self.locationManager startMonitoringForRegion:distCircularRegion];
@@ -92,6 +104,13 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
 
 }
+
+- (IBAction)goUserLocation:(UIButton *)sender
+{
+    self.mapFlag = NO;
+    [self.locationManager startUpdatingLocation];
+}
+
 
 - (void)locationAuth{
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
