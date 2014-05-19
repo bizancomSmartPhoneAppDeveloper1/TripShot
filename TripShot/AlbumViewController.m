@@ -15,6 +15,7 @@
 {
     UIImageView *imageViewBackA;
     NSMutableArray *picture;
+    NSMutableArray *picsCount;
     NSMutableArray *idarray;
     NSMutableArray *placeName;
     int idnumb;
@@ -45,12 +46,11 @@
     
     [self viewBackground];
     
-    //長押しで削除するようにする
-    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPressGesture)];
-    longPressGestureRecognizer.minimumPressDuration = 0.8;
-    longPressGestureRecognizer.delegate = self;
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+//    longPressGestureRecognizer.minimumPressDuration = 0.3;
+//    longPressGestureRecognizer.delegate = self;
     [_AlbumCollection addGestureRecognizer:longPressGestureRecognizer];
-        
+
 }
 
 
@@ -63,9 +63,11 @@
     TSDataBase *db = [[TSDataBase alloc]init];
     NSMutableArray *DBData = [db loadDBData];
     
+    picsCount = [[NSMutableArray alloc]init];
     
     placeName = DBData[1];
     picture = DBData[6];
+    picsCount = DBData[7];
     idarray = DBData[0];
     
     //配列のいっこめをボタンにする
@@ -158,8 +160,13 @@
 
     }else{ //通常時。要注意。配列画像の画像の一枚目を表示する。（石井さんにきくこと）
         
-        NSData *dt = [NSData dataWithContentsOfURL:[NSURL URLWithString:picture[indexPath.item]]];
-        UIImage *image = [[UIImage alloc]initWithData:dt];
+        NSArray *arrayPicNotMutable = [picture[indexPath.item] componentsSeparatedByString:@","];
+        NSLog(@"arrayPicNotMutable=%@",[arrayPicNotMutable description]);
+        NSData *dataPics = [[NSData alloc] initWithContentsOfFile:[arrayPicNotMutable objectAtIndex:0]];
+        UIImage* image = [[UIImage alloc] initWithData:dataPics];
+        
+        //NSData *dt = [NSData dataWithContentsOfURL:[NSURL URLWithString:picture[indexPath.item]]];
+        //UIImage *image = [[UIImage alloc]initWithData:dt];
         
         [[cell pictureView]setImage:image];
     }
@@ -172,15 +179,21 @@
 
 #pragma mark - EditCells
 
--(void)handleLongPressGesture{
-    
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
-                                                   message:@"削除しますか"
-                                                  delegate:self
-                                         cancelButtonTitle:@"キャンセル"
-                                         otherButtonTitles:@"はい", nil];
-    [alert show];
+-  (void)handleLongPress:(UILongPressGestureRecognizer*)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+
+    }
+    else if (sender.state == UIGestureRecognizerStateBegan){
+
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
+                                                       message:@"削除しますか"
+                                                      delegate:self
+                                             cancelButtonTitle:@"キャンセル"
+                                             otherButtonTitles:@"はい", nil];
+        [alert show];
+    }
 }
+
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
