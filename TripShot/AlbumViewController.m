@@ -15,6 +15,7 @@
 {
     UIImageView *imageViewBackA;
     NSMutableArray *picture;
+    NSMutableArray *picsCount;
     NSMutableArray *idarray;
     NSMutableArray *placeName;
     int idnumb;
@@ -62,9 +63,11 @@
     TSDataBase *db = [[TSDataBase alloc]init];
     NSMutableArray *DBData = [db loadDBData];
     
+    picsCount = [[NSMutableArray alloc]init];
     
     placeName = DBData[1];
     picture = DBData[6];
+    picsCount = DBData[7];
     idarray = DBData[0];
     
     //配列のいっこめをボタンにする
@@ -157,8 +160,13 @@
 
     }else{ //通常時。要注意。配列画像の画像の一枚目を表示する。（石井さんにきくこと）
         
-        NSData *dt = [NSData dataWithContentsOfURL:[NSURL URLWithString:picture[indexPath.item]]];
-        UIImage *image = [[UIImage alloc]initWithData:dt];
+        NSArray *arrayPicNotMutable = [picture[indexPath.item] componentsSeparatedByString:@","];
+        NSLog(@"arrayPicNotMutable=%@",[arrayPicNotMutable description]);
+        NSData *dataPics = [[NSData alloc] initWithContentsOfFile:[arrayPicNotMutable objectAtIndex:0]];
+        UIImage* image = [[UIImage alloc] initWithData:dataPics];
+        
+        //NSData *dt = [NSData dataWithContentsOfURL:[NSURL URLWithString:picture[indexPath.item]]];
+        //UIImage *image = [[UIImage alloc]initWithData:dt];
         
         [[cell pictureView]setImage:image];
     }
