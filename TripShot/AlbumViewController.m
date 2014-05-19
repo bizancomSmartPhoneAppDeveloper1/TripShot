@@ -46,7 +46,7 @@
     
     [self viewBackground];
     
-    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(rowButtonAction:)];
 //    longPressGestureRecognizer.minimumPressDuration = 0.3;
 //    longPressGestureRecognizer.delegate = self;
     [_AlbumCollection addGestureRecognizer:longPressGestureRecognizer];
@@ -179,20 +179,42 @@
 
 #pragma mark - EditCells
 
--  (void)handleLongPress:(UILongPressGestureRecognizer*)sender {
-    if (sender.state == UIGestureRecognizerStateEnded) {
-
-    }
-    else if (sender.state == UIGestureRecognizerStateBegan){
-
+//長押しタイミングの取得および選択されたコンポーネントの取得
+-(void)rowButtonAction:(UILongPressGestureRecognizer *)gestureRecognizer {
+    CGPoint p = [gestureRecognizer locationInView:_AlbumCollection];
+    NSIndexPath *indexPath = [_AlbumCollection indexPathForItemAtPoint:p];
+    if (indexPath == nil){
+        NSLog(@"long press on table view");
+    }else if (((UILongPressGestureRecognizer *)gestureRecognizer).state == UIGestureRecognizerStateBegan){
+        //セルが長押しされた場合の処理
+        
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
-                                                       message:@"削除しますか"
+                                                       message:@"削除しますか\n（だいじょうぶいまは削除されない）"
                                                       delegate:self
                                              cancelButtonTitle:@"キャンセル"
                                              otherButtonTitles:@"はい", nil];
         [alert show];
+        NSLog(@"取得したバスの数字%d",indexPath.row);
+
     }
 }
+
+
+
+//-  (void)handleLongPress:(UILongPressGestureRecognizer*)sender {
+//    if (sender.state == UIGestureRecognizerStateEnded) {
+//
+//    }
+//    else if (sender.state == UIGestureRecognizerStateBegan){
+//
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
+//                                                       message:@"削除しますか"
+//                                                      delegate:self
+//                                             cancelButtonTitle:@"キャンセル"
+//                                             otherButtonTitles:@"はい", nil];
+//        [alert show];
+//    }
+//}
 
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{

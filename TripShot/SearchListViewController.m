@@ -58,7 +58,22 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     [self loadLocationData];
 }
 
+-(NSString *)barricadeString:(NSString *)word{
+    NSString *barricadedString;
+    
+    //含まれてたらアレな文字って言ったら
+    // % APIKEY # とか？ここでおきかえるよ
+    
+    
+    return barricadedString;
+}
+
+
 -(void)getJsonFromWord:(NSString *)word{
+    
+    //ここで一旦wordを検査する必要がある
+    //NSString *barricadedString = [self barricadeString:word];
+    
     
     _nameArray = [[NSMutableArray alloc]init]; //店名一覧格納
     _locationArray = [[NSMutableArray alloc]init]; //緯度経度格納
