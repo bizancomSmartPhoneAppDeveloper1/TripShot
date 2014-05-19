@@ -147,20 +147,13 @@
     //50枚まで写真を撮れるようにした。
     int counter = 50;
     while (counter >= 0) {
-//        path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
-//            [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage,counter];
         path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
                  [self myDocumentsPath],self.idFromMainPage,counter];
-        
     if ([[NSURL fileURLWithPath:path] checkResourceIsReachableAndReturnError:nil] == YES) {
-//        path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
-//                [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage,counter+1];
         path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
                 [self myDocumentsPath],self.idFromMainPage,counter+1];
         break;
     }else{
-//        path = [NSString stringWithFormat:@"%@/TSpicture%d-0.jpg",
-//                [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage];
         path = [NSString stringWithFormat:@"%@/TSpicture%d-0.jpg",
                 [self myDocumentsPath],self.idFromMainPage];
     }
