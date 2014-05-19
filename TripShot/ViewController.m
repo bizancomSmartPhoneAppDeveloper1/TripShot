@@ -193,7 +193,7 @@
         // 入った。
         if ([region.identifier isEqualToString:[NSString stringWithFormat:@"%@",titleList[r]]]) {
             NSLog(@"ジオフェンス領域%@に入りました",titleList[r]);
-           
+            NSLog(@"%d",r);
             //バックグラウンドからの通知
             [self LocalNotificationStart];
 
@@ -244,6 +244,8 @@
     
     
     [[UIApplication sharedApplication]scheduleLocalNotification:notification];  //ローカル通知の登録
+    
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     
 }
 
@@ -301,7 +303,8 @@
         
         distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
-
+        
+        NSLog(@"%@",titleList[i]);
     /*
     //アノテーションを刺した場所のジオフェンスを開始
     //行っていない場所にだけジオフェンスをセットするために、if文を追加（石井）
