@@ -54,6 +54,12 @@
     //各表示
     [self viewSet];
     
+    //データ保存用のディレクトリを作成する
+    if ([self makeDirForAppContents]) {
+        //ディレクトリに対して「do not backup」属性をセット
+        NSURL *dirUrl = [NSURL fileURLWithPath: [self myDocumentsPath]];
+        [self addSkipBackupAttributeToItemAtURL:dirUrl];
+    }
     
     
 }
@@ -141,15 +147,22 @@
     //50枚まで写真を撮れるようにした。
     int counter = 50;
     while (counter >= 0) {
+//        path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
+//            [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage,counter];
         path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
-            [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage,counter];
+                 [self myDocumentsPath],self.idFromMainPage,counter];
+        
     if ([[NSURL fileURLWithPath:path] checkResourceIsReachableAndReturnError:nil] == YES) {
+//        path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
+//                [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage,counter+1];
         path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
-                [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage,counter+1];
+                [self myDocumentsPath],self.idFromMainPage,counter+1];
         break;
     }else{
+//        path = [NSString stringWithFormat:@"%@/TSpicture%d-0.jpg",
+//                [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage];
         path = [NSString stringWithFormat:@"%@/TSpicture%d-0.jpg",
-                [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage];
+                [self myDocumentsPath],self.idFromMainPage];
     }
         counter --;
         NSLog(@"counter=%d",counter);
@@ -323,12 +336,61 @@
 }
 
 
+//Documentsフォルダにデータ保存用のフォルダを作成する関数
+- (BOOL)makeDirForAppContents
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *baseDir = [self myDocumentsPath];
+    
+    BOOL exists = [fileManager fileExistsAtPath:baseDir];
+    if (!exists) {
+        NSError *error;
+        BOOL created = [fileManager createDirectoryAtPath:baseDir withIntermediateDirectories:YES attributes:nil error:&error];
+        if (!created) {
+            NSLog(@"ディレクトリ作成失敗");
+            return NO;
+        }
+    } else {
+        //作成済みの場合はNO
+        return NO;
+    }
+    return YES;
+}
+
+
+//データ保存用のフォルダのパスを返す関数
+- (NSString *)myDocumentsPath
+{
+    //アプリのドキュメントフォルダのパスを検索
+    NSString *documentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    //追加するディレクトリ名を指定
+    NSString *picsFolderPath = [documentsPath stringByAppendingPathComponent:@"PicsFolder"];
+    NSLog(@"PicsFolderPass=%@",picsFolderPath);
+    return picsFolderPath;
+}
+
+
+//iCloudへのバックアップを行なわないようにする関数
+- (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
+{
+    assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
+    NSError *error = nil;
+    BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
+                                  forKey: NSURLIsExcludedFromBackupKey error: &error];
+    if(!success){
+        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+    }
+    return success;
+}
+
+
 //main画面に戻る際の関数。
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"cameraViewToMainView"]) {
         NSLog(@"確認");
         //DBに保存する
         pics = [picsArray componentsJoinedByString:@","];
+        NSLog(@"pics=%@",[pics description]);
         picsCount =[picsArray count];
         NSLog(@"count=%d",picsCount);
         comment = textfield.text;
