@@ -299,6 +299,7 @@
 
 }
 
+/*
  //到達フラグをたてる
 -(void)wentFlagFromDataId:(int)dataId{
     
@@ -314,14 +315,11 @@
     NSString *update_sqlWentFlag = [NSString stringWithFormat:@"update testTable set went_flag = 1 where id = %d",dataId];
     
     [database open];
-    
     [database executeUpdate:update_sqlWentFlag];
-    
-    //NSLog(@"記事No:%d DB上書き完了",dataid);
     [database close];
 
 }
-
+*/
 
 //緯度経度から住所を取得する
 -(NSString *)getAddressFromLat:(double)lat AndLot:(double)lot{
@@ -414,7 +412,7 @@
 
 
 
-//cameraViewでデータを上書き保存するために使う関数（石井作成）
+//cameraViewでデータを上書き保存するために使う関数
 - (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount WENTFLAG:(int)went_flag{
 
     //ディレクトリのリストを取得する
@@ -449,8 +447,8 @@
 }
 
 
-//カメラVewでDB読み込むための関数（石井作成） 引数numberはdataid
-- (NSMutableArray *)loadDBDataOnCamera:(int)number{
+//カメラVewでDB読み込むための関数　引数numberはdataid
+- (FMResultSet *)loadDBDataOnCamera:(int)number{
     
     //ディレクトリのリストを取得する
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -459,68 +457,13 @@
     
     //データベース接続
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
-    
-    //容れ物の準備
-    NSMutableArray *resultArray = [[NSMutableArray alloc]init];
-    
-    //データベースを開く
     [database open];
     
-
     NSString *sql = [NSString stringWithFormat:@"SELECT * FROM testTable WHERE id = %d;",number];
-    FMResultSet *results = [database executeQuery:sql];//
-    
-    //データ取得を行うループ
-    while([results next]){ //結果が一行ずつ返されて、最後までいくとnextメソッドがnoを返す
-        int i = 0;
-        //カラム名を指定して、カラム値を取得する。
-        int db_id = [results intForColumn:@"id"];
-        [resultArray addObject:@(db_id)];
-        
-        NSString *db_title = [results stringForColumn:@"place_name"];
-        [resultArray addObject:db_title];
-        
-        double lat = [results doubleForColumn:@"latitude"];
-        [resultArray addObject:@(lat)];
-        
-        double lon = [results doubleForColumn:@"longitude"];
-        [resultArray addObject:@(lon)];
-        
-        int db_date = [results intForColumn:@"date"];
-        [resultArray addObject:@(db_date)];
-        
-        int db_piccount = [results intForColumn:@"picCount"];//天気カラムを削除し、写真の枚数カラムを追加した（石井）
-        [resultArray addObject:@(db_piccount)];
-        
-        NSString *db_text = [results stringForColumn:@"text"];
-        [resultArray addObject:db_text];
-        
-        NSString *db_pics = [results stringForColumn:@"pics"];
-        [resultArray addObject:db_pics];
-        
-        int wentflag = [results intForColumn:@"went_flag"];
-        [resultArray addObject:@(wentflag)];
-        
-        int deleteflag = [results intForColumn:@"delete_flag"];
-        [resultArray addObject:@(deleteflag)];
-        
-        int db_hour = [results intForColumn:@"hour"];
-        [resultArray addObject:@(db_hour)];
-        
-        NSString *db_address = [results stringForColumn:@"address"];
-        [resultArray addObject:db_address];
-        
-    
-        //        int deleteflag = [results intForColumn:@"delete_flag"];
-        
-        i++;
-    }
-    
-    //NSLog(@"resultArray=%@",[resultArray description]);//確認表示
-    [database close];
-    return resultArray;
+    FMResultSet *results = [database executeQuery:sql];
+    //[database close];
+    return results;
 }
-
 
 
 //DB削除メソッド。必要な時以外、絶対に使用しないこと！！（石井）
@@ -540,8 +483,8 @@
 }
 
 
-- (NSMutableArray *)loadLatLonPlaceName:(NSString *)place_name{
-    
+//IDをplace_nameから取得する関数
+- (FMResultSet *)loadIDFromPlaceName:(NSString *)place_name{
     //ディレクトリのリストを取得する
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectry = paths[0];
@@ -549,38 +492,15 @@
     
     //データベース接続
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
-    
-    //容れ物の準備
-    NSMutableArray *resultArray = [[NSMutableArray alloc]init];
-    
-    //データベースを開く
     [database open];
-    //NSString *sql = [NSString stringWithFormat:@"SELECT * FROM testTable WHERE id = 1"];
-    //NSString *sql = [NSString stringWithFormat:@"SELECT id FROM testTable WHERE place_name = '%@' and latitude = %f and longitude = %f;",place_name,latitude,longitude];
     
-    //NSString *sql = [NSString stringWithFormat:@"SELECT id FROM testTable WHERE latitude = %f and longitude = %f;",latitude,longitude];
-
     NSString *sql = [NSString stringWithFormat:@"SELECT id FROM testTable WHERE place_name = '%@'",place_name];
-    //NSString *sql = [NSString stringWithFormat:@"SELECT id FROM testTable WHERE latitude = %f",latitude];
-    
     FMResultSet *results = [database executeQuery:sql];
-
-    while([results next]){ //結果が一行ずつ返されて、最後までいくとnextメソッドがnoを返す
-        int i = 0;
-        //カラム名を指定して、カラム値を取得する。
-        
-        int db_id = [results intForColumn:@"id"];
-        [resultArray addObject:@(db_id)];
-
-        i++;
-    }
-    
-    //NSLog(@"resultArray=%@",[resultArray description]);//確認表示
-    [database close];
-    NSLog(@"reslutarray=%@",[resultArray description]);
-    return resultArray;
+    return results;
 }
 
+
+//individualAlbumViewControllerでコメントを編集した時に使う関数
 - (void)updateText:(int)ID TEXT:(NSString *)comment{
     
     //ディレクトリのリストを取得する
@@ -593,11 +513,115 @@
     
     //データのupdate
     NSString *update_sqlText = [NSString stringWithFormat:@"update testTable set text = '%@' where id = %d",comment, ID];
-    
     [database open];
     [database executeUpdate:update_sqlText];
     [database close];
 }
+
+
+/*
+ //IDをplace_nameから取得する関数
+ - (NSMutableArray *)loadIDFromPlaceName:(NSString *)place_name{
+ 
+ //ディレクトリのリストを取得する
+ NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+ NSString *documentDirectry = paths[0];
+ NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+ 
+ //データベース接続
+ FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+ [database open];
+ 
+ //容れ物の準備
+ NSMutableArray *resultArray = [[NSMutableArray alloc]init];
+ 
+ NSString *sql = [NSString stringWithFormat:@"SELECT id FROM testTable WHERE place_name = '%@'",place_name];
+ FMResultSet *results = [database executeQuery:sql];
+ 
+ //int i = 0; ????
+ while([results next]){
+ int db_id = [results intForColumn:@"id"];
+ [resultArray addObject:@(db_id)];
+ //i++;
+ }
+ 
+ [database close];
+ NSLog(@"reslutarray=%@",[resultArray description]);
+ return resultArray;
+ }
+ */
+
+
+
+/*
+ //カメラVewでDB読み込むための最初の関数　引数numberはdataid
+ - (NSMutableArray *)loadDBDataOnCamera:(int)number{
+ 
+ //ディレクトリのリストを取得する
+ NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+ NSString *documentDirectry = paths[0];
+ NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+ 
+ //データベース接続
+ FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+ [database open];
+ 
+ //容れ物の準備
+ NSMutableArray *resultArray = [[NSMutableArray alloc]init];
+ 
+ NSString *sql = [NSString stringWithFormat:@"SELECT * FROM testTable WHERE id = %d;",number];
+ FMResultSet *results = [database executeQuery:sql];//
+ NSLog(@"FMResultSet=%@",results);
+ 
+ //データ取得を行うループ
+ while([results next]){ //結果が一行ずつ返されて、最後までいくとnextメソッドがnoを返す
+ int i = 0;
+ //カラム名を指定して、カラム値を取得する。
+ int db_id = [results intForColumn:@"id"];
+ [resultArray addObject:@(db_id)];
+ 
+ NSString *db_title = [results stringForColumn:@"place_name"];
+ [resultArray addObject:db_title];
+ 
+ double lat = [results doubleForColumn:@"latitude"];
+ [resultArray addObject:@(lat)];
+ 
+ double lon = [results doubleForColumn:@"longitude"];
+ [resultArray addObject:@(lon)];
+ 
+ int db_date = [results intForColumn:@"date"];
+ [resultArray addObject:@(db_date)];
+ 
+ int db_piccount = [results intForColumn:@"picCount"];//天気カラムを削除し、写真の枚数カラムを追加した（石井）
+ [resultArray addObject:@(db_piccount)];
+ 
+ NSString *db_text = [results stringForColumn:@"text"];
+ [resultArray addObject:db_text];
+ 
+ NSString *db_pics = [results stringForColumn:@"pics"];
+ [resultArray addObject:db_pics];
+ 
+ int wentflag = [results intForColumn:@"went_flag"];
+ [resultArray addObject:@(wentflag)];
+ 
+ int deleteflag = [results intForColumn:@"delete_flag"];
+ [resultArray addObject:@(deleteflag)];
+ 
+ int db_hour = [results intForColumn:@"hour"];
+ [resultArray addObject:@(db_hour)];
+ 
+ NSString *db_address = [results stringForColumn:@"address"];
+ [resultArray addObject:db_address];
+ 
+ 
+ //        int deleteflag = [results intForColumn:@"delete_flag"];
+ 
+ i++;
+ }
+ [database close];
+ return resultArray;
+ }
+ */
 
 
 

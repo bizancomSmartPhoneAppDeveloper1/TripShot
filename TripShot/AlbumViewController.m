@@ -168,9 +168,6 @@
         NSData *dataPics = [[NSData alloc] initWithContentsOfFile:[arrayPicNotMutable objectAtIndex:0]];
         UIImage* image = [[UIImage alloc] initWithData:dataPics];
         
-        //NSData *dt = [NSData dataWithContentsOfURL:[NSURL URLWithString:picture[indexPath.item]]];
-        //UIImage *image = [[UIImage alloc]initWithData:dt];
-        
         [[cell pictureView]setImage:image];
     }
     

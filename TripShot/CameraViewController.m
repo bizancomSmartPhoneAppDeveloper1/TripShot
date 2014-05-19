@@ -19,6 +19,7 @@
     NSMutableArray *picsArray;
     NSString *pics;
     int picsCount;
+    NSString *title;
     BOOL autoScrollStopped;
     NSString *path;
     NSMutableArray *facebookImages;
@@ -144,7 +145,7 @@
     editedImage = (UIImage *)[info objectForKey:UIImagePickerControllerEditedImage];
     NSData *data = UIImageJPEGRepresentation(editedImage, 0.5);
     
-    //50枚まで写真を撮れるようにした。
+    //50枚まで写真撮影可能
     int counter = 50;
     while (counter >= 0) {
         path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
@@ -210,18 +211,35 @@
 //行きたい所リスト等情報をViewに設定させる関数
 - (void)viewSet{
     
-    //行きたい場所情報をメイン画面から引き継ぐ
-    NSMutableArray *resultarray = [tsdatabase loadLatLonPlaceName:_place_nameFromMainPage];
     facebookImages = [[NSMutableArray alloc]init];
-    int dataid = [[resultarray objectAtIndex:0] intValue];
-    NSLog(@"dataid=%d",dataid);
-    self.idFromMainPage = dataid;
-    NSMutableArray *resultArray = [tsdatabase loadDBDataOnCamera:self.idFromMainPage];
     
+    //行きたい場所情報をメイン画面から引き継ぐ
+    FMResultSet *resultsID = [tsdatabase loadIDFromPlaceName:_place_nameFromMainPage];
+    while([resultsID next]){
+        self.idFromMainPage = [resultsID intForColumn:@"id"];
+    }
+    
+    //DBを閉じる
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+    [database close];
+    
+    //DBからFMResultSetを取り出す
+    FMResultSet *results = [tsdatabase loadDBDataOnCamera:self.idFromMainPage];
+    while([results next]){
+        title = [results stringForColumn:@"place_name"];
+        address = [results stringForColumn:@"address"];
+    }
+    
+    //DBを閉じる
+    [database close];
+
     //行きたい場所リストタイトル表示
     CGRect titleRect = CGRectMake(90, 320, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
-    titleLabel.text = [resultArray objectAtIndex:1];
+    titleLabel.text = title;
     titleLabel.textColor = [UIColor blueColor];
     titleLabel.font = [UIFont boldSystemFontOfSize:30];
     [self.scrollAllView addSubview:titleLabel];
@@ -246,7 +264,7 @@
     //住所情報入力
     CGRect addressRect = CGRectMake(90, 400, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
-    addressLabel.text = [resultArray objectAtIndex:11];
+    addressLabel.text = address;
     addressLabel.textColor = [UIColor blueColor];
     addressLabel.font = [UIFont boldSystemFontOfSize:14];
     [self.scrollAllView addSubview:addressLabel];

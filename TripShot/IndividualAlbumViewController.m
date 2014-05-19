@@ -14,13 +14,16 @@
     UITextField *textfield;
     NSString *address;
     NSMutableArray *array;
-    NSDate *date;
     NSString *comment;
     NSMutableArray *picsArray;
+    NSString *title;
+    int date;
+    NSString *text;
     NSString *pics;
     int picsCount;
     BOOL autoScrollStopped;
     NSMutableArray *facebookImages;
+    
 }
 
 
@@ -74,13 +77,26 @@
 //行きたい所リスト等情報をViewに設定させる関数
 - (void)viewSet{
     
-    NSMutableArray *resultArray = [tsdatabase loadDBDataOnCamera:self.idFromMainPage];
-    NSLog(@"idFromMainPage=%d",self.idFromMainPage);
-    facebookImages = [[NSMutableArray alloc]init];
+    //DBからFMResultSetを取り出す
+    FMResultSet *results = [tsdatabase loadDBDataOnCamera:self.idFromMainPage];
+    while([results next]){
+        title = [results stringForColumn:@"place_name"];
+        date = [results intForColumn:@"date"];
+        text = [results stringForColumn:@"text"];
+        pics = [results stringForColumn:@"pics"];
+        picsCount = [results intForColumn:@"picCount"];
+        address = [results stringForColumn:@"address"];
+    }
     
+    //DBを閉じる
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+    [database close];
+
+     
     //写真をスクロール表示
-    pics = [resultArray objectAtIndex:7];
-    picsCount = [[resultArray objectAtIndex:5] intValue];
     NSArray *arrayPicNotMutable = [pics componentsSeparatedByString:@","];
     NSLog(@"arrayPicNotMutable=%@",[arrayPicNotMutable description]);
     NSLog(@"picsCount=%d",picsCount);
@@ -99,6 +115,7 @@
         [v removeFromSuperview];
     }
     CGRect workingFrame = _scrollView.frame;
+    facebookImages = [[NSMutableArray alloc]init];
     if (!picsCount==0) {
         for (int i=0; i<picsCount; i++) {
             NSData *dataPics = [[NSData alloc] initWithContentsOfFile:[arrayPicNotMutable objectAtIndex:i]];
@@ -120,24 +137,21 @@
     //行きたい場所リストタイトル表示
     CGRect titleRect = CGRectMake(90, 320, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
-    titleLabel.text = [resultArray objectAtIndex:1];
+    titleLabel.text = title;
     titleLabel.textColor = [UIColor blueColor];
     titleLabel.font = [UIFont boldSystemFontOfSize:30];
     [self.scrollAllView addSubview:titleLabel];
     
     //日付入力
-    date = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dateComps = [calendar components:NSYearCalendarUnit |
-                                   NSMonthCalendarUnit  |
-                                   NSDayCalendarUnit    |
-                                   NSHourCalendarUnit   |
-                                   NSMinuteCalendarUnit |
-                                   NSSecondCalendarUnit
-                                              fromDate:date];
-    CGRect daterect = CGRectMake(90, 370, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    NSString *dateString = [NSString stringWithFormat:@"%d",date];
+    NSString *monthString = [dateString substringWithRange:NSMakeRange(4,2)];
+    int month = [monthString intValue];
+    NSLog(@"month=%d",month);
+    NSString *dayString = [dateString substringWithRange:NSMakeRange(6,2)];
+    int day = [dayString intValue];
+    CGRect daterect = CGRectMake(90, 370, 220, 50);
     UILabel *dateLabel = [[UILabel alloc]initWithFrame:daterect];
-    dateLabel.text = [NSString stringWithFormat:@"%d月　%d日",(int)dateComps.month,(int)dateComps.day];
+    dateLabel.text = [NSString stringWithFormat:@"%d月　%d日",month,day];
     dateLabel.textColor = [UIColor blueColor];
     dateLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.scrollAllView addSubview:dateLabel];
@@ -145,7 +159,7 @@
     //住所情報入力
     CGRect addressRect = CGRectMake(90, 400, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
-    addressLabel.text = [resultArray objectAtIndex:11];
+    addressLabel.text = address;
     addressLabel.textColor = [UIColor blueColor];
     addressLabel.font = [UIFont boldSystemFontOfSize:14];
     [self.scrollAllView addSubview:addressLabel];
@@ -153,13 +167,12 @@
     //コメント欄
     CGRect textRect = CGRectMake(90, 430, 220, 50);
     textfield = [[UITextField alloc]initWithFrame:textRect];
-    textfield.text = [resultArray objectAtIndex:6];
+    textfield.text = text;
     textfield.textColor = [UIColor blueColor];
     textfield.font = [UIFont boldSystemFontOfSize:10];
     textfield.returnKeyType = UIReturnKeyDefault;
     textfield.delegate = self;
     [self.scrollAllView addSubview:textfield];
-    // キーボードが表示されたときのNotificationをうけとります。
     [self registerForKeyboardNotifications];
     
     //スクリーンサイズの取得
