@@ -86,15 +86,15 @@
     [self saveLocation:location];//値受け渡し用メソッド追加（藤原）
     
     //最初だけユーザーの位置を中心に地図表示
-    if (self.mapFlag == NO)
-    {
+//    if (self.mapFlag == NO)
+//    {
         //現在地を地図表示
         MKCoordinateRegion region = MKCoordinateRegionMake([location coordinate], MKCoordinateSpanMake(0.01, 0.01));//現在地を地図の中心位置を表した値と、表示領域（地図縮尺）の値をMKCoordinateRegionクラスのインスタンスへ代入
         
         [self.mapView setRegion:region animated:YES];
         
         self.mapFlag = YES;
-    }
+   // }
     
     //到達点についた時に分かるようにジオフェンスをスタート
     [self.locationManager startMonitoringForRegion:distCircularRegion];
@@ -267,7 +267,7 @@
     //バックグラウンド通信ができるか確認する
     [self backgroundCheck];
     
-   
+    self.mapFlag = NO;
     //DBからピンぶっさしてます
     [self markingPinFromList];
     _mapView.delegate = self;
