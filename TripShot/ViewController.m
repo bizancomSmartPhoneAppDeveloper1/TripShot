@@ -462,6 +462,11 @@
         pin.subtitle = addressList[i];
         
         [_mapView addAnnotation:pin];
+        
+        CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
+        
+        distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:500
+                                                          identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
 
     /*
     //アノテーションを刺した場所のジオフェンスを開始
