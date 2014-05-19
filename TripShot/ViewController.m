@@ -44,18 +44,18 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.locationManager = [[CLLocationManager alloc]init];
-    self.locationManager.delegate = self;
-       // [self.locationManager startUpdatingLocation];
-    
-    //位置情報が使えるか確認する
-    [self locationAuth];
-    
-    //バックグラウンド通信ができるか確認する
-    [self backgroundCheck];
-    
-    //到達点についた時に分かるようにジオフェンスをスタート
-    [self.locationManager startMonitoringForRegion:distCircularRegion];
+//    self.locationManager = [[CLLocationManager alloc]init];
+//    self.locationManager.delegate = self;
+//       // [self.locationManager startUpdatingLocation];
+//    
+//    //位置情報が使えるか確認する
+//    [self locationAuth];
+//    
+//    //バックグラウンド通信ができるか確認する
+//    [self backgroundCheck];
+//    
+//    //到達点についた時に分かるようにジオフェンスをスタート
+//    [self.locationManager startMonitoringForRegion:distCircularRegion];
     
     //tabバーのアイコンの色設定
     [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
@@ -238,7 +238,7 @@
     if (notification == nil)return;
     
     notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:3]; //3秒後にメッセ時が表示されるよう設定
-    notification.repeatInterval = NSCalendarUnitDay;  //毎日通知させる設定
+    //notification.repeatInterval = NSCalendarUnitDay;  //毎日通知させる設定
     notification.alertBody = [NSString stringWithFormat:@"行きたい場所が近くです＾＾"];  //メッセージの内容
     notification.timeZone = [NSTimeZone defaultTimeZone];  //タイムゾーンの設定 その端末にあるローケーションに合わせる
     notification.soundName = UILocalNotificationDefaultSoundName;  //効果音
@@ -257,6 +257,17 @@
     [self.navigationController setNavigationBarHidden:YES];
     self.tabBarController.tabBar.hidden = NO;
     
+    self.locationManager = [[CLLocationManager alloc]init];
+    self.locationManager.delegate = self;
+    // [self.locationManager startUpdatingLocation];
+    
+    //位置情報が使えるか確認する
+    [self locationAuth];
+    
+    //バックグラウンド通信ができるか確認する
+    [self backgroundCheck];
+    
+   
     //DBからピンぶっさしてます
     [self markingPinFromList];
     _mapView.delegate = self;
@@ -265,6 +276,9 @@
 }
 
 -(void)markingPinFromList{
+    
+    
+    [self geoFenceCancel];
     
     //DBと接続
     TSDataBase *db = [[TSDataBase alloc]init];
@@ -302,13 +316,23 @@
         
     //アノテーションを刺した場所のジオフェンスを開始
     //行っていない場所にだけジオフェンスをセットするために、if文を追加（石井）
+    
+        CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
+        
+        titleList[i] = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
+                                                          identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
+        //到達点についた時に分かるようにジオフェンスをスタート
+        [self.locationManager startMonitoringForRegion:titleList[i]];
+        
+    /*
     if ([[wentFlagList objectAtIndex:i] intValue]==1) {
  
     CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
         
     distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
-    }
+    }*/
+        
     }
     
 }
@@ -354,5 +378,13 @@
 
 }
 
+//ジオフェンスキャンセル　今回はバックグラウンドで通信を行ない続けるので、使わない
+- (void)geoFenceCancel{
+    for (CLRegion *region in self.locationManager.monitoredRegions) {
+        // 登録してある地点を全て取得し、停止
+        [self.locationManager stopMonitoringForRegion:region];
+        NSLog(@"monotoring regions:%@", self.locationManager.monitoredRegions);
+    }
+}
 
 @end
