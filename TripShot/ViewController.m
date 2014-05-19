@@ -225,8 +225,9 @@
     notification.soundName = UILocalNotificationDefaultSoundName;  //効果音
     notification.applicationIconBadgeNumber = 1;  //通知された時のアイコンバッジの右肩の数字
     
-    
     [[UIApplication sharedApplication]scheduleLocalNotification:notification];  //ローカル通知の登録
+    
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     
 }
 
