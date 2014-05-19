@@ -39,9 +39,22 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 
+    //現在地を地図表示
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.centerCoordinate, 1000, 1000);//現在地を地図の中心位置を表した値と、表示領域（地図縮尺）の値をMKCoordinateRegionクラスのインスタンスへ代入
+    
+    [self.mapView setRegion:region animated:YES];
+    
     self.locationManager = [[CLLocationManager alloc]init];
     self.locationManager.delegate = self;
-       // [self.locationManager startUpdatingLocation];
+    
+    //中心から地図が動かされた事を検知する
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(mapViewPanGesture)];
+    
+    [self.mapView addGestureRecognizer:panGesture];
+    //フラグの初期化
+    self.isChasing = YES;
+    //self.userLocationBtn.hidden = YES;
+
     
     //位置情報が使えるか確認する
     [self locationAuth];
@@ -58,11 +71,21 @@
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
-    
+    }
+
+//複数のジェスチャーを同時認識する事を許可
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
 }
 
-
-
+-(void)mapViewPanGesture
+{
+    NSLog(@"検知しました");
+    self.isChasing = NO;
+    
+    self.userLocationBtn.hidden = NO;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -76,14 +99,16 @@
     
     //最新の位置情報を取り出す
     CLLocation *location = [locations lastObject];
-    [self.mapView setCenterCoordinate:location.coordinate animated:YES];
+    
+    if (self.isChasing)
+    {
+        [self.mapView setCenterCoordinate:location.coordinate animated:YES];
+
+    }
     
     [self saveLocation:location];//値受け渡し用メソッド追加（藤原）
     
-    //現在地を地図表示
-    MKCoordinateRegion region = MKCoordinateRegionMake([location coordinate], MKCoordinateSpanMake(0.01, 0.01));//現在地を地図の中心位置を表した値と、表示領域（地図縮尺）の値をMKCoordinateRegionクラスのインスタンスへ代入
     
-    [self.mapView setRegion:region animated:YES];
     
     //到達点についた時に分かるようにジオフェンスをスタート
     [self.locationManager startMonitoringForRegion:distCircularRegion];
@@ -253,6 +278,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     
+    
     [self.navigationController setNavigationBarHidden:YES];
     self.tabBarController.tabBar.hidden = NO;
     
@@ -361,4 +387,10 @@
 }
 
 
+- (IBAction)tapUserLocationBtn:(UIButton *)sender
+{
+    self.isChasing = YES;
+    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+    self.userLocationBtn.hidden = YES;
+}
 @end
