@@ -58,7 +58,22 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     [self loadLocationData];
 }
 
+-(NSString *)barricadeString:(NSString *)word{
+    NSString *barricadedString;
+    
+    //含まれてたらアレな文字って言ったら
+    // % APIKEY # とか？ここでおきかえるよ
+    
+    
+    return barricadedString;
+}
+
+
 -(void)getJsonFromWord:(NSString *)word{
+    
+    //ここで一旦wordを検査する必要がある
+    //NSString *barricadedString = [self barricadeString:word];
+    
     
     _nameArray = [[NSMutableArray alloc]init]; //店名一覧格納
     _locationArray = [[NSMutableArray alloc]init]; //緯度経度格納
@@ -273,10 +288,9 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 -(void)initNavigationBar{
     //ナビゲーションバー
     UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"subtitle2.png"]];
+    
     [navigationTitle setContentMode:UIViewContentModeScaleAspectFit];
     self.navigationItem.titleView = navigationTitle;
-    [UINavigationBar appearance].tintColor = [UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0];
-    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
 }
 

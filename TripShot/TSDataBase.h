@@ -41,22 +41,30 @@
 -(void)saveData;//通し番号セーブ（記事作成後に必ず）
 -(int)loadData;//通し番号読み込み（記事作成前に必ず）通し番号がかえってくる
 
--(void)wentFlagFromDataId:(int)dataId;//到達フラグをたてる
+//-(void)wentFlagFromDataId:(int)dataId;//到達フラグをたてる
 -(int)CountNowData;//現在のデータ総数を確認する
 
 //緯度経度からDBにデータ追加するメソッド
 -(void)createDBDataFromLat:(double)lat andLot:(double)lot andTitle:(NSString *)title; //SeachListViewControllerで使用
-    
+- (void)DeleteFlag:(int)number;
+- (FMResultSet *)loadDBDataFromDBId:(int)number;
 
 
 
-//あと必要なメソッドって何がある？
 
-- (NSMutableArray *)loadDBDataOnCamera:(int)number;//cameraViewで使用するメソッド
-- (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount WENTFLAG:(int)went_flag;//cameraViewで使用するメソッド
-- (void)dbDelete;//完全削除メソッド 必要な時以外、絶対に使用しないこと！！
+//カメラVewでDB読み込むための関数　引数numberはdataid
+- (FMResultSet *)loadDBDataOnCamera:(int)number;
 
-- (NSMutableArray *)loadLatLonPlaceName:(NSString *)place_name;//緯度経度行きたい場所でidを検索するメソッド
+//cameraViewでデータを上書き保存するために使う関数
+- (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount WENTFLAG:(int)went_flag;
+
+//完全削除メソッド 必要な時以外、絶対に使用しないこと！！
+//- (void)dbDelete;
+
+//IDをplace_nameから取得する関数
+- (FMResultSet *)loadIDFromPlaceName:(NSString *)place_name;
+
+//individualAlbumViewControllerでコメントを編集した時に使う関数
 - (void)updateText:(int)ID TEXT:(NSString *)comment;
 
 @end

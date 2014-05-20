@@ -19,6 +19,7 @@
     NSMutableArray *picsArray;
     NSString *pics;
     int picsCount;
+    NSString *title;
     BOOL autoScrollStopped;
     NSString *path;
     NSMutableArray *facebookImages;
@@ -54,6 +55,12 @@
     //各表示
     [self viewSet];
     
+    //データ保存用のディレクトリを作成する
+    if ([self makeDirForAppContents]) {
+        //ディレクトリに対して「do not backup」属性をセット
+        NSURL *dirUrl = [NSURL fileURLWithPath: [self myDocumentsPath]];
+        [self addSkipBackupAttributeToItemAtURL:dirUrl];
+    }
     
     
 }
@@ -138,18 +145,18 @@
     editedImage = (UIImage *)[info objectForKey:UIImagePickerControllerEditedImage];
     NSData *data = UIImageJPEGRepresentation(editedImage, 0.5);
     
-    //50枚まで写真を撮れるようにした。
+    //50枚まで写真撮影可能
     int counter = 50;
     while (counter >= 0) {
         path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
-            [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage,counter];
+                 [self myDocumentsPath],self.idFromMainPage,counter];
     if ([[NSURL fileURLWithPath:path] checkResourceIsReachableAndReturnError:nil] == YES) {
         path = [NSString stringWithFormat:@"%@/TSpicture%d-%d.jpg",
-                [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage,counter+1];
+                [self myDocumentsPath],self.idFromMainPage,counter+1];
         break;
     }else{
         path = [NSString stringWithFormat:@"%@/TSpicture%d-0.jpg",
-                [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],self.idFromMainPage];
+                [self myDocumentsPath],self.idFromMainPage];
     }
         counter --;
         NSLog(@"counter=%d",counter);
@@ -204,20 +211,37 @@
 //行きたい所リスト等情報をViewに設定させる関数
 - (void)viewSet{
     
-    //行きたい場所情報をメイン画面から引き継ぐ
-    NSMutableArray *resultarray = [tsdatabase loadLatLonPlaceName:_place_nameFromMainPage];
     facebookImages = [[NSMutableArray alloc]init];
-    int dataid = [[resultarray objectAtIndex:0] intValue];
-    NSLog(@"dataid=%d",dataid);
-    self.idFromMainPage = dataid;
-    NSMutableArray *resultArray = [tsdatabase loadDBDataOnCamera:self.idFromMainPage];
     
+    //行きたい場所情報をメイン画面から引き継ぐ
+    FMResultSet *resultsID = [tsdatabase loadIDFromPlaceName:_place_nameFromMainPage];
+    while([resultsID next]){
+        self.idFromMainPage = [resultsID intForColumn:@"id"];
+    }
+    
+    //DBを閉じる
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+    [database close];
+    
+    //DBからFMResultSetを取り出す
+    FMResultSet *results = [tsdatabase loadDBDataOnCamera:self.idFromMainPage];
+    while([results next]){
+        title = [results stringForColumn:@"place_name"];
+        address = [results stringForColumn:@"address"];
+    }
+    
+    //DBを閉じる
+    [database close];
+
     //行きたい場所リストタイトル表示
     CGRect titleRect = CGRectMake(90, 320, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
-    titleLabel.text = [resultArray objectAtIndex:1];
+    titleLabel.text = title;
     titleLabel.textColor = [UIColor blueColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:30];
+    titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.scrollAllView addSubview:titleLabel];
     
     //日付入力
@@ -232,25 +256,25 @@
                                               fromDate:date];
     CGRect daterect = CGRectMake(90, 370, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *dateLabel = [[UILabel alloc]initWithFrame:daterect];
-    dateLabel.text = [NSString stringWithFormat:@"%d月　%d日",(int)dateComps.month,(int)dateComps.day];
+    dateLabel.text = [NSString stringWithFormat:@"%d月%d日",(int)dateComps.month,(int)dateComps.day];
     dateLabel.textColor = [UIColor blueColor];
-    dateLabel.font = [UIFont boldSystemFontOfSize:20];
+    dateLabel.font = [UIFont boldSystemFontOfSize:16];
     [self.scrollAllView addSubview:dateLabel];
     
     //住所情報入力
-    CGRect addressRect = CGRectMake(90, 400, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    CGRect addressRect = CGRectMake(90, 340, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
-    addressLabel.text = [resultArray objectAtIndex:11];
+    addressLabel.text = address;
     addressLabel.textColor = [UIColor blueColor];
-    addressLabel.font = [UIFont boldSystemFontOfSize:14];
+    addressLabel.font = [UIFont systemFontOfSize:12];
     [self.scrollAllView addSubview:addressLabel];
     
     //コメント欄
-    CGRect textRect = CGRectMake(90, 430, 220, 50);
+    CGRect textRect = CGRectMake(90, 390, 220, 50);
     textfield = [[UITextField alloc]initWithFrame:textRect];
     textfield.text = @"コメントを入れてね♪";
     textfield.textColor = [UIColor blueColor];
-    textfield.font = [UIFont boldSystemFontOfSize:10];
+    textfield.font = [UIFont boldSystemFontOfSize:12];
     textfield.returnKeyType = UIReturnKeyDefault;
     textfield.delegate = self;
     [self.scrollAllView addSubview:textfield];
@@ -323,12 +347,78 @@
 }
 
 
-//main画面に戻る際の関数。
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"cameraViewToMainView"]) {
-        NSLog(@"確認");
+//Documentsフォルダにデータ保存用のフォルダを作成する関数
+- (BOOL)makeDirForAppContents
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *baseDir = [self myDocumentsPath];
+    
+    BOOL exists = [fileManager fileExistsAtPath:baseDir];
+    if (!exists) {
+        NSError *error;
+        BOOL created = [fileManager createDirectoryAtPath:baseDir withIntermediateDirectories:YES attributes:nil error:&error];
+        if (!created) {
+            NSLog(@"ディレクトリ作成失敗");
+            return NO;
+        }
+    } else {
+        //作成済みの場合はNO
+        return NO;
+    }
+    return YES;
+}
+
+
+//データ保存用のフォルダのパスを返す関数
+- (NSString *)myDocumentsPath
+{
+    //アプリのドキュメントフォルダのパスを検索
+    NSString *documentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    //追加するディレクトリ名を指定
+    NSString *picsFolderPath = [documentsPath stringByAppendingPathComponent:@"PicsFolder"];
+    NSLog(@"PicsFolderPass=%@",picsFolderPath);
+    return picsFolderPath;
+}
+
+
+//iCloudへのバックアップを行なわないようにする関数
+- (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
+{
+    assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
+    NSError *error = nil;
+    BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
+                                  forKey: NSURLIsExcludedFromBackupKey error: &error];
+    if(!success){
+        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+    }
+    return success;
+}
+
+//main画面に戻る際の関数。 5/20 CommentOuted byFujiwara
+//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+//    
+//    if ([segue.identifier isEqualToString:@"cameraViewToMainView"]) {
+//        NSLog(@"確認");
+//        //DBに保存する
+//        pics = [picsArray componentsJoinedByString:@","];
+//        NSLog(@"pics=%@",[pics description]);
+//        picsCount =[picsArray count];
+//        NSLog(@"count=%d",picsCount);
+//        comment = textfield.text;
+//        //went_flagを行ったことにする。これによりジオフェンスを外す。
+//        int went_frag = 0;
+//        [tsdatabase updateDBDataOnCamera:self.idFromMainPage TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
+//    }
+//}
+
+#pragma mark - Fujiwara
+
+-(void)viewWillDisappear:(BOOL)animated{
+    if([self.navigationController.viewControllers indexOfObject:self] == NSNotFound){
+    
         //DBに保存する
         pics = [picsArray componentsJoinedByString:@","];
+        NSLog(@"pics=%@",[pics description]);
         picsCount =[picsArray count];
         NSLog(@"count=%d",picsCount);
         comment = textfield.text;
@@ -336,7 +426,12 @@
         int went_frag = 0;
         [tsdatabase updateDBDataOnCamera:self.idFromMainPage TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
     }
+    
+    [super viewWillDisappear:animated];
 }
+
+
+
 
 
 @end

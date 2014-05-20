@@ -15,8 +15,10 @@
 {
     UIImageView *imageViewBackA;
     NSMutableArray *picture;
+    NSMutableArray *picsCount;
     NSMutableArray *idarray;
     NSMutableArray *placeName;
+    int deleteIdNumb;
     int idnumb;
 }
 @end
@@ -45,12 +47,14 @@
     
     [self viewBackground];
     
-    //長押しで削除するようにする
-    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPressGesture)];
-    longPressGestureRecognizer.minimumPressDuration = 0.8;
-    longPressGestureRecognizer.delegate = self;
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(rowButtonAction:)];
+//    longPressGestureRecognizer.minimumPressDuration = 0.3;
+//    longPressGestureRecognizer.delegate = self;
     [_AlbumCollection addGestureRecognizer:longPressGestureRecognizer];
-        
+    
+    //データ保存用のディレクトリを作成する
+    [self makeDirForAppContents];
+
 }
 
 
@@ -63,9 +67,11 @@
     TSDataBase *db = [[TSDataBase alloc]init];
     NSMutableArray *DBData = [db loadDBData];
     
+    picsCount = [[NSMutableArray alloc]init];
     
     placeName = DBData[1];
     picture = DBData[6];
+    picsCount = DBData[7];
     idarray = DBData[0];
     
     //配列のいっこめをボタンにする
@@ -158,8 +164,10 @@
 
     }else{ //通常時。要注意。配列画像の画像の一枚目を表示する。（石井さんにきくこと）
         
-        NSData *dt = [NSData dataWithContentsOfURL:[NSURL URLWithString:picture[indexPath.item]]];
-        UIImage *image = [[UIImage alloc]initWithData:dt];
+        NSArray *arrayPicNotMutable = [picture[indexPath.item] componentsSeparatedByString:@","];
+        NSLog(@"arrayPicNotMutable=%@",[arrayPicNotMutable description]);
+        NSData *dataPics = [[NSData alloc] initWithContentsOfFile:[arrayPicNotMutable objectAtIndex:0]];
+        UIImage* image = [[UIImage alloc] initWithData:dataPics];
         
         [[cell pictureView]setImage:image];
     }
@@ -172,24 +180,61 @@
 
 #pragma mark - EditCells
 
--(void)handleLongPressGesture{
-    
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
-                                                   message:@"削除しますか"
-                                                  delegate:self
-                                         cancelButtonTitle:@"キャンセル"
-                                         otherButtonTitles:@"はい", nil];
-    [alert show];
+//長押しタイミングの取得および選択されたコンポーネントの取得
+-(void)rowButtonAction:(UILongPressGestureRecognizer *)gestureRecognizer {
+    CGPoint p = [gestureRecognizer locationInView:_AlbumCollection];
+    NSIndexPath *indexPath = [_AlbumCollection indexPathForItemAtPoint:p];
+    if (indexPath == nil){
+        NSLog(@"long press on table view");
+    }else if (((UILongPressGestureRecognizer *)gestureRecognizer).state == UIGestureRecognizerStateBegan){
+        //セルが長押しされた場合の処理
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
+                                                       message:@"削除しますか\n（だいじょうぶいまは削除されない）"
+                                                      delegate:self
+                                             cancelButtonTitle:@"キャンセル"
+                                             otherButtonTitles:@"はい", nil];
+        [alert show];
+        
+        NSLog(@"取得したバスの数字%d",indexPath.row);
+//ここでこの数字からレコードのidを取得する必要がある
+        //        deleteIdNumb = indexPath.row;
+
+    }
 }
 
+
+
+//-  (void)handleLongPress:(UILongPressGestureRecognizer*)sender {
+//    if (sender.state == UIGestureRecognizerStateEnded) {
+//
+//    }
+//    else if (sender.state == UIGestureRecognizerStateBegan){
+//
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
+//                                                       message:@"削除しますか"
+//                                                      delegate:self
+//                                             cancelButtonTitle:@"キャンセル"
+//                                             otherButtonTitles:@"はい", nil];
+//        [alert show];
+//    }
+//}
+
+
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
+    TSDataBase *db = [[TSDataBase alloc]init];
+
     switch(buttonIndex){
         case 0:
+
             break;
             
         case 1://「はい」のとき。
-            //ここにデータの削除処理を書く
+        
+            [db DeleteFlag:deleteIdNumb];
+            
+            
+            
             break;
             
     }
@@ -197,16 +242,6 @@
 
 
 #pragma mark - Navigation (Arita)
-
--(void)initNavigationBar{ //念のため用意した
-    //ナビゲーションバー
-    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"subtitle1.png"]];
-    [navigationTitle setContentMode:UIViewContentModeScaleAspectFit];
-    self.navigationItem.titleView = navigationTitle;
-    [UINavigationBar appearance].tintColor = [UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0];
-    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
-    
-}
 
 -(void)viewBackground{
     //スクリーンサイズの取得
@@ -225,5 +260,40 @@
     [self.view sendSubviewToBack:imageViewBackA];
 
 }
+
+
+//Documentsフォルダにデータ保存用のフォルダを作成する関数
+- (BOOL)makeDirForAppContents
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *baseDir = [self myDocumentsPath];
+    
+    BOOL exists = [fileManager fileExistsAtPath:baseDir];
+    if (!exists) {
+        NSError *error;
+        BOOL created = [fileManager createDirectoryAtPath:baseDir withIntermediateDirectories:YES attributes:nil error:&error];
+        if (!created) {
+            NSLog(@"ディレクトリ作成失敗");
+            return NO;
+        }
+    } else {
+        //作成済みの場合はNO
+        return NO;
+    }
+    return YES;
+}
+
+
+//データ保存用のフォルダのパスを返す関数
+- (NSString *)myDocumentsPath
+{
+    //アプリのドキュメントフォルダのパスを検索
+    NSString *documentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    //追加するディレクトリ名を指定
+    NSString *picsFolderPath = [documentsPath stringByAppendingPathComponent:@"PicsFolder"];
+    NSLog(@"PicsFolderPass=%@",picsFolderPath);
+    return picsFolderPath;
+}
+
 
 @end

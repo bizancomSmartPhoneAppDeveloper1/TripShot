@@ -34,6 +34,11 @@
 
 @implementation ViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    //フラグを初期化
+    self.mapFlag = NO;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -235,16 +240,6 @@
     NSLog(@"%d",error.code);
 }
 
-
-//ジオフェンスキャンセル　今回はバックグラウンドで通信を行ない続けるので、使わない
-- (void)geoFenceCancel{
-    for (CLRegion *region in self.locationManager.monitoredRegions) {
-        // 登録してある地点を全て取得し、停止
-        [self.locationManager stopMonitoringForRegion:region];
-        NSLog(@"monotoring regions:%@", self.locationManager.monitoredRegions);
-    }
-}
-
 //読み込み失敗時に呼ばれる関数
 - (void)alertViewMethod:(NSString*)message{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message
@@ -268,7 +263,6 @@
     notification.timeZone = [NSTimeZone defaultTimeZone];  //タイムゾーンの設定 その端末にあるローケーションに合わせる
     notification.soundName = UILocalNotificationDefaultSoundName;  //効果音
     notification.applicationIconBadgeNumber = 1;  //通知された時のアイコンバッジの右肩の数字
-    
     
     [[UIApplication sharedApplication]scheduleLocalNotification:notification];  //ローカル通知の登録
     
@@ -351,9 +345,9 @@
  
     CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
         
-    distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:500
+    distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
-    }*/
+    }
     }
     
 }

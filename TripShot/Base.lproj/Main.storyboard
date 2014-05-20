@@ -76,7 +76,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S5l-Mj-AiX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-190" y="428"/>
+            <point key="canvasLocation" x="-380" y="222"/>
         </scene>
         <!--Individual Album View Controller-->
         <scene sceneID="cCF-JJ-JMz">
@@ -98,16 +98,6 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </scrollView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQM-Fo-RDb">
-                                        <rect key="frame" x="28" y="413" width="44" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="return60.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="wo6-80-wNV" kind="modal" id="ZAm-TO-3A6"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQC-li-sOw">
                                         <rect key="frame" x="28" y="371" width="44" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -123,6 +113,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="scrollAllView" destination="Yw1-KM-wH8" id="FVp-wk-BPc"/>
                         <outlet property="scrollView" destination="1nA-FJ-V7U" id="dgJ-OW-RKl"/>
@@ -130,7 +121,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LjG-cG-6fc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="518" y="908"/>
+            <point key="canvasLocation" x="102" y="351"/>
         </scene>
         <!--Camera View Controller - Item-->
         <scene sceneID="dfN-JF-inY">
@@ -158,13 +149,6 @@
                                             <action selector="takePhoto:" destination="PDs-5O-UB4" eventType="touchUpInside" id="YmJ-wk-0HD"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3G-N5-Utc">
-                                        <rect key="frame" x="28" y="413" width="44" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="return60.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jAV-rN-EYK">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -185,6 +169,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="D8H-z3-Jtp"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="scrollAllView" destination="CmQ-3B-hsW" id="zLx-BD-pQ7"/>
                         <outlet property="scrollView" destination="jAV-rN-EYK" id="oqS-Zw-eUD"/>
@@ -192,7 +177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n4X-jA-tNC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1068" y="523"/>
+            <point key="canvasLocation" x="516" y="351"/>
         </scene>
         <!--Search List View Controller-->
         <scene sceneID="hCz-vd-bPd">
@@ -301,7 +286,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="970" y="-291"/>
+            <point key="canvasLocation" x="762" y="-491"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="D1Q-6e-ulU">
@@ -343,7 +328,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3gy-3G-PY0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1145" y="-609"/>
+            <point key="canvasLocation" x="-585" y="-745"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mbI-sv-VYe">
@@ -362,7 +347,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XDL-4Q-dDd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-716" y="428"/>
+            <point key="canvasLocation" x="-804" y="-104"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4uE-ro-xSg">
@@ -381,7 +366,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="758-hX-gzq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="444" y="-291"/>
+            <point key="canvasLocation" x="236" y="-491"/>
         </scene>
     </scenes>
     <resources>
@@ -390,7 +375,6 @@
         <image name="camera60.png" width="60" height="60"/>
         <image name="facebook.png" width="50" height="50"/>
         <image name="mapTabicon" width="30" height="30"/>
-        <image name="return60.png" width="60" height="60"/>
         <image name="returnTabicon" width="30" height="30"/>
         <image name="subtitle1.png" width="640" height="44"/>
     </resources>
@@ -400,6 +384,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ZAm-TO-3A6"/>
+        <segue reference="RBS-Fe-Fdj"/>
     </inferredMetricsTieBreakers>
 </document>
