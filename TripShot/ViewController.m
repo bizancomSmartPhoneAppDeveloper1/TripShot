@@ -50,20 +50,22 @@
     //中心から地図が動かされた事を検知する
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(mapViewPanGesture)];
     
+    panGesture.delegate = self;
+    
     [self.mapView addGestureRecognizer:panGesture];
     //フラグの初期化
     self.isChasing = YES;
-    //self.userLocationBtn.hidden = YES;
+    self.userLocationBtn.hidden = YES;
 
     
-    //位置情報が使えるか確認する
-    [self locationAuth];
-    
-    //バックグラウンド通信ができるか確認する
-    [self backgroundCheck];
-    
-    //到達点についた時に分かるようにジオフェンスをスタート
-    [self.locationManager startMonitoringForRegion:distCircularRegion];
+//    //位置情報が使えるか確認する
+//    [self locationAuth];
+//    
+//    //バックグラウンド通信ができるか確認する
+//    [self backgroundCheck];
+//    
+//    //到達点についた時に分かるようにジオフェンスをスタート
+//    [self.locationManager startMonitoringForRegion:distCircularRegion];
     
     
     //tabバーのアイコンの色設定
@@ -100,7 +102,7 @@
     //最新の位置情報を取り出す
     CLLocation *location = [locations lastObject];
     
-    if (self.isChasing)
+    if (self.isChasing == YES)
     {
         [self.mapView setCenterCoordinate:location.coordinate animated:YES];
 
@@ -282,9 +284,20 @@
     [self.navigationController setNavigationBarHidden:YES];
     self.tabBarController.tabBar.hidden = NO;
     
+    //位置情報が使えるか確認する
+    [self locationAuth];
+    
+    //バックグラウンド通信ができるか確認する
+    [self backgroundCheck];
+
     //DBからピンぶっさしてます
     [self markingPinFromList];
     _mapView.delegate = self;
+    
+    
+    //到達点についた時に分かるようにジオフェンスをスタート
+    [self.locationManager startMonitoringForRegion:distCircularRegion];
+
 
 
 }
