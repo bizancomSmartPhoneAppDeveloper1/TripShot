@@ -83,10 +83,11 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     NSString *encodedString = [word stringByAddingPercentEscapesUsingEncoding:
                                NSUTF8StringEncoding];
     
-    //現在地に近い順でソートする 現時点では遠いところは表示されないみたいなのでいったんコメントアウト
-    //NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json&lat=%@&lon=%@&sort=geo",APIKEY,encodedString,_savedLat,_savedLon];
-    
-    NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&query=%@&output=json",APIKEY,encodedString];
+    //現在地に近い順でソートする 現時点では遠いところは表示されないので、いったんコメントアウト
+    //NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&device=mobile&query=%@&output=json&lat=%@&lon=%@&sort=hybrid&results=20",APIKEY,encodedString,_savedLat,_savedLon];
+
+    //初動として20件のみ取得
+    NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&device=mobile&query=%@&results=20&output=json",APIKEY,encodedString];
 
 
     NSURL *url = [NSURL URLWithString:path];
@@ -103,6 +104,8 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
         NSLog(@"%@",dic);
         
         NSArray *arrayResult = [dic objectForKey:@"Feature"];
+        
+        if(arrayResult.count != 0){
         
         for(int i = 0 ; i < arrayResult.count ; i++){
             
@@ -130,10 +133,20 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
             [_addressArray addObject:address];
         }
         
-        NSLog(@"result NameArray : %@",_nameArray);//店名一覧。
-        NSLog(@"result locationArray : %@",_locationArray);//NSStringで（lat,lot)となっている。
-        NSLog(@"result addressArray : %@",_addressArray);
+            NSLog(@"result NameArray : %@",_nameArray);//店名一覧。
+            NSLog(@"result locationArray : %@",_locationArray);//NSStringで（lat,lot)となっている。
+            NSLog(@"result addressArray : %@",_addressArray);
+            
+        }else if(arrayResult.count == 0){
         
+             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"ごめんね！"
+                                                           message:@"検索結果が見つかりませんでした"
+                                                          delegate:nil
+                                                 cancelButtonTitle:nil
+                                                 otherButtonTitles:@"検索しなおす", nil];
+            [alert show];
+        }
+
     }else{
         
         NSLog(@"the connection could not be created or if the download fails.");
@@ -236,12 +249,8 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     NSString *word = _searchField.text;
     [_searchField resignFirstResponder];
     [self getJsonFromWord:word];
-
-    //検索結果がからっぽだったとき(JSONDataのResultInfoのCountが0のとき）-------------------------
-    //の処理をここにかく。
     
     [_TableView reloadData];
-    
     
 }
 
