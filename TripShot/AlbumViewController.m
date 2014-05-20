@@ -42,7 +42,7 @@
     [[self AlbumCollection]setDelegate:self];
 
 //
-//    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+//self.navigationItem.leftBarButtonItem = self.editButtonItem;
 //
     
     [self viewBackground];
