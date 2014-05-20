@@ -231,6 +231,7 @@
         case 1://「はい」のとき。
         
             [db DeleteFlag:deleteIdNumb];
+            [_AlbumCollection reloadData];
 
             break;
             
