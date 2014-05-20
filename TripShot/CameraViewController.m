@@ -241,7 +241,7 @@
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
     titleLabel.text = title;
     titleLabel.textColor = [UIColor blueColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:30];
+    titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.scrollAllView addSubview:titleLabel];
     
     //日付入力
@@ -256,25 +256,25 @@
                                               fromDate:date];
     CGRect daterect = CGRectMake(90, 370, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *dateLabel = [[UILabel alloc]initWithFrame:daterect];
-    dateLabel.text = [NSString stringWithFormat:@"%d月　%d日",(int)dateComps.month,(int)dateComps.day];
+    dateLabel.text = [NSString stringWithFormat:@"%d月%d日",(int)dateComps.month,(int)dateComps.day];
     dateLabel.textColor = [UIColor blueColor];
-    dateLabel.font = [UIFont boldSystemFontOfSize:20];
+    dateLabel.font = [UIFont boldSystemFontOfSize:16];
     [self.scrollAllView addSubview:dateLabel];
     
     //住所情報入力
-    CGRect addressRect = CGRectMake(90, 400, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    CGRect addressRect = CGRectMake(90, 340, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
     addressLabel.text = address;
     addressLabel.textColor = [UIColor blueColor];
-    addressLabel.font = [UIFont boldSystemFontOfSize:14];
+    addressLabel.font = [UIFont systemFontOfSize:12];
     [self.scrollAllView addSubview:addressLabel];
     
     //コメント欄
-    CGRect textRect = CGRectMake(90, 430, 220, 50);
+    CGRect textRect = CGRectMake(90, 390, 220, 50);
     textfield = [[UITextField alloc]initWithFrame:textRect];
     textfield.text = @"コメントを入れてね♪";
     textfield.textColor = [UIColor blueColor];
-    textfield.font = [UIFont boldSystemFontOfSize:10];
+    textfield.font = [UIFont boldSystemFontOfSize:12];
     textfield.returnKeyType = UIReturnKeyDefault;
     textfield.delegate = self;
     [self.scrollAllView addSubview:textfield];
@@ -394,11 +394,28 @@
     return success;
 }
 
+//main画面に戻る際の関数。 5/20 CommentOuted byFujiwara
+//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+//    
+//    if ([segue.identifier isEqualToString:@"cameraViewToMainView"]) {
+//        NSLog(@"確認");
+//        //DBに保存する
+//        pics = [picsArray componentsJoinedByString:@","];
+//        NSLog(@"pics=%@",[pics description]);
+//        picsCount =[picsArray count];
+//        NSLog(@"count=%d",picsCount);
+//        comment = textfield.text;
+//        //went_flagを行ったことにする。これによりジオフェンスを外す。
+//        int went_frag = 0;
+//        [tsdatabase updateDBDataOnCamera:self.idFromMainPage TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
+//    }
+//}
 
-//main画面に戻る際の関数。
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"cameraViewToMainView"]) {
-        NSLog(@"確認");
+#pragma mark - Fujiwara
+
+-(void)viewWillDisappear:(BOOL)animated{
+    if([self.navigationController.viewControllers indexOfObject:self] == NSNotFound){
+    
         //DBに保存する
         pics = [picsArray componentsJoinedByString:@","];
         NSLog(@"pics=%@",[pics description]);
@@ -409,7 +426,12 @@
         int went_frag = 0;
         [tsdatabase updateDBDataOnCamera:self.idFromMainPage TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
     }
+    
+    [super viewWillDisappear:animated];
 }
+
+
+
 
 
 @end

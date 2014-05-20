@@ -46,8 +46,8 @@
 
 //緯度経度からDBにデータ追加するメソッド
 -(void)createDBDataFromLat:(double)lat andLot:(double)lot andTitle:(NSString *)title; //SeachListViewControllerで使用
-
-
+- (void)DeleteFlag:(int)number;
+- (FMResultSet *)loadDBDataFromDBId:(int)number;
 
 
 

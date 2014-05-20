@@ -139,7 +139,7 @@
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
     titleLabel.text = title;
     titleLabel.textColor = [UIColor blueColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:30];
+    titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.scrollAllView addSubview:titleLabel];
     
     //日付入力
@@ -151,25 +151,25 @@
     int day = [dayString intValue];
     CGRect daterect = CGRectMake(90, 370, 220, 50);
     UILabel *dateLabel = [[UILabel alloc]initWithFrame:daterect];
-    dateLabel.text = [NSString stringWithFormat:@"%d月　%d日",month,day];
+    dateLabel.text = [NSString stringWithFormat:@"%d月%d日",month,day];
     dateLabel.textColor = [UIColor blueColor];
-    dateLabel.font = [UIFont boldSystemFontOfSize:20];
+    dateLabel.font = [UIFont boldSystemFontOfSize:16];
     [self.scrollAllView addSubview:dateLabel];
     
     //住所情報入力
-    CGRect addressRect = CGRectMake(90, 400, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    CGRect addressRect = CGRectMake(90, 340, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
     addressLabel.text = address;
     addressLabel.textColor = [UIColor blueColor];
-    addressLabel.font = [UIFont boldSystemFontOfSize:14];
+    addressLabel.font = [UIFont systemFontOfSize:12];
     [self.scrollAllView addSubview:addressLabel];
     
     //コメント欄
-    CGRect textRect = CGRectMake(90, 430, 220, 50);
+    CGRect textRect = CGRectMake(90, 390, 220, 50);
     textfield = [[UITextField alloc]initWithFrame:textRect];
     textfield.text = text;
     textfield.textColor = [UIColor blueColor];
-    textfield.font = [UIFont boldSystemFontOfSize:10];
+    textfield.font = [UIFont boldSystemFontOfSize:12];
     textfield.returnKeyType = UIReturnKeyDefault;
     textfield.delegate = self;
     [self.scrollAllView addSubview:textfield];
