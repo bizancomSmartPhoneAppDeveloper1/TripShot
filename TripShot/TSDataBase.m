@@ -382,7 +382,7 @@
     return  _dataid;
 }
 
-//現在のデータ総数を確認する
+//現在の削除されてないデータ総数を確認する
 -(int)CountNowData{
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -393,7 +393,7 @@
     
     [database open];
     
-    NSString *sql = @"SELECT COUNT(*) AS COUNT FROM testTable;";
+    NSString *sql = @"SELECT COUNT(*) AS COUNT FROM testTable WHERE delete_flag = 0;";
     
     FMResultSet *results = [database executeQuery:sql];//DBの中身はresultsにはいるよ
     NSLog(@"%@",results);

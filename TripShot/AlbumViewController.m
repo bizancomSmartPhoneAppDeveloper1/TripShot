@@ -18,9 +18,10 @@
     NSMutableArray *picsCount;
     NSMutableArray *idarray;
     NSMutableArray *placeName;
-    int deleteIdNumb;
+//    int deleteIdNumb;
     int idnumb;
 }
+
 @end
 
 @implementation AlbumViewController
@@ -48,8 +49,6 @@
     [self viewBackground];
     
     UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(rowButtonAction:)];
-//    longPressGestureRecognizer.minimumPressDuration = 0.3;
-//    longPressGestureRecognizer.delegate = self;
     [_AlbumCollection addGestureRecognizer:longPressGestureRecognizer];
     
     //データ保存用のディレクトリを作成する
@@ -60,6 +59,13 @@
 
 
 -(void)viewDidAppear:(BOOL)animated{
+
+    [self reloadAlbumView];
+    
+}
+
+
+-(void)reloadAlbumView{
 
     [self.navigationController setNavigationBarHidden:YES];
     self.tabBarController.tabBar.hidden = NO;
@@ -81,8 +87,6 @@
     [_AlbumCollection reloadData];
 
 }
-
-
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView;
 {
@@ -133,8 +137,6 @@
         NSLog(@"idarray=%@",[idarray description]);
         NSString *pathNumber = [idarray objectAtIndex:indexPath.row-1];
         idnumb = [pathNumber intValue];
-        
-        //        [self performSegueWithIdentifier:@"albumToIndividualAlbum" sender:self];//これを使う（石井）
         
         IndividualAlbumViewController *indiAVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IndividualAVC"];
         indiAVC.idFromMainPage = idnumb;
@@ -188,54 +190,40 @@
         NSLog(@"long press on table view");
     }else if (((UILongPressGestureRecognizer *)gestureRecognizer).state == UIGestureRecognizerStateBegan){
         //セルが長押しされた場合の処理
-        
+        if(indexPath.row != 0){
+      
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
-                                                       message:@"削除しますか\n（だいじょうぶいまは削除されない）"
+                                                       message:@"削除しますか？"
                                                       delegate:self
                                              cancelButtonTitle:@"キャンセル"
                                              otherButtonTitles:@"はい", nil];
         [alert show];
         
-        //ここでこの数字からレコードのidを取得する必要がある
-       deleteIdNumb = ([[idarray objectAtIndex:indexPath.row] intValue] +1 );
-        NSLog(@"取得したバスの数字%d,これはつまり配列の%d番目",indexPath.row,deleteIdNumb);
+        NSString *pathNumber = [idarray objectAtIndex:indexPath.row-1];
+        idnumb = [pathNumber intValue];
+        
+            NSLog(@"取得したバスの数字%d。ID%dを削除。",indexPath.row,idnumb);
+        }
     }
 }
 
 
-
-//-  (void)handleLongPress:(UILongPressGestureRecognizer*)sender {
-//    if (sender.state == UIGestureRecognizerStateEnded) {
-//
-//    }
-//    else if (sender.state == UIGestureRecognizerStateBegan){
-//
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"確認"
-//                                                       message:@"削除しますか"
-//                                                      delegate:self
-//                                             cancelButtonTitle:@"キャンセル"
-//                                             otherButtonTitles:@"はい", nil];
-//        [alert show];
-//    }
-//}
-
-
+//アラートに対する応答
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
     TSDataBase *db = [[TSDataBase alloc]init];
 
     switch(buttonIndex){
         case 0:
-
             break;
             
         case 1://「はい」のとき。
         
-            [db DeleteFlag:deleteIdNumb];
-            [_AlbumCollection reloadData];
-
+            [db DeleteFlag:idnumb];
+            [self reloadAlbumView];
             break;
-            
     }
+
 }
 
 
