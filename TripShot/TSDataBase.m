@@ -411,6 +411,51 @@
 }
 
 
+//削除フラグ建てるメソッド
+- (void)DeleteFlag:(int)number{
+    
+    //idからデータ取得
+    FMResultSet *result = [self loadDBDataFromDBId:number];
+
+    //取り出してきたデータのフラグをたてる
+    NSLog(@"%@のフラグをたてるお",result);
+
+    FMDatabase *db = [[FMDatabase alloc]init];
+    
+    //データのupdate
+    NSString *update_sqlDeleteFlag = [NSString stringWithFormat:@"update testTable set delete_flag = 1 where id = %d",number];
+        
+        [db open];
+        [db executeUpdate:update_sqlDeleteFlag];
+        [db close];
+        
+}
+
+//内容ほぼいっしょ、最後DB閉じてる。
+- (FMResultSet *)loadDBDataFromDBId:(int)number{
+    
+    //ディレクトリのリストを取得する
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectry = paths[0];
+    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //データベース接続
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+    [database open];
+    
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM testTable WHERE id = %d;",number];
+    FMResultSet *results = [database executeQuery:sql];
+    [database close];
+    return results;
+}
+
+
+
+
+
+
+
+
 
 //cameraViewでデータを上書き保存するために使う関数
 - (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount WENTFLAG:(int)went_flag{

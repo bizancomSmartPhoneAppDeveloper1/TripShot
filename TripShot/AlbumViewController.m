@@ -18,6 +18,7 @@
     NSMutableArray *picsCount;
     NSMutableArray *idarray;
     NSMutableArray *placeName;
+    int deleteIdNumb;
     int idnumb;
 }
 @end
@@ -194,7 +195,10 @@
                                              cancelButtonTitle:@"キャンセル"
                                              otherButtonTitles:@"はい", nil];
         [alert show];
+        
         NSLog(@"取得したバスの数字%d",indexPath.row);
+//ここでこの数字からレコードのidを取得する必要がある
+        //        deleteIdNumb = indexPath.row;
 
     }
 }
@@ -218,13 +222,19 @@
 
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
+    TSDataBase *db = [[TSDataBase alloc]init];
+
     switch(buttonIndex){
         case 0:
+
             break;
             
         case 1://「はい」のとき。
-            //ここにデータの削除処理を書く
+        
+            [db DeleteFlag:deleteIdNumb];
+            
+            
+            
             break;
             
     }
