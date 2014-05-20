@@ -196,10 +196,9 @@
                                              otherButtonTitles:@"はい", nil];
         [alert show];
         
-        NSLog(@"取得したバスの数字%d",indexPath.row);
-//ここでこの数字からレコードのidを取得する必要がある
-        //        deleteIdNumb = indexPath.row;
-
+        //ここでこの数字からレコードのidを取得する必要がある
+       deleteIdNumb = ([[idarray objectAtIndex:indexPath.row] intValue] +1 );
+        NSLog(@"取得したバスの数字%d,これはつまり配列の%d番目",indexPath.row,deleteIdNumb);
     }
 }
 
@@ -232,9 +231,7 @@
         case 1://「はい」のとき。
         
             [db DeleteFlag:deleteIdNumb];
-            
-            
-            
+
             break;
             
     }
