@@ -249,7 +249,7 @@
     if (notification == nil)return;
     
     notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0.0001]; //3秒後にメッセ時が表示されるよう設定
-    notification.alertBody = [NSString stringWithFormat:@"行きたい場所が近くです＾＾"];  //メッセージの内容
+    notification.alertBody = [NSString stringWithFormat:@"行きたい%d場所が近くです＾＾",list];  //メッセージの内容
     notification.timeZone = [NSTimeZone defaultTimeZone];  //タイムゾーンの設定 その端末にあるローケーションに合わせる
     notification.soundName = UILocalNotificationDefaultSoundName;  //効果音
     notification.applicationIconBadgeNumber = list;  //通知された時のアイコンバッジの右肩の数字
