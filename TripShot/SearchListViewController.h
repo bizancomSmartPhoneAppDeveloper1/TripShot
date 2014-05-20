@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SearchListViewController : UITableViewController<UISearchDisplayDelegate,UISearchBarDelegate>
+
 @property (strong, nonatomic) IBOutlet UITableView *TableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchField;
 - (IBAction)cancelButtonTapped:(id)sender;
