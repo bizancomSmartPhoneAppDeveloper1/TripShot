@@ -8,7 +8,6 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import "ViewController.h"
-#import "CustomAnnotation.h"
 #import "TSDataBase.h"
 #import "CameraViewController.h"
 
@@ -28,17 +27,11 @@
     
 }
 
-@property (strong, nonatomic) CustomAnnotation *annotation;
-
 @end
 
 @implementation ViewController
 
--(void)viewWillAppear:(BOOL)animated
-{
-    //フラグを初期化
-    self.mapFlag = NO;
-}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -62,17 +55,6 @@
     self.isChasing = YES;
     self.userLocationBtn.hidden = YES;
 
-    
-//    //位置情報が使えるか確認する
-//    [self locationAuth];
-//    
-//    //バックグラウンド通信ができるか確認する
-//    [self backgroundCheck];
-//    
-//    //到達点についた時に分かるようにジオフェンスをスタート
-//    [self.locationManager startMonitoringForRegion:distCircularRegion];
-    
-    
     //tabバーのアイコンの色設定
     [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
     //tabbar背景色
@@ -116,7 +98,6 @@
     [self saveLocation:location];//値受け渡し用メソッド追加（藤原）
     
     
-    
     //到達点についた時に分かるようにジオフェンスをスタート
     [self.locationManager startMonitoringForRegion:distCircularRegion];
     
@@ -125,6 +106,15 @@
       self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
    // self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
 
+}
+
+//現在地ボタンが押された時
+- (IBAction)tapUserLocationBtn:(UIButton *)sender
+{
+    //フラグを初期化して、現在地を地図の中心にする
+    self.isChasing = YES;
+    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+    self.userLocationBtn.hidden = YES;
 }
 
 - (void)locationAuth{
@@ -288,6 +278,10 @@
     [self markingPinFromList];
     _mapView.delegate = self;
     
+    //tabバーのアイコンの色設定
+    [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
+    //tabbar背景色
+    [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
     //到達点についた時に分かるようにジオフェンスをスタート
     [self.locationManager startMonitoringForRegion:distCircularRegion];
@@ -338,6 +332,7 @@
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
         
         NSLog(@"%@",titleList[i]);
+    }
     /*
     //アノテーションを刺した場所のジオフェンスを開始
     //行っていない場所にだけジオフェンスをセットするために、if文を追加（石井）
@@ -348,7 +343,7 @@
     distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
     }
-    }
+    }*/
     
 }
 
@@ -394,10 +389,5 @@
 }
 
 
-- (IBAction)tapUserLocationBtn:(UIButton *)sender
-{
-    self.isChasing = YES;
-    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
-    self.userLocationBtn.hidden = YES;
-}
+
 @end
