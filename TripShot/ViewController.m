@@ -19,7 +19,7 @@
     double targetLongitude;
     double targetLatitude;
     CLRegion* distCircularRegion;
-    
+    int q;
     NSMutableArray *titleList;
     NSMutableArray *latList;
     NSMutableArray *lonList;
@@ -209,15 +209,16 @@
 
 // 進入イベント 通知
 -(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-   
+    q = 0;
     for (int r = 0; r < titleList.count; r++)
     {
         // 入った。
         if ([region.identifier isEqualToString:[NSString stringWithFormat:@"%@",titleList[r]]]) {
             NSLog(@"ジオフェンス領域%@に入りました",titleList[r]);
             NSLog(@"%d",r);
+             q++;
             //バックグラウンドからの通知
-            [self LocalNotificationStart];
+            [self LocalNotificationStart:q];
 
         }
     }
@@ -241,22 +242,23 @@
 }
 
 //バックグラウンド状態の時に通知する
--(void)LocalNotificationStart{
+-(void)LocalNotificationStart:(int)list{
     
     [[UIApplication sharedApplication] cancelAllLocalNotifications];  //設定する前に、設定済みの通知をキャンセルする
     UILocalNotification *notification = [[UILocalNotification alloc]init];  //ローカル通知させる時のインスタンス作成
     if (notification == nil)return;
     
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:3]; //3秒後にメッセ時が表示されるよう設定
-    //notification.repeatInterval = NSCalendarUnitDay;  //毎日通知させる設定
+    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0.0001]; //3秒後にメッセ時が表示されるよう設定
     notification.alertBody = [NSString stringWithFormat:@"行きたい場所が近くです＾＾"];  //メッセージの内容
     notification.timeZone = [NSTimeZone defaultTimeZone];  //タイムゾーンの設定 その端末にあるローケーションに合わせる
     notification.soundName = UILocalNotificationDefaultSoundName;  //効果音
-    notification.applicationIconBadgeNumber = 1;  //通知された時のアイコンバッジの右肩の数字
+    notification.applicationIconBadgeNumber = list;  //通知された時のアイコンバッジの右肩の数字
     
     [[UIApplication sharedApplication]scheduleLocalNotification:notification];  //ローカル通知の登録
     
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    NSLog(@"%d",list);
+    NSLog(@"震えてるよ");
     
 }
 
@@ -283,8 +285,8 @@
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
-    //到達点についた時に分かるようにジオフェンスをスタート
-    [self.locationManager startMonitoringForRegion:distCircularRegion];
+//    //到達点についた時に分かるようにジオフェンスをスタート
+//    [self.locationManager startMonitoringForRegion:distCircularRegion];
 
 
 
@@ -332,6 +334,10 @@
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
         
         NSLog(@"%@",titleList[i]);
+        
+        //到達点についた時に分かるようにジオフェンスをスタート
+        [self.locationManager startMonitoringForRegion:distCircularRegion];
+
     }
     /*
     //アノテーションを刺した場所のジオフェンスを開始
