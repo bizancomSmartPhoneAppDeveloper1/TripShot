@@ -11,7 +11,7 @@
 		180E0C821921E23000399554 /* pic1.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E0C811921E23000399554 /* pic1.png */; };
 		180FBCA51924809C00AFD3AC /* TSPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */; };
 		180FBCB01928C55600AFD3AC /* albumCellImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 180FBCAF1928C55600AFD3AC /* albumCellImage.png */; };
-		1810F862192AFDAD00316062 /* nowhere44.png in Resources */ = {isa = PBXBuildFile; fileRef = 1810F861192AFDAD00316062 /* nowhere44.png */; };
+		1854808B192CA1D6001A381D /* nowhere1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1854808A192CA1D6001A381D /* nowhere1.png */; };
 		189D4AEB191D4AA200498178 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AEA191D4AA200498178 /* libsqlite3.dylib */; };
 		189D4AF6191E105000498178 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AF5191E105000498178 /* libsqlite3.0.dylib */; };
 		189D4B02191E122500498178 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 189D4AF8191E122500498178 /* FMDatabase.m */; };
@@ -81,7 +81,7 @@
 		180FBCA31924809C00AFD3AC /* TSPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSPointAnnotation.h; path = ../TSPointAnnotation.h; sourceTree = "<group>"; };
 		180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSPointAnnotation.m; path = ../TSPointAnnotation.m; sourceTree = "<group>"; };
 		180FBCAF1928C55600AFD3AC /* albumCellImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = albumCellImage.png; sourceTree = "<group>"; };
-		1810F861192AFDAD00316062 /* nowhere44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nowhere44.png; sourceTree = "<group>"; };
+		1854808A192CA1D6001A381D /* nowhere1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nowhere1.png; sourceTree = "<group>"; };
 		189D4AEA191D4AA200498178 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		189D4AF5191E105000498178 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		189D4AF7191E122500498178 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -233,7 +233,7 @@
 		87522D3A19208F4A00334492 /* pics */ = {
 			isa = PBXGroup;
 			children = (
-				1810F861192AFDAD00316062 /* nowhere44.png */,
+				1854808A192CA1D6001A381D /* nowhere1.png */,
 				180FBCAF1928C55600AFD3AC /* albumCellImage.png */,
 				87354C761927794B00EF8FC2 /* facebook.png */,
 				8777B2781925BCA0002126BA /* map30.png */,
@@ -437,6 +437,7 @@
 				180E0C821921E23000399554 /* pic1.png in Resources */,
 				8777B2731925BC28002126BA /* return60.png in Resources */,
 				F62A87F219208E83001BBDDB /* image2.jpg in Resources */,
+				1854808B192CA1D6001A381D /* nowhere1.png in Resources */,
 				F62A87F019208E7D001BBDDB /* image1.jpg in Resources */,
 				F62A87F419208E8B001BBDDB /* image3.jpg in Resources */,
 				87354C771927794B00EF8FC2 /* facebook.png in Resources */,
@@ -447,7 +448,6 @@
 				87AC9676191CF98400C69813 /* Main.storyboard in Resources */,
 				18F4B7BD1924A43A00F4C8BB /* bright_img140514103609.jpg in Resources */,
 				180FBCB01928C55600AFD3AC /* albumCellImage.png in Resources */,
-				1810F862192AFDAD00316062 /* nowhere44.png in Resources */,
 				87522D3E1920E88900334492 /* camera.png in Resources */,
 				8777B2711925BC1B002126BA /* camera60.png in Resources */,
 				8777B2751925BC3A002126BA /* return30.png in Resources */,

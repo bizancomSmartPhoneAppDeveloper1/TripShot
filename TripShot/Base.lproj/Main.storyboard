@@ -266,7 +266,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hTE-JN-NxY">
-                                <rect key="frame" x="5" y="385" width="44" height="44"/>
+                                <rect key="frame" x="276" y="385" width="44" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="nowhere44.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -281,7 +281,6 @@
                     <navigationItem key="navigationItem" id="OSx-66-EUQ"/>
                     <connections>
                         <outlet property="mapView" destination="Man-Q1-MmQ" id="OUe-gd-sQX"/>
-                        <outlet property="userLocationBtn" destination="GHv-V2-GFg" id="UnQ-G1-RR6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
