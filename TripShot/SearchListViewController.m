@@ -51,7 +51,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
     //サーチバーの定義
     _searchField.delegate = self;
-    _searchField.placeholder = @"行きたい場所を入力してね！";
+    _searchField.placeholder = @"行きたいところを検索！";
     
     [self viewBackground];
     [self initNavigationBar];
@@ -83,8 +83,10 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     NSString *encodedString = [word stringByAddingPercentEscapesUsingEncoding:
                                NSUTF8StringEncoding];
     
+    /*
     //現在地に近い順でソートする 現時点では遠いところは表示されないので、いったんコメントアウト
     //NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&device=mobile&query=%@&output=json&lat=%@&lon=%@&sort=hybrid&results=20",APIKEY,encodedString,_savedLat,_savedLon];
+     */
 
     //初動として20件のみ取得
     NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&device=mobile&query=%@&results=20&output=json",APIKEY,encodedString];
@@ -143,7 +145,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
                                                            message:@"検索結果が見つかりませんでした"
                                                           delegate:nil
                                                  cancelButtonTitle:nil
-                                                 otherButtonTitles:@"検索しなおす", nil];
+                                                 otherButtonTitles:@"他のキーワードで探す", nil];
             [alert show];
         }
 
@@ -254,6 +256,13 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     
 }
 
+
+-(void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    NSLog(@"%dこめのせるが表示おわったとき",indexPath.row);
+
+}
+
 -(void)loadLocationData{
     NSUserDefaults *savedata = [NSUserDefaults standardUserDefaults];
     _savedLat = [savedata stringForKey:@"latFromMainPage"];
@@ -281,7 +290,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     CGRect screenSize = [[UIScreen mainScreen] bounds];
     CGFloat width = screenSize.size.width;
     CGFloat height = screenSize.size.height;
-    CGRect rect = CGRectMake(0, 0, width, height);
+    CGRect rect = CGRectMake(0, 0, width, height*2.2);
     
     UIImage *imageData = [UIImage imageNamed:@"kinari_img140514103609.jpg"];
     

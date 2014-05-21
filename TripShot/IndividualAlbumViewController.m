@@ -136,47 +136,7 @@
         [_scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
         [self.scrollAllView addSubview:_scrollView];
     }
-      
-    //行きたい場所リストタイトル表示
-    CGRect titleRect = CGRectMake(90, 320, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
-    titleLabel.text = title;
-    titleLabel.textColor = [UIColor blueColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:20];
-    [self.scrollAllView addSubview:titleLabel];
-    
-    //日付入力
-    NSString *dateString = [NSString stringWithFormat:@"%d",date];
-    NSString *monthString = [dateString substringWithRange:NSMakeRange(4,2)];
-    int month = [monthString intValue];
-    NSLog(@"month=%d",month);
-    NSString *dayString = [dateString substringWithRange:NSMakeRange(6,2)];
-    int day = [dayString intValue];
-    CGRect daterect = CGRectMake(90, 370, 220, 50);
-    UILabel *dateLabel = [[UILabel alloc]initWithFrame:daterect];
-    dateLabel.text = [NSString stringWithFormat:@"%d月%d日",month,day];
-    dateLabel.textColor = [UIColor blueColor];
-    dateLabel.font = [UIFont boldSystemFontOfSize:16];
-    [self.scrollAllView addSubview:dateLabel];
-    
-    //住所情報入力
-    CGRect addressRect = CGRectMake(90, 340, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
-    UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
-    addressLabel.text = address;
-    addressLabel.textColor = [UIColor blueColor];
-    addressLabel.font = [UIFont systemFontOfSize:12];
-    [self.scrollAllView addSubview:addressLabel];
-    
-    //コメント欄
-    CGRect textRect = CGRectMake(90, 390, 220, 50);
-    textfield = [[UITextField alloc]initWithFrame:textRect];
-    textfield.text = text;
-    textfield.textColor = [UIColor blueColor];
-    textfield.font = [UIFont boldSystemFontOfSize:12];
-    textfield.returnKeyType = UIReturnKeyDefault;
-    textfield.delegate = self;
-    [self.scrollAllView addSubview:textfield];
-    [self registerForKeyboardNotifications];
+
     
     //スクリーンサイズの取得
     CGRect screenSize = [[UIScreen mainScreen] bounds];
@@ -191,6 +151,59 @@
     imageViewBack.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageViewBack];
     [self.view sendSubviewToBack:imageViewBack];
+
+    
+    //文字色の指定（藍色にする！)
+    UIColor *textColor = [UIColor colorWithRed:0.16 green:0.16 blue:0.42 alpha:1.0];
+    
+    
+    //行きたい場所リストタイトル表示
+    CGRect titleRect = CGRectMake(20, 340, width-40, 40);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
+    titleLabel.text = title;
+    titleLabel.numberOfLines = 0;
+    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    titleLabel.textColor = textColor;
+    titleLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
+//    titleLabel.backgroundColor = [[UIColor greenColor]colorWithAlphaComponent:0.5]; //確認用
+    [self.scrollAllView addSubview:titleLabel];
+    
+    //日付入力
+    NSString *dateString = [NSString stringWithFormat:@"%d",date];
+    NSString *monthString = [dateString substringWithRange:NSMakeRange(4,2)];
+    int month = [monthString intValue];
+    NSLog(@"month=%d",month);
+    NSString *dayString = [dateString substringWithRange:NSMakeRange(6,2)];
+    int day = [dayString intValue];
+    CGRect daterect = CGRectMake(20, 430, width-40, 14);
+    UILabel *dateLabel = [[UILabel alloc]initWithFrame:daterect];
+    dateLabel.text = [NSString stringWithFormat:@"%d月%d日",month,day];
+    dateLabel.textColor = textColor;
+    dateLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
+//    dateLabel.backgroundColor = [[UIColor yellowColor]colorWithAlphaComponent:0.5];//確認用
+    [self.scrollAllView addSubview:dateLabel];
+    
+    //住所情報入力
+    CGRect addressRect = CGRectMake(18, 445, width-40, 20);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
+    addressLabel.text = address;
+    addressLabel.textColor = textColor;
+    addressLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
+//    addressLabel.backgroundColor = [[UIColor redColor]colorWithAlphaComponent:0.5]; //確認用
+    [self.scrollAllView addSubview:addressLabel];
+    
+    //コメント欄
+    CGRect textRect = CGRectMake(20, 380, width-40, 30);
+    textfield = [[UITextField alloc]initWithFrame:textRect];
+    textfield.text = text;
+    textfield.textColor = textColor;
+//    textfield.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0.5];//確認用
+    textfield.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
+    textfield.returnKeyType = UIReturnKeyDefault;
+    textfield.delegate = self;
+    [self.scrollAllView addSubview:textfield];
+    [self registerForKeyboardNotifications];
+    
 }
 
 
