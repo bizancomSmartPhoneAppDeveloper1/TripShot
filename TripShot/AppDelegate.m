@@ -12,6 +12,7 @@
 
 @implementation AppDelegate
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
@@ -19,6 +20,12 @@
     [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     [UITabBar appearance].tintColor = [UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0];
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
+    
+    UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if (notification)
+    {
+        application.applicationIconBadgeNumber = notification.applicationIconBadgeNumber -1;
+    }
     return YES;
 }
 							
@@ -32,15 +39,18 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    //バックグラウンドに行く時に、バッジがあったら無くす
+    application.applicationIconBadgeNumber = -1;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
-    //バックグラウンドへ移行すると、バッヂを無くす
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-
+    //フォアグラウンドへ移行すると、バッヂを無くす
+     application.applicationIconBadgeNumber = -1;
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
