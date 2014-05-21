@@ -19,18 +19,18 @@
     double targetLongitude;
     double targetLatitude;
     CLRegion* distCircularRegion;
-    int q;
+    
     NSMutableArray *titleList;
     NSMutableArray *latList;
     NSMutableArray *lonList;
     NSMutableArray *wentFlagList;
-    
+
+   
 }
 
 @end
 
 @implementation ViewController
-
 
 - (void)viewDidLoad
 {
@@ -209,19 +209,11 @@
 
 // 進入イベント 通知
 -(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    q = 0;
-    for (int r = 0; r < titleList.count; r++)
-    {
-        // 入った。
-        if ([region.identifier isEqualToString:[NSString stringWithFormat:@"%@",titleList[r]]]) {
-            NSLog(@"ジオフェンス領域%@に入りました",titleList[r]);
-            NSLog(@"%d",r);
-             q++;
-            //バックグラウンドからの通知
-            [self LocalNotificationStart:q];
-
-        }
-    }
+   NSLog(@"ジオフェンス領域%@に入りました%d",region.identifier,self.q);
+    self.q = 0;
+    self.q++;
+    //バックグラウンドからの通知
+    [self LocalNotificationStart:region.identifier];
 }
 
 
@@ -242,22 +234,23 @@
 }
 
 //バックグラウンド状態の時に通知する
--(void)LocalNotificationStart:(int)list{
+-(void)LocalNotificationStart:(NSString *)locationName {
     
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];  //設定する前に、設定済みの通知をキャンセルする
-    UILocalNotification *notification = [[UILocalNotification alloc]init];  //ローカル通知させる時のインスタンス作成
-    if (notification == nil)return;
+   // [[UIApplication sharedApplication] cancelAllLocalNotifications];  //設定する前に、設定済みの通知をキャンセルする
+    UILocalNotification *notification = [[UILocalNotification alloc]init];
+    //ローカル通知させる時のインスタンス作成
+    if (notification == nil)
     
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0.0001]; //3秒後にメッセ時が表示されるよう設定
-    notification.alertBody = [NSString stringWithFormat:@"行きたい%d場所が近くです＾＾",list];  //メッセージの内容
+    notification.fireDate = [NSDate new]; //3秒後にメッセ時が表示されるよう設定
+    notification.shouldGroupAccessibilityChildren = YES;
+    notification.alertBody = [NSString stringWithFormat:@"%@が近くです＾＾",locationName];  //メッセージの内容
     notification.timeZone = [NSTimeZone defaultTimeZone];  //タイムゾーンの設定 その端末にあるローケーションに合わせる
     notification.soundName = UILocalNotificationDefaultSoundName;  //効果音
-    notification.applicationIconBadgeNumber = list;  //通知された時のアイコンバッジの右肩の数字
-    
-    [[UIApplication sharedApplication]scheduleLocalNotification:notification];  //ローカル通知の登録
+    notification.applicationIconBadgeNumber += 1;  //通知された時のアイコンバッジの右肩の数字
+    [[UIApplication sharedApplication]presentLocalNotificationNow:notification];  //ローカル通知の登録
     
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    NSLog(@"%d",list);
+
     NSLog(@"震えてるよ");
     
 }
@@ -285,8 +278,6 @@
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
-//    //到達点についた時に分かるようにジオフェンスをスタート
-//    [self.locationManager startMonitoringForRegion:distCircularRegion];
 
 
 
@@ -394,6 +385,8 @@
 
 }
 
-
+-(void)clearQ {
+    self.q=0;
+}
 
 @end

@@ -10,6 +10,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "MapView.h"
 
+
 @interface ViewController : UIViewController<CLLocationManagerDelegate,MKMapViewDelegate,UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -19,7 +20,7 @@
 @property NSUserDefaults *mydefault;
 @property NSTimer* timer;
 @property BOOL isChasing;
-
+@property int q;
 - (IBAction)tapUserLocationBtn:(UIButton *)sender;
 
 @end
