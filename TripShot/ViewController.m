@@ -287,7 +287,6 @@
     [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
-    
 
 
 
@@ -335,7 +334,8 @@
         distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
         
-        NSLog(@"%@",titleList[i]);
+        NSLog(@"titleList=%@",titleList[i]);
+        NSLog(@"wentFlag=%@",[[wentFlagList objectAtIndex:i] description]);
         
 //        到達点についた時に分かるようにジオフェンスをスタート
 //        [self.locationManager startMonitoringForRegion:distCircularRegion];
@@ -347,13 +347,12 @@
         {
  
             CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
-        
             distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
-        
+
             //到達点についた時に分かるようにジオフェンスをスタート
             [self.locationManager startMonitoringForRegion:distCircularRegion];
-
+            
         }
     }
     

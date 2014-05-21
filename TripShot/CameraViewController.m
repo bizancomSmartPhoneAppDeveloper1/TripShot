@@ -26,6 +26,7 @@
     NSMutableArray *facebookImages;
     UIScrollView *scrollAllView;
     UIScrollView *scrollView;
+    int deleteFlag;
 }
 
 
@@ -210,13 +211,14 @@
     //行きたい場所情報をメイン画面から引き継ぐ
     FMResultSet *resultsID = [tsdatabase loadIDFromPlaceName:_place_nameFromMainPage];
     while([resultsID next]){
+        //削除フラグが立っていない情報のみ取得
+        if (deleteFlag==0) {
         self.idFromMainPage = [resultsID intForColumn:@"id"];
+        }
     }
     
     //DBを閉じる
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    NSString *databaseFilePath = [[tsdatabase dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
     [database close];
     
@@ -225,6 +227,7 @@
     while([results next]){
         title = [results stringForColumn:@"place_name"];
         address = [results stringForColumn:@"address"];
+        deleteFlag = [results intForColumn:@"delete_flag"];
     }
     
     //DBを閉じる
@@ -454,11 +457,10 @@
     //あるばむいちらん画面に戻りたいが一番したの背景が先に呼ばれて改めてタブバーボタンを押すと画面が戻る
 //    AlbumViewController *albumViewCon = [[AlbumViewController alloc]init];
 //    [self.navigationController pushViewController:albumViewCon animated:YES];
+    
     //NSTimerをstop
     [self.timer invalidate];
 }
-
-
 
 
 @end

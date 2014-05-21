@@ -94,9 +94,7 @@
     }
     
     //DBを閉じる
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    NSString *databaseFilePath = [[tsdatabase dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
     [database close];
 
