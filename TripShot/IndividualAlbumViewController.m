@@ -58,12 +58,15 @@
     self.tabBarController.tabBar.hidden = YES;
 
     //navigationBar設定
-    //ナビゲーションバー
-    [UINavigationBar appearance].tintColor = [UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0];
-    
-    
-    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
-    
+//    //ナビゲーションバー
+//    [UINavigationBar appearance].tintColor = [UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0];
+//    
+//    
+//    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
+//
+    //オリジナルBarButton生成　selectorでメソッドを指定
+    UIImage *image = [UIImage imageNamed:@"return30.png"];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleBordered target:self action:@selector(didTapReturnButton)];
 }
 
 
@@ -265,7 +268,10 @@
     [self button_Tapped];
 }
 
-
+-(void)didTapReturnButton{
+    //BarBUttonもどるで元の画面に
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 @end

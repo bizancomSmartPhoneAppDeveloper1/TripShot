@@ -265,10 +265,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GHv-V2-GFg">
-                                <rect key="frame" x="20" y="361" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hTE-JN-NxY">
+                                <rect key="frame" x="5" y="385" width="44" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button">
+                                <state key="normal" image="nowhere44.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -347,7 +347,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XDL-4Q-dDd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-804" y="-104"/>
+            <point key="canvasLocation" x="-808" y="50"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4uE-ro-xSg">
@@ -375,6 +375,7 @@
         <image name="camera60.png" width="60" height="60"/>
         <image name="facebook.png" width="50" height="50"/>
         <image name="mapTabicon" width="30" height="30"/>
+        <image name="nowhere44.png" width="44" height="44"/>
         <image name="returnTabicon" width="30" height="30"/>
         <image name="subtitle1.png" width="640" height="44"/>
     </resources>

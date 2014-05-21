@@ -7,6 +7,7 @@
 //
 
 #import "CameraViewController.h"
+#import "AlbumViewController.h"
 
 @interface CameraViewController (){
     TSDataBase *tsdatabase;
@@ -69,6 +70,9 @@
 
     [self.navigationController setNavigationBarHidden:NO];
     self.tabBarController.tabBar.hidden = YES;
+    //barbutton生成　画像入れ込み　メソッド指定
+    UIImage *image = [UIImage imageNamed:@"return30.png"];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleBordered target:self action:@selector(didTapReturnButton)];
 }
 
 
@@ -430,6 +434,13 @@
     [super viewWillDisappear:animated];
 }
 
+-(void)didTapReturnButton{
+    //BarBUttonもどるで元の画面に
+    [self.navigationController popViewControllerAnimated:YES];
+    //あるばむいちらん画面に戻りたいが一番したの背景が先に呼ばれて改めてタブバーボタンを押すと画面が戻る
+//    AlbumViewController *albumViewCon = [[AlbumViewController alloc]init];
+//    [self.navigationController pushViewController:albumViewCon animated:YES];
+}
 
 
 
