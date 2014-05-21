@@ -420,6 +420,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     if([self.navigationController.viewControllers indexOfObject:self] == NSNotFound){
     
+        
         //DBに保存する
         pics = [picsArray componentsJoinedByString:@","];
         NSLog(@"pics=%@",[pics description]);
@@ -428,7 +429,10 @@
         comment = textfield.text;
         //went_flagを行ったことにする。これによりジオフェンスを外す。
         int went_frag = 0;
+        
+        if (!(picsCount==0)) {
         [tsdatabase updateDBDataOnCamera:self.idFromMainPage TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
+        }
     }
     
     [super viewWillDisappear:animated];
@@ -440,6 +444,8 @@
     //あるばむいちらん画面に戻りたいが一番したの背景が先に呼ばれて改めてタブバーボタンを押すと画面が戻る
 //    AlbumViewController *albumViewCon = [[AlbumViewController alloc]init];
 //    [self.navigationController pushViewController:albumViewCon animated:YES];
+    //NSTimerをstop
+    [self.timer invalidate];
 }
 
 

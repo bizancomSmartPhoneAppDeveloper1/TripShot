@@ -108,11 +108,15 @@
     if ([self.timer isValid]) {
         [self.timer invalidate];
     }
+    if (!picsCount==0) {
+        NSLog(@"picsCount=%d",picsCount);
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.03
                                                   target:self
                                                 selector:@selector(timerDidFire:)
                                                 userInfo:nil
                                                  repeats:YES];
+    }
+    
     _scrollView.showsHorizontalScrollIndicator = NO;
     for (UIView *v in [_scrollView subviews]) {
         [v removeFromSuperview];
@@ -271,6 +275,8 @@
 -(void)didTapReturnButton{
     //BarBUttonもどるで元の画面に
     [self.navigationController popViewControllerAnimated:YES];
+    //NSTimerをstop
+    [self.timer invalidate];
 }
 
 
