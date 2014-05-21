@@ -18,7 +18,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *userLocationBtn;
 
-
 @property NSUserDefaults *mydefault;
 @property NSTimer* timer;
 @property BOOL isChasing;
