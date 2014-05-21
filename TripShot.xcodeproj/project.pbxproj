@@ -61,7 +61,7 @@
 		F66BEDBE19206029000E60E8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F66BEDBD19206029000E60E8 /* MapKit.framework */; };
 		F66BEDC119206F92000E60E8 /* AlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BEDC019206F92000E60E8 /* AlbumViewController.m */; };
 		F66BEDC419206FF7000E60E8 /* CollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BEDC319206FF7000E60E8 /* CollectionCell.m */; };
-		F6BA12871929CC48005A1EB7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6BA12861929CC48005A1EB7 /* AudioToolbox.framework */; };
+		F6B74970192A9981007C0341 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B7496F192A9981007C0341 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,7 +150,7 @@
 		F66BEDC019206F92000E60E8 /* AlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumViewController.m; sourceTree = "<group>"; };
 		F66BEDC219206FF7000E60E8 /* CollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionCell.h; sourceTree = "<group>"; };
 		F66BEDC319206FF7000E60E8 /* CollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionCell.m; sourceTree = "<group>"; };
-		F6BA12861929CC48005A1EB7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F6B7496F192A9981007C0341 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6BA12871929CC48005A1EB7 /* AudioToolbox.framework in Frameworks */,
+				F6B74970192A9981007C0341 /* AudioToolbox.framework in Frameworks */,
 				87354C7919277D7000EF8FC2 /* Social.framework in Frameworks */,
 				F66BEDBE19206029000E60E8 /* MapKit.framework in Frameworks */,
 				189D4B0E191FBA8900498178 /* CoreLocation.framework in Frameworks */,
@@ -274,7 +274,7 @@
 		87AC9661191CF98300C69813 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F6BA12861929CC48005A1EB7 /* AudioToolbox.framework */,
+				F6B7496F192A9981007C0341 /* AudioToolbox.framework */,
 				87354C7819277D7000EF8FC2 /* Social.framework */,
 				F66BEDBD19206029000E60E8 /* MapKit.framework */,
 				189D4B0D191FBA8800498178 /* CoreLocation.framework */,

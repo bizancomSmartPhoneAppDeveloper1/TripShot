@@ -382,7 +382,7 @@
     return  _dataid;
 }
 
-//現在のデータ総数を確認する
+//現在の削除されてないデータ総数を確認する
 -(int)CountNowData{
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -393,7 +393,7 @@
     
     [database open];
     
-    NSString *sql = @"SELECT COUNT(*) AS COUNT FROM testTable;";
+    NSString *sql = @"SELECT COUNT(*) AS COUNT FROM testTable WHERE delete_flag = 0;";
     
     FMResultSet *results = [database executeQuery:sql];//DBの中身はresultsにはいるよ
     NSLog(@"%@",results);
@@ -414,26 +414,6 @@
 //削除フラグ建てるメソッド
 - (void)DeleteFlag:(int)number{
     
-    //idからデータ取得
-    FMResultSet *result = [self loadDBDataFromDBId:number];
-
-    //取り出してきたデータのフラグをたてる
-    NSLog(@"%@のフラグをたてるお",result);
-
-    FMDatabase *db = [[FMDatabase alloc]init];
-    
-    //データのupdate
-    NSString *update_sqlDeleteFlag = [NSString stringWithFormat:@"update testTable set delete_flag = 1 where id = %d",number];
-        
-        [db open];
-        [db executeUpdate:update_sqlDeleteFlag];
-        [db close];
-        
-}
-
-//内容ほぼいっしょ、最後DB閉じてる。
-- (FMResultSet *)loadDBDataFromDBId:(int)number{
-    
     //ディレクトリのリストを取得する
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectry = paths[0];
@@ -442,18 +422,15 @@
     //データベース接続
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
     [database open];
+
     
-    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM testTable WHERE id = %d;",number];
-    FMResultSet *results = [database executeQuery:sql];
+    //データのupdate
+    NSString *update_sqlDeleteFlag = [NSString stringWithFormat:@"update testTable set delete_flag = 1 where id = %d",number];
+    
+    [database executeUpdate:update_sqlDeleteFlag];
     [database close];
-    return results;
+        
 }
-
-
-
-
-
-
 
 
 
