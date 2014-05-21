@@ -281,7 +281,7 @@
                     <navigationItem key="navigationItem" id="OSx-66-EUQ"/>
                     <connections>
                         <outlet property="mapView" destination="Man-Q1-MmQ" id="OUe-gd-sQX"/>
-                        <outlet property="userLocationBtn" destination="GHv-V2-GFg" id="UnQ-G1-RR6"/>
+                        <outlet property="userLocationBtn" destination="hTE-JN-NxY" id="iSM-RF-YZc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
