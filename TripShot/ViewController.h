@@ -15,7 +15,9 @@
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) IBOutlet MapView *mapView;
+
 @property (strong, nonatomic) IBOutlet UIButton *userLocationBtn;
+
 
 @property NSUserDefaults *mydefault;
 @property NSTimer* timer;
