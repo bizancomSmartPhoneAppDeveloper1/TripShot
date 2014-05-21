@@ -16,10 +16,10 @@
 }
 @property int idFromMainPage;//メイン画面でピンを選択した時にcameraViewに対して渡されるDBのID
 @property (nonatomic, retain) NSTimer* timer;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollAllView;
+//@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+//@property (weak, nonatomic) IBOutlet UIScrollView *scrollAllView;
 
-- (IBAction)buttonFacebook:(UIButton *)sender;
+//- (IBAction)buttonFacebook:(UIButton *)sender;
 
 
 @end

@@ -24,7 +24,8 @@
     BOOL autoScrollStopped;
     NSString *path;
     NSMutableArray *facebookImages;
-
+    UIScrollView *scrollAllView;
+    UIScrollView *scrollView;
 }
 
 
@@ -176,7 +177,8 @@
     picsCount = [array count];
     
     //以下からScrollView機能
-    _scrollView.delegate = self;
+    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.width)];
+    scrollView.delegate = self;
     autoScrollStopped = NO;
     if ([self.timer isValid]) {
         [self.timer invalidate];
@@ -186,11 +188,11 @@
                                                 selector:@selector(timerDidFire:)
                                                 userInfo:nil
                                                  repeats:YES];
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    for (UIView *v in [_scrollView subviews]) {
+    scrollView.showsHorizontalScrollIndicator = NO;
+    for (UIView *v in [scrollView subviews]) {
         [v removeFromSuperview];
     }
-    CGRect workingFrame = _scrollView.frame;
+    CGRect workingFrame = scrollView.frame;
     if (!picsCount==0) {
         for (int i=0; i<picsCount; i++) {
             UIImage* image = [array objectAtIndex:i];
@@ -198,13 +200,13 @@
             [imageview setContentMode:UIViewContentModeScaleAspectFit];
             imageview.frame = workingFrame;
             
-            [_scrollView addSubview:imageview];
+            [scrollView addSubview:imageview];
             workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
             [facebookImages addObject:image];
         }
-        [_scrollView setPagingEnabled:YES];
-        [_scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
-        [self.scrollAllView addSubview:_scrollView];
+        [scrollView setPagingEnabled:YES];
+        [scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
+        [scrollAllView addSubview:scrollView];
     }
     
     //カメラ機能終了
@@ -240,13 +242,17 @@
     //DBを閉じる
     [database close];
 
+    //全体にUIScrollviewを作成
+    scrollAllView = [[UIScrollView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self.view addSubview:scrollAllView];
+    
     //行きたい場所リストタイトル表示
     CGRect titleRect = CGRectMake(90, 320, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
     titleLabel.text = title;
     titleLabel.textColor = [UIColor blueColor];
     titleLabel.font = [UIFont boldSystemFontOfSize:20];
-    [self.scrollAllView addSubview:titleLabel];
+    [scrollAllView addSubview:titleLabel];
     
     //日付入力
     date = [NSDate date];
@@ -263,7 +269,7 @@
     dateLabel.text = [NSString stringWithFormat:@"%d月%d日",(int)dateComps.month,(int)dateComps.day];
     dateLabel.textColor = [UIColor blueColor];
     dateLabel.font = [UIFont boldSystemFontOfSize:16];
-    [self.scrollAllView addSubview:dateLabel];
+    [scrollAllView addSubview:dateLabel];
     
     //住所情報入力
     CGRect addressRect = CGRectMake(90, 340, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
@@ -271,7 +277,7 @@
     addressLabel.text = address;
     addressLabel.textColor = [UIColor blueColor];
     addressLabel.font = [UIFont systemFontOfSize:12];
-    [self.scrollAllView addSubview:addressLabel];
+    [scrollAllView addSubview:addressLabel];
     
     //コメント欄
     CGRect textRect = CGRectMake(90, 390, 220, 50);
@@ -281,9 +287,25 @@
     textfield.font = [UIFont boldSystemFontOfSize:12];
     textfield.returnKeyType = UIReturnKeyDefault;
     textfield.delegate = self;
-    [self.scrollAllView addSubview:textfield];
+    [scrollAllView addSubview:textfield];
     // キーボードが表示されたときのNotificationを受け取る
     [self registerForKeyboardNotifications];
+    
+    //Facebookボタン作成
+    UIButton *buttonFacebook = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonFacebook.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-50, 340, 44, 44);
+    [buttonFacebook setBackgroundImage:[UIImage imageNamed:@"facebook.png"] forState:UIControlStateNormal];
+    [buttonFacebook sizeToFit];
+    [buttonFacebook addTarget:self action:@selector(button_Tapped) forControlEvents:UIControlEventTouchUpInside];
+    [scrollAllView addSubview:buttonFacebook];
+    
+    //cameraボタン作成
+    UIButton *buttonCamera = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonCamera.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-55, 400, 44, 44);
+    [buttonCamera setBackgroundImage:[UIImage imageNamed:@"camera60.png"] forState:UIControlStateNormal];
+    [buttonCamera sizeToFit];
+    [buttonCamera addTarget:self action:@selector(startCamera) forControlEvents:UIControlEventTouchUpInside];
+    [scrollAllView addSubview:buttonCamera];
     
     //スクリーンサイズの取得
     CGRect screenSize = [[UIScreen mainScreen] bounds];
@@ -314,12 +336,12 @@
 	if (autoScrollStopped) {
 		return;
 	}
-	CGPoint p = self.scrollView.contentOffset;
+	CGPoint p = scrollView.contentOffset;
 	p.x = p.x + 1;
-    CGRect aFrame = self.scrollView.frame;
+    CGRect aFrame = scrollView.frame;
     //Imageの数だけ来ると自動スクロール停止
 	if (p.x < ((aFrame.size.width * picsCount)- aFrame.size.width)) {
-		self.scrollView.contentOffset = p;
+		scrollView.contentOffset = p;
 	}
 }
 
@@ -340,14 +362,14 @@
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
     CGPoint scrollPoint = CGPointMake(0.0,200.0);
-    [self.scrollAllView setContentOffset:scrollPoint animated:YES];
+    [scrollAllView setContentOffset:scrollPoint animated:YES];
 }
 
 
 //キーボードを隠す関数
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    [self.scrollAllView setContentOffset:CGPointZero animated:YES];
+    [scrollAllView setContentOffset:CGPointZero animated:YES];
 }
 
 
