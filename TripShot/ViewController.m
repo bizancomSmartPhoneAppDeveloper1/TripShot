@@ -108,7 +108,7 @@
 }
 
 //現在地ボタンが押された時
-- (IBAction)tapUserLocationBtn:(UIButton *)sender
+- (IBAction)tapUserLocationButton:(UIButton *)sender
 {
     //フラグを初期化して、現在地を地図の中心にする
     self.isChasing = YES;

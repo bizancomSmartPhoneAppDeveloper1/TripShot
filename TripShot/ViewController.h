@@ -20,7 +20,7 @@
 @property NSUserDefaults *mydefault;
 @property NSTimer* timer;
 @property BOOL isChasing;
-//@property int q;
-- (IBAction)tapUserLocationBtn:(UIButton *)sender;
+
+- (IBAction)tapUserLocationButton:(UIButton *)sender;
 
 @end
