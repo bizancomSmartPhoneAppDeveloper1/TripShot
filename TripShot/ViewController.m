@@ -52,7 +52,7 @@
     [self.mapView addGestureRecognizer:panGesture];
     //フラグの初期化
     self.isChasing = YES;
-    self.userLocationBtn.hidden = YES;
+    self.userLocationButton.hidden = YES;
 
     //tabバーのアイコンの色設定
     [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
@@ -72,7 +72,7 @@
     NSLog(@"検知しました");
     self.isChasing = NO;
     
-    self.userLocationBtn.hidden = NO;
+    self.userLocationButton.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -113,7 +113,7 @@
     //フラグを初期化して、現在地を地図の中心にする
     self.isChasing = YES;
     [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
-    self.userLocationBtn.hidden = YES;
+    self.userLocationButton.hidden = YES;
 }
 
 - (void)locationAuth{

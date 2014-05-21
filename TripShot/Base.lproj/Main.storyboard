@@ -287,6 +287,7 @@
                     <connections>
                         <outlet property="mapView" destination="Man-Q1-MmQ" id="OUe-gd-sQX"/>
                         <outlet property="userLocationBtn" destination="hTE-JN-NxY" id="Zs3-GV-2pe"/>
+                        <outlet property="userLocationButton" destination="hTE-JN-NxY" id="q09-Ff-RZA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
