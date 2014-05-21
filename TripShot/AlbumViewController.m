@@ -155,16 +155,23 @@
     
     CollectionCell *cell = [collectionView
                             dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+/*
+    if(indexPath.row == 0){
+        NSLog(@"追加がつくられとるんじゃーぼけー");
+        [[cell cellFrameView]setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
+    }
+*/
     
-    if([picture[indexPath.item] isEqualToString:@"icon_1r_192.png"]){//追加ボタン
+    
+    if([picture[indexPath.item] isEqualToString:@"icon_1r_192.png"]){//追加ボタンの部分
+        [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
+//        [[cell cellFrameView]setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
         
-      [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
-    
     }else if ([picture[indexPath.item] isEqualToString:@"NODATA"]){//データが空のとき
         
         [[cell pictureView] setImage:[UIImage imageNamed:@"image1.jpg"]];
 
-    }else{ //通常時。要注意。配列画像の画像の一枚目を表示する。（石井さんにきくこと）
+    }else{ //通常時。配列画像の画像の一枚目を表示する。
         
         NSArray *arrayPicNotMutable = [picture[indexPath.item] componentsSeparatedByString:@","];
         NSLog(@"arrayPicNotMutable=%@",[arrayPicNotMutable description]);
