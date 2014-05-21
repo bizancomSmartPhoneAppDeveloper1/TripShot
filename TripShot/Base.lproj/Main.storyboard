@@ -277,7 +277,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tapUserLocationBtn:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="k4x-Sj-vgQ"/>
+                                    <action selector="tapUserLocationButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="PyJ-EF-ByO"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -286,7 +286,6 @@
                     <navigationItem key="navigationItem" id="OSx-66-EUQ"/>
                     <connections>
                         <outlet property="mapView" destination="Man-Q1-MmQ" id="OUe-gd-sQX"/>
-                        <outlet property="userLocationBtn" destination="hTE-JN-NxY" id="Zs3-GV-2pe"/>
                         <outlet property="userLocationButton" destination="hTE-JN-NxY" id="q09-Ff-RZA"/>
                     </connections>
                 </viewController>
