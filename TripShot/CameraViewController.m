@@ -104,18 +104,6 @@
 }
 
 
-//カメラボタンを押した時に呼ばれる関数
-- (IBAction)takePhoto:(UIButton *)sender {
-    [self startCamera];
-}
-
-
-//Facebookボタンを押した時に呼ばれる関数
-- (IBAction)buttonFacebook:(UIButton *)sender {
-    [self button_Tapped];
-}
-
-
 //Facebookへの投稿関数
 - (void)button_Tapped
 

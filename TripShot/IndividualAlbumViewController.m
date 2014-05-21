@@ -293,11 +293,6 @@
 }
 
 
-//FaceBook投稿
-- (IBAction)buttonFacebook:(UIButton *)sender {
-    [self button_Tapped];
-}
-
 -(void)didTapReturnButton{
     //BarBUttonもどるで元の画面に
     [self.navigationController popViewControllerAnimated:YES];
