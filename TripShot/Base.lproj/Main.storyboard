@@ -244,9 +244,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hTE-JN-NxY">
-                                <rect key="frame" x="5" y="385" width="44" height="44"/>
+                                <rect key="frame" x="276" y="385" width="44" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="nowhere44.png">
+                                <state key="normal" image="nowhere1.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -350,7 +350,7 @@
         <image name="albumCellImage.png" width="514" height="402"/>
         <image name="albumTabicon" width="30" height="30"/>
         <image name="mapTabicon" width="30" height="30"/>
-        <image name="nowhere44.png" width="44" height="44"/>
+        <image name="nowhere1.png" width="44" height="44"/>
         <image name="returnTabicon" width="30" height="30"/>
         <image name="subtitle1.png" width="640" height="44"/>
     </resources>
