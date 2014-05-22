@@ -11,8 +11,9 @@
 		180E0C821921E23000399554 /* pic1.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E0C811921E23000399554 /* pic1.png */; };
 		180FBCA51924809C00AFD3AC /* TSPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */; };
 		180FBCB01928C55600AFD3AC /* albumCellImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 180FBCAF1928C55600AFD3AC /* albumCellImage.png */; };
+		181806D0192DD4200047A7D8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 181806CF192DD41F0047A7D8 /* SystemConfiguration.framework */; };
+		181806D4192DD4EF0047A7D8 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 181806D3192DD4EF0047A7D8 /* Reachability.m */; };
 		1854808B192CA1D6001A381D /* nowhere1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1854808A192CA1D6001A381D /* nowhere1.png */; };
-		18976C69192D985200901720 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18976C68192D985200901720 /* CoreText.framework */; };
 		18976C6C192DB83400901720 /* cellNoPhotoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 18976C6A192DB83400901720 /* cellNoPhotoIcon.png */; };
 		18976C6D192DB83400901720 /* adding.png in Resources */ = {isa = PBXBuildFile; fileRef = 18976C6B192DB83400901720 /* adding.png */; };
 		189D4AEB191D4AA200498178 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D4AEA191D4AA200498178 /* libsqlite3.dylib */; };
@@ -84,6 +85,9 @@
 		180FBCA31924809C00AFD3AC /* TSPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSPointAnnotation.h; path = ../TSPointAnnotation.h; sourceTree = "<group>"; };
 		180FBCA41924809C00AFD3AC /* TSPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSPointAnnotation.m; path = ../TSPointAnnotation.m; sourceTree = "<group>"; };
 		180FBCAF1928C55600AFD3AC /* albumCellImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = albumCellImage.png; sourceTree = "<group>"; };
+		181806CF192DD41F0047A7D8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		181806D2192DD4EF0047A7D8 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		181806D3192DD4EF0047A7D8 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		1854808A192CA1D6001A381D /* nowhere1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nowhere1.png; sourceTree = "<group>"; };
 		18976C68192D985200901720 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		18976C6A192DB83400901720 /* cellNoPhotoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cellNoPhotoIcon.png; sourceTree = "<group>"; };
@@ -164,7 +168,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18976C69192D985200901720 /* CoreText.framework in Frameworks */,
+				181806D0192DD4200047A7D8 /* SystemConfiguration.framework in Frameworks */,
 				F6B74970192A9981007C0341 /* AudioToolbox.framework in Frameworks */,
 				87354C7919277D7000EF8FC2 /* Social.framework in Frameworks */,
 				F66BEDBE19206029000E60E8 /* MapKit.framework in Frameworks */,
@@ -215,6 +219,15 @@
 				189D4B0B191F9C8F00498178 /* WantsToGoListViewController.m */,
 			);
 			name = notUseFIles;
+			sourceTree = "<group>";
+		};
+		181806D1192DD4CA0047A7D8 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				181806D2192DD4EF0047A7D8 /* Reachability.h */,
+				181806D3192DD4EF0047A7D8 /* Reachability.m */,
+			);
+			name = Reachability;
 			sourceTree = "<group>";
 		};
 		189D4AF1191D537F00498178 /* DataBaseFolder */ = {
@@ -283,6 +296,7 @@
 		87AC9661191CF98300C69813 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				181806CF192DD41F0047A7D8 /* SystemConfiguration.framework */,
 				18976C68192D985200901720 /* CoreText.framework */,
 				F6B7496F192A9981007C0341 /* AudioToolbox.framework */,
 				87354C7819277D7000EF8FC2 /* Social.framework */,
@@ -310,6 +324,7 @@
 				180E0C7B1921BEFB00399554 /* SearchListViewController.h */,
 				180E0C7C1921BEFB00399554 /* SearchListViewController.m */,
 				F66BEDC219206FF7000E60E8 /* CollectionCell.h */,
+				181806D1192DD4CA0047A7D8 /* Reachability */,
 				F66BEDC319206FF7000E60E8 /* CollectionCell.m */,
 				87CB77D71921B49700F2AFDC /* CameraViewController.h */,
 				87CB77D81921B49700F2AFDC /* CameraViewController.m */,
@@ -492,6 +507,7 @@
 				189D4B02191E122500498178 /* FMDatabase.m in Sources */,
 				180E0C7D1921BEFB00399554 /* SearchListViewController.m in Sources */,
 				F62A87F9192097FF001BBDDB /* CustomAnnotation.m in Sources */,
+				181806D4192DD4EF0047A7D8 /* Reachability.m in Sources */,
 				189D4B04191E122500498178 /* FMDatabasePool.m in Sources */,
 				189D4B06191E122500498178 /* FMResultSet.m in Sources */,
 				189D4B09191F7AFA00498178 /* TSDataBase.m in Sources */,
@@ -628,13 +644,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TripShot/TripShot-Prefix.pch";
 				INFOPLIST_FILE = "TripShot/TripShot-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DF81DB5F-1D57-47B4-840F-ED6D8E41B23A";
+				PROVISIONING_PROFILE = "0A039A79-1A6C-495A-A465-47CC74E3579D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -644,13 +660,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TripShot/TripShot-Prefix.pch";
 				INFOPLIST_FILE = "TripShot/TripShot-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DF81DB5F-1D57-47B4-840F-ED6D8E41B23A";
+				PROVISIONING_PROFILE = "0A039A79-1A6C-495A-A465-47CC74E3579D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

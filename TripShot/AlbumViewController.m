@@ -51,6 +51,7 @@
     UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(rowButtonAction:)];
     [_AlbumCollection addGestureRecognizer:longPressGestureRecognizer];
     
+    
     //データ保存用のディレクトリを作成する
     [self makeDirForAppContents];
 
@@ -155,8 +156,9 @@
     
     CollectionCell *cell = [collectionView
                             dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-
-
+        [[cell pictureDate] setTextColor:[UIColor colorWithRed:0.16 green:0.16 blue:0.42 alpha:1.0]];    
+        cell.pictureDate.adjustsFontSizeToFitWidth = YES;
+    
  if(indexPath.row == 0){
      
         [[cell cellFrameView]setImage:[UIImage imageNamed:@"adding.png"]];
@@ -179,6 +181,7 @@
         [[cell cellFrameView]setImage:[UIImage imageNamed:@"albumCellImage.png"]];
         [[cell pictureView]setImage:image];
         [[cell pictureDate] setText:[placeName objectAtIndex:indexPath.item]];
+
     }
     
 
@@ -247,8 +250,15 @@
     imageViewBackA = [[UIImageView alloc]initWithFrame:rect];
     imageViewBackA.image = imageData;
     imageViewBackA.contentMode = UIViewContentModeScaleToFill;
+    imageViewBackA.alpha = 0.8;
     [self.view addSubview:imageViewBackA];
     [self.view sendSubviewToBack:imageViewBackA];
+
+//    //ナビゲーションバー
+//    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"subtitle1.png"]];
+//    
+//    [navigationTitle setContentMode:UIViewContentModeScaleAspectFit];
+//    self.navigationItem.titleView = navigationTitle;
 
 }
 
