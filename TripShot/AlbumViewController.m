@@ -155,37 +155,35 @@
     
     CollectionCell *cell = [collectionView
                             dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-/*
-    if(indexPath.row == 0){
-        NSLog(@"追加がつくられとるんじゃーぼけー");
-        [[cell cellFrameView]setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
-    }
-*/
-    
-    
-    if([picture[indexPath.item] isEqualToString:@"icon_1r_192.png"]){//追加ボタンの部分
-        [[cell pictureView] setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
-//        [[cell cellFrameView]setImage:[UIImage imageNamed:[picture objectAtIndex:indexPath.item]]];
-        
+
+
+ if(indexPath.row == 0){
+     
+        [[cell cellFrameView]setImage:[UIImage imageNamed:@"adding.png"]];
+        [[cell pictureDate] setText:nil];
+        [[cell pictureView] setImage:nil];
+     
     }else if ([picture[indexPath.item] isEqualToString:@"NODATA"]){//データが空のとき
-        
-        [[cell pictureView] setImage:[UIImage imageNamed:@"image1.jpg"]];
+ 
+        [[cell cellFrameView] setImage:[UIImage imageNamed:@"cellNoPhotoIcon.png"]];
+        [[cell pictureDate] setText:[placeName objectAtIndex:indexPath.item]];
+        [[cell pictureView] setImage:nil];
 
     }else{ //通常時。配列画像の画像の一枚目を表示する。
         
         NSArray *arrayPicNotMutable = [picture[indexPath.item] componentsSeparatedByString:@","];
         NSLog(@"arrayPicNotMutable=%@",[arrayPicNotMutable description]);
         NSData *dataPics = [[NSData alloc] initWithContentsOfFile:[arrayPicNotMutable objectAtIndex:0]];
-        UIImage* image = [[UIImage alloc] initWithData:dataPics];
+        UIImage *image = [[UIImage alloc] initWithData:dataPics];
         
+        [[cell cellFrameView]setImage:[UIImage imageNamed:@"albumCellImage.png"]];
         [[cell pictureView]setImage:image];
+        [[cell pictureDate] setText:[placeName objectAtIndex:indexPath.item]];
     }
     
-    [[cell pictureDate] setText:[placeName objectAtIndex:indexPath.item]];
 
     return cell;
 }
-
 
 #pragma mark - EditCells
 
