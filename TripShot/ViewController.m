@@ -7,9 +7,11 @@
 //
 
 #import <CoreLocation/CoreLocation.h>
+#import <CoreText/CoreText.h>
 #import "ViewController.h"
 #import "TSDataBase.h"
 #import "CameraViewController.h"
+
 
 
 @interface ViewController ()

@@ -26,6 +26,10 @@
     {
         application.applicationIconBadgeNumber = notification.applicationIconBadgeNumber -1;
     }
+    
+    
+    
+    
     return YES;
 }
 							
