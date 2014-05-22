@@ -491,6 +491,7 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)textTitle{
 	
     if ([textTitle isEqualToString:@"\n"]) {
+        [tsdatabase updateTitle:self.idFromMainPage TITLE:titleField.text];
         [textView resignFirstResponder];
         return NO;
     }
