@@ -199,7 +199,7 @@
     [scrollAllView addSubview:dateLabel];
     
     //住所情報入力
-    CGRect addressRect = CGRectMake(18, 445, width-40, 20);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    CGRect addressRect = CGRectMake(18, 445, width-84, 20);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
     addressLabel.text = address;
     addressLabel.textColor = textColor;
