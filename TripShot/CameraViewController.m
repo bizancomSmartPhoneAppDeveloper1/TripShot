@@ -24,7 +24,9 @@
     BOOL autoScrollStopped;
     NSString *path;
     NSMutableArray *facebookImages;
-
+    UIScrollView *scrollAllView;
+    UIScrollView *scrollView;
+    int deleteFlag;
 }
 
 
@@ -103,18 +105,6 @@
 }
 
 
-//カメラボタンを押した時に呼ばれる関数
-- (IBAction)takePhoto:(UIButton *)sender {
-    [self startCamera];
-}
-
-
-//Facebookボタンを押した時に呼ばれる関数
-- (IBAction)buttonFacebook:(UIButton *)sender {
-    [self button_Tapped];
-}
-
-
 //Facebookへの投稿関数
 - (void)button_Tapped
 
@@ -176,7 +166,8 @@
     picsCount = [array count];
     
     //以下からScrollView機能
-    _scrollView.delegate = self;
+    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.width)];
+    scrollView.delegate = self;
     autoScrollStopped = NO;
     if ([self.timer isValid]) {
         [self.timer invalidate];
@@ -186,11 +177,11 @@
                                                 selector:@selector(timerDidFire:)
                                                 userInfo:nil
                                                  repeats:YES];
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    for (UIView *v in [_scrollView subviews]) {
+    scrollView.showsHorizontalScrollIndicator = NO;
+    for (UIView *v in [scrollView subviews]) {
         [v removeFromSuperview];
     }
-    CGRect workingFrame = _scrollView.frame;
+    CGRect workingFrame = scrollView.frame;
     if (!picsCount==0) {
         for (int i=0; i<picsCount; i++) {
             UIImage* image = [array objectAtIndex:i];
@@ -198,13 +189,13 @@
             [imageview setContentMode:UIViewContentModeScaleAspectFit];
             imageview.frame = workingFrame;
             
-            [_scrollView addSubview:imageview];
+            [scrollView addSubview:imageview];
             workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
             [facebookImages addObject:image];
         }
-        [_scrollView setPagingEnabled:YES];
-        [_scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
-        [self.scrollAllView addSubview:_scrollView];
+        [scrollView setPagingEnabled:YES];
+        [scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
+        [scrollAllView addSubview:scrollView];
     }
     
     //カメラ機能終了
@@ -220,13 +211,14 @@
     //行きたい場所情報をメイン画面から引き継ぐ
     FMResultSet *resultsID = [tsdatabase loadIDFromPlaceName:_place_nameFromMainPage];
     while([resultsID next]){
+        //削除フラグが立っていない情報のみ取得
+        if (deleteFlag==0) {
         self.idFromMainPage = [resultsID intForColumn:@"id"];
+        }
     }
     
     //DBを閉じる
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    NSString *databaseFilePath = [[tsdatabase dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
     [database close];
     
@@ -235,6 +227,7 @@
     while([results next]){
         title = [results stringForColumn:@"place_name"];
         address = [results stringForColumn:@"address"];
+        deleteFlag = [results intForColumn:@"delete_flag"];
     }
     
     //DBを閉じる
@@ -259,6 +252,10 @@
     
 
 
+    //全体にUIScrollviewを作成
+    scrollAllView = [[UIScrollView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self.view addSubview:scrollAllView];
+    
     //行きたい場所リストタイトル表示
     CGRect titleRect = CGRectMake(20, 340, width-40, 40);  //横始まり・縦始まり・ラベルの横幅・縦幅
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
@@ -304,7 +301,7 @@
     textfield.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
     textfield.returnKeyType = UIReturnKeyDefault;
     textfield.delegate = self;
-    [self.scrollAllView addSubview:textfield];
+    [scrollAllView addSubview:textfield];
     // キーボードが表示されたときのNotificationを受け取る
     [self registerForKeyboardNotifications];
     
@@ -324,12 +321,12 @@
 	if (autoScrollStopped) {
 		return;
 	}
-	CGPoint p = self.scrollView.contentOffset;
+	CGPoint p = scrollView.contentOffset;
 	p.x = p.x + 1;
-    CGRect aFrame = self.scrollView.frame;
+    CGRect aFrame = scrollView.frame;
     //Imageの数だけ来ると自動スクロール停止
 	if (p.x < ((aFrame.size.width * picsCount)- aFrame.size.width)) {
-		self.scrollView.contentOffset = p;
+		scrollView.contentOffset = p;
 	}
 }
 
@@ -350,14 +347,14 @@
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
     CGPoint scrollPoint = CGPointMake(0.0,200.0);
-    [self.scrollAllView setContentOffset:scrollPoint animated:YES];
+    [scrollAllView setContentOffset:scrollPoint animated:YES];
 }
 
 
 //キーボードを隠す関数
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    [self.scrollAllView setContentOffset:CGPointZero animated:YES];
+    [scrollAllView setContentOffset:CGPointZero animated:YES];
 }
 
 
@@ -430,6 +427,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     if([self.navigationController.viewControllers indexOfObject:self] == NSNotFound){
     
+        
         //DBに保存する
         pics = [picsArray componentsJoinedByString:@","];
         NSLog(@"pics=%@",[pics description]);
@@ -438,7 +436,10 @@
         comment = textfield.text;
         //went_flagを行ったことにする。これによりジオフェンスを外す。
         int went_frag = 0;
+        
+        if (!(picsCount==0)) {
         [tsdatabase updateDBDataOnCamera:self.idFromMainPage TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
+        }
     }
     
     [super viewWillDisappear:animated];
@@ -450,9 +451,10 @@
     //あるばむいちらん画面に戻りたいが一番したの背景が先に呼ばれて改めてタブバーボタンを押すと画面が戻る
 //    AlbumViewController *albumViewCon = [[AlbumViewController alloc]init];
 //    [self.navigationController pushViewController:albumViewCon animated:YES];
+    
+    //NSTimerをstop
+    [self.timer invalidate];
 }
-
-
 
 
 @end

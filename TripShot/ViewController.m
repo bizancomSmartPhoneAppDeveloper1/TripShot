@@ -52,7 +52,7 @@
     [self.mapView addGestureRecognizer:panGesture];
     //フラグの初期化
     self.isChasing = YES;
-    self.userLocationBtn.hidden = YES;
+    self.userLocationButton.hidden = YES;
 
     //tabバーのアイコンの色設定
     [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
@@ -72,7 +72,7 @@
     NSLog(@"検知しました");
     self.isChasing = NO;
     
-    self.userLocationBtn.hidden = NO;
+    self.userLocationButton.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,12 +108,12 @@
 }
 
 //現在地ボタンが押された時
-- (IBAction)tapUserLocationBtn:(UIButton *)sender
+- (IBAction)tapUserLocationButton:(UIButton *)sender
 {
     //フラグを初期化して、現在地を地図の中心にする
     self.isChasing = YES;
     [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
-    self.userLocationBtn.hidden = YES;
+    self.userLocationButton.hidden = YES;
 }
 
 - (void)locationAuth{
@@ -287,7 +287,6 @@
     [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
-    
 
 
 
@@ -335,7 +334,8 @@
         distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
         
-        NSLog(@"%@",titleList[i]);
+        NSLog(@"titleList=%@",titleList[i]);
+        NSLog(@"wentFlag=%@",[[wentFlagList objectAtIndex:i] description]);
         
 //        到達点についた時に分かるようにジオフェンスをスタート
 //        [self.locationManager startMonitoringForRegion:distCircularRegion];
@@ -347,13 +347,12 @@
         {
  
             CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
-        
             distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
-        
+
             //到達点についた時に分かるようにジオフェンスをスタート
             [self.locationManager startMonitoringForRegion:distCircularRegion];
-
+            
         }
     }
     
