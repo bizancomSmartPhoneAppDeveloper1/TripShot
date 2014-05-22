@@ -295,7 +295,7 @@
     //コメント欄
     CGRect textRect = CGRectMake(20, 380, width-40, 30);
     textfield = [[UITextField alloc]initWithFrame:textRect];
-    textfield.text = @"コメントを入れてね♪";
+    textfield.placeholder = @"コメントを入れてね♪";
     textfield.textColor = textColor;
     textfield.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
     textfield.returnKeyType = UIReturnKeyDefault;

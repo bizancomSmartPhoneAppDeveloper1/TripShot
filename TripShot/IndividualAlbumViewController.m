@@ -12,6 +12,7 @@
     TSDataBase *tsdatabase;
     UIImageView *imageViewBack;
     UITextField *textfield;
+    UITextView *titleField;
     NSString *address;
     NSMutableArray *array;
     NSString *comment;
@@ -166,15 +167,21 @@
     
     
     //行きたい場所リストタイトル表示
-    CGRect titleRect = CGRectMake(20, 340, width-40, 40);  //横始まり・縦始まり・ラベルの横幅・縦幅
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
-    titleLabel.text = title;
-    titleLabel.numberOfLines = 0;
-    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    titleLabel.textColor = textColor;
-    titleLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
-//    titleLabel.backgroundColor = [[UIColor greenColor]colorWithAlphaComponent:0.5]; //確認用
-    [scrollAllView addSubview:titleLabel];
+    CGRect titleRect = CGRectMake(20, 340, width-40, 45);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    titleField = [[UITextView alloc]initWithFrame:titleRect];
+    titleField.text = title;
+    titleField.returnKeyType = UIReturnKeyDefault;
+    titleField.delegate = self;
+    titleField.textColor = textColor;
+    titleField.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
+    titleField.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0];
+    [scrollAllView addSubview:titleField];
+    [self registerForKeyboardNotifications];
+    
+    
+    
+    
+    
     
     //日付入力
     NSString *dateString = [NSString stringWithFormat:@"%d",date];
@@ -203,7 +210,11 @@
     //コメント欄
     CGRect textRect = CGRectMake(20, 380, width-40, 30);
     textfield = [[UITextField alloc]initWithFrame:textRect];
+    if ([text isEqualToString:@" "]) {
+    textfield.placeholder = @"コメントを入れてね♪";
+    }else{
     textfield.text = text;
+    }
     textfield.textColor = textColor;
 //    textfield.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0.5];//確認用
     textfield.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
