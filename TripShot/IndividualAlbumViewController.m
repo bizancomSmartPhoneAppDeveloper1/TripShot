@@ -214,7 +214,7 @@
     
     //Facebookボタン作成
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-50, 340, 44, 44);
+    button.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-60, 420, 44, 44);
     [button setBackgroundImage:[UIImage imageNamed:@"facebook.png"] forState:UIControlStateNormal];
     [button sizeToFit];
     [button addTarget:self action:@selector(button_Tapped) forControlEvents:UIControlEventTouchUpInside];

@@ -247,10 +247,10 @@
     [self.view addSubview:imageViewBack];
     [self.view sendSubviewToBack:imageViewBack];
     
+    
     //文字色の指定（藍色にする！)
     UIColor *textColor = [UIColor colorWithRed:0.16 green:0.16 blue:0.42 alpha:1.0];
     
-
 
     //全体にUIScrollviewを作成
     scrollAllView = [[UIScrollView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -264,7 +264,7 @@
     titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     titleLabel.textColor = textColor;
     titleLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
-    [self.scrollAllView addSubview:titleLabel];
+   [scrollAllView addSubview:titleLabel];
     
     //日付入力
     date = [NSDate date];
@@ -282,8 +282,7 @@
     dateLabel.textColor = textColor;
     dateLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
 
-    [self.scrollAllView addSubview:dateLabel];
-    
+      [scrollAllView addSubview:dateLabel];
     
     //住所情報入力
     CGRect addressRect = CGRectMake(18, 445, width-40, 20);  //横始まり・縦始まり・ラベルの横幅・縦幅
@@ -291,7 +290,7 @@
     addressLabel.text = address;
     addressLabel.textColor = textColor;
     addressLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
-    [self.scrollAllView addSubview:addressLabel];
+    [scrollAllView addSubview:addressLabel];
     
     //コメント欄
     CGRect textRect = CGRectMake(20, 380, width-40, 30);
@@ -304,6 +303,22 @@
     [scrollAllView addSubview:textfield];
     // キーボードが表示されたときのNotificationを受け取る
     [self registerForKeyboardNotifications];
+
+    //Facebookボタン作成
+    UIButton *buttonFacebook = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonFacebook.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-60, 420, 44, 44);
+    [buttonFacebook setBackgroundImage:[UIImage imageNamed:@"facebook.png"] forState:UIControlStateNormal];
+    [buttonFacebook sizeToFit];
+    [buttonFacebook addTarget:self action:@selector(button_Tapped) forControlEvents:UIControlEventTouchUpInside];
+    [scrollAllView addSubview:buttonFacebook];
+    
+    //cameraボタン作成
+    UIButton *buttonCamera = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonCamera.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-65, 360, 44, 44);
+    [buttonCamera setBackgroundImage:[UIImage imageNamed:@"camera60.png"] forState:UIControlStateNormal];
+    [buttonCamera sizeToFit];
+    [buttonCamera addTarget:self action:@selector(startCamera) forControlEvents:UIControlEventTouchUpInside];
+    [scrollAllView addSubview:buttonCamera];
     
 }
 
