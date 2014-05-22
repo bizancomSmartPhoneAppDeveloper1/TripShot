@@ -131,6 +131,7 @@
     NSInteger date = [self getIntegerDate];
     NSInteger hour = [self getIntegerHour];
     NSString *address = [self getAddressFromLat:lat AndLot:lot];
+    NSLog(@"getAddressFromLat=%@",address);
     
 //    //ディレクトリのリストを取得する
 //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -371,10 +372,10 @@
         if ([statusString isEqualToString:@"ZERO_RESULTS"]) {
 //            [self alertViewMethod]; //アラートビュー出す
             NSLog(@"ZERO_RESULTS");
-            addressStr = @"NODATA";
+            addressStr = @" ";
         }else if([statusString isEqualToString:@"OVER_QUERY_LIMIT"]){
             NSLog(@"OVER_QUERY_LIMIT");
-            addressStr = @"NODATA";
+            addressStr = @" ";
         }else{
             NSMutableArray *result = [jsonObjectResults objectForKey:@"results"];
 //            NSString *str = [result description];
