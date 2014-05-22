@@ -232,71 +232,6 @@
     
     //DBを閉じる
     [database close];
-
-    //全体にUIScrollviewを作成
-    scrollAllView = [[UIScrollView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
-    [self.view addSubview:scrollAllView];
-    
-    //行きたい場所リストタイトル表示
-    CGRect titleRect = CGRectMake(90, 320, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
-    titleLabel.text = title;
-    titleLabel.textColor = [UIColor blueColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:20];
-    [scrollAllView addSubview:titleLabel];
-    
-    //日付入力
-    date = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dateComps = [calendar components:NSYearCalendarUnit |
-                                   NSMonthCalendarUnit  |
-                                   NSDayCalendarUnit    |
-                                   NSHourCalendarUnit   |
-                                   NSMinuteCalendarUnit |
-                                   NSSecondCalendarUnit
-                                              fromDate:date];
-    CGRect daterect = CGRectMake(90, 370, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
-    UILabel *dateLabel = [[UILabel alloc]initWithFrame:daterect];
-    dateLabel.text = [NSString stringWithFormat:@"%d月%d日",(int)dateComps.month,(int)dateComps.day];
-    dateLabel.textColor = [UIColor blueColor];
-    dateLabel.font = [UIFont boldSystemFontOfSize:16];
-    [scrollAllView addSubview:dateLabel];
-    
-    //住所情報入力
-    CGRect addressRect = CGRectMake(90, 340, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
-    UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
-    addressLabel.text = address;
-    addressLabel.textColor = [UIColor blueColor];
-    addressLabel.font = [UIFont systemFontOfSize:12];
-    [scrollAllView addSubview:addressLabel];
-    
-    //コメント欄
-    CGRect textRect = CGRectMake(90, 390, 220, 50);
-    textfield = [[UITextField alloc]initWithFrame:textRect];
-    textfield.text = @"コメントを入れてね♪";
-    textfield.textColor = [UIColor blueColor];
-    textfield.font = [UIFont boldSystemFontOfSize:12];
-    textfield.returnKeyType = UIReturnKeyDefault;
-    textfield.delegate = self;
-    [scrollAllView addSubview:textfield];
-    // キーボードが表示されたときのNotificationを受け取る
-    [self registerForKeyboardNotifications];
-    
-    //Facebookボタン作成
-    UIButton *buttonFacebook = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonFacebook.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-50, 340, 44, 44);
-    [buttonFacebook setBackgroundImage:[UIImage imageNamed:@"facebook.png"] forState:UIControlStateNormal];
-    [buttonFacebook sizeToFit];
-    [buttonFacebook addTarget:self action:@selector(button_Tapped) forControlEvents:UIControlEventTouchUpInside];
-    [scrollAllView addSubview:buttonFacebook];
-    
-    //cameraボタン作成
-    UIButton *buttonCamera = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonCamera.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-55, 400, 44, 44);
-    [buttonCamera setBackgroundImage:[UIImage imageNamed:@"camera60.png"] forState:UIControlStateNormal];
-    [buttonCamera sizeToFit];
-    [buttonCamera addTarget:self action:@selector(startCamera) forControlEvents:UIControlEventTouchUpInside];
-    [scrollAllView addSubview:buttonCamera];
     
     //スクリーンサイズの取得
     CGRect screenSize = [[UIScreen mainScreen] bounds];
@@ -311,6 +246,80 @@
     imageViewBack.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageViewBack];
     [self.view sendSubviewToBack:imageViewBack];
+    
+    
+    //文字色の指定（藍色にする！)
+    UIColor *textColor = [UIColor colorWithRed:0.16 green:0.16 blue:0.42 alpha:1.0];
+    
+
+    //全体にUIScrollviewを作成
+    scrollAllView = [[UIScrollView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self.view addSubview:scrollAllView];
+    
+    //行きたい場所リストタイトル表示
+    CGRect titleRect = CGRectMake(20, 340, width-40, 40);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
+    titleLabel.text = title;
+    titleLabel.numberOfLines = 0;
+    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    titleLabel.textColor = textColor;
+    titleLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
+   [scrollAllView addSubview:titleLabel];
+    
+    //日付入力
+    date = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComps = [calendar components:NSYearCalendarUnit |
+                                   NSMonthCalendarUnit  |
+                                   NSDayCalendarUnit    |
+                                   NSHourCalendarUnit   |
+                                   NSMinuteCalendarUnit |
+                                   NSSecondCalendarUnit
+                                              fromDate:date];
+    CGRect daterect = CGRectMake(20, 430, width-40, 14);
+    UILabel *dateLabel = [[UILabel alloc]initWithFrame:daterect];
+    dateLabel.text = [NSString stringWithFormat:@"%d月%d日",(int)dateComps.month,(int)dateComps.day];
+    dateLabel.textColor = textColor;
+    dateLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
+
+      [scrollAllView addSubview:dateLabel];
+    
+    //住所情報入力
+    CGRect addressRect = CGRectMake(18, 445, width-40, 20);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
+    addressLabel.text = address;
+    addressLabel.textColor = textColor;
+    addressLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
+    [scrollAllView addSubview:addressLabel];
+    
+    //コメント欄
+    CGRect textRect = CGRectMake(20, 380, width-40, 30);
+    textfield = [[UITextField alloc]initWithFrame:textRect];
+    textfield.text = @"コメントを入れてね♪";
+    textfield.textColor = textColor;
+    textfield.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
+    textfield.returnKeyType = UIReturnKeyDefault;
+    textfield.delegate = self;
+    [scrollAllView addSubview:textfield];
+    // キーボードが表示されたときのNotificationを受け取る
+    [self registerForKeyboardNotifications];
+
+    //Facebookボタン作成
+    UIButton *buttonFacebook = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonFacebook.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-60, 420, 44, 44);
+    [buttonFacebook setBackgroundImage:[UIImage imageNamed:@"facebook.png"] forState:UIControlStateNormal];
+    [buttonFacebook sizeToFit];
+    [buttonFacebook addTarget:self action:@selector(button_Tapped) forControlEvents:UIControlEventTouchUpInside];
+    [scrollAllView addSubview:buttonFacebook];
+    
+    //cameraボタン作成
+    UIButton *buttonCamera = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonCamera.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-65, 360, 44, 44);
+    [buttonCamera setBackgroundImage:[UIImage imageNamed:@"camera60.png"] forState:UIControlStateNormal];
+    [buttonCamera sizeToFit];
+    [buttonCamera addTarget:self action:@selector(startCamera) forControlEvents:UIControlEventTouchUpInside];
+    [scrollAllView addSubview:buttonCamera];
+    
 }
 
 

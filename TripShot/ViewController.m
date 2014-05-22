@@ -7,9 +7,11 @@
 //
 
 #import <CoreLocation/CoreLocation.h>
+#import <CoreText/CoreText.h>
 #import "ViewController.h"
 #import "TSDataBase.h"
 #import "CameraViewController.h"
+
 
 
 @interface ViewController ()
@@ -54,8 +56,8 @@
     self.isChasing = YES;
     self.userLocationButton.hidden = YES;
 
-    //tabバーのアイコンの色設定
-    [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
+//    //tabバーのアイコンの色設定
+//    [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
@@ -374,6 +376,15 @@
     }
 }
 
+- (MKAnnotationView *) mapView:(MKMapView *)targetMapView
+             viewForAnnotation:(id ) annotation
+{
+    if([annotation isKindOfClass:[MKUserLocation class]]){
+        ((MKUserLocation *)annotation).title = nil;
+    }
+    return nil;
+}
+
 //アクセサリーが押された時のイベント
 -(void) mapView:(MKMapView *)mapView
     annotationView:(MKAnnotationView *)view
@@ -387,6 +398,8 @@
 
     [self.navigationController pushViewController:cameraVC animated:YES];
 }
+
+
 
 //緯度経度保存
 -(void)saveLocation:(CLLocation *)lastLocation{

@@ -51,7 +51,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
     //サーチバーの定義
     _searchField.delegate = self;
-    _searchField.placeholder = @"行きたいところを検索！";
+    _searchField.placeholder = @"例：丸の内 スタバ";
     
     [self viewBackground];
     [self initNavigationBar];
