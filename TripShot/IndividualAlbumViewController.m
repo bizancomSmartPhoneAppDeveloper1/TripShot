@@ -23,6 +23,8 @@
     int picsCount;
     BOOL autoScrollStopped;
     NSMutableArray *facebookImages;
+    UIScrollView *scrollAllView;
+    UIScrollView *scrollView;
     
 }
 
@@ -92,32 +94,38 @@
     }
     
     //DBを閉じる
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    NSString *databaseFilePath = [[tsdatabase dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
     [database close];
 
-     
+    //全体にUIScrollviewを作成
+    scrollAllView = [[UIScrollView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self.view addSubview:scrollAllView];
+    
     //写真をスクロール表示
+    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.width)];
     NSArray *arrayPicNotMutable = [pics componentsSeparatedByString:@","];
     NSLog(@"arrayPicNotMutable=%@",[arrayPicNotMutable description]);
     NSLog(@"picsCount=%d",picsCount);
-    _scrollView.delegate = self;
+    scrollView.delegate = self;
     autoScrollStopped = NO;
     if ([self.timer isValid]) {
         [self.timer invalidate];
     }
+    if (!picsCount==0) {
+        NSLog(@"picsCount=%d",picsCount);
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.03
                                                   target:self
                                                 selector:@selector(timerDidFire:)
                                                 userInfo:nil
                                                  repeats:YES];
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    for (UIView *v in [_scrollView subviews]) {
+    }
+    
+    scrollView.showsHorizontalScrollIndicator = NO;
+    for (UIView *v in [scrollView subviews]) {
         [v removeFromSuperview];
     }
-    CGRect workingFrame = _scrollView.frame;
+    CGRect workingFrame = scrollView.frame;
     facebookImages = [[NSMutableArray alloc]init];
     if (!picsCount==0) {
         for (int i=0; i<picsCount; i++) {
@@ -127,56 +135,16 @@
             [imageview setContentMode:UIViewContentModeScaleAspectFit];
             imageview.frame = workingFrame;
             
-            [_scrollView addSubview:imageview];
+            [scrollView addSubview:imageview];
             workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
             
             [facebookImages addObject:image];
         }
-        [_scrollView setPagingEnabled:YES];
-        [_scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
-        [self.scrollAllView addSubview:_scrollView];
+        [scrollView setPagingEnabled:YES];
+        [scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
+        [scrollAllView addSubview:scrollView];
     }
-      
-    //行きたい場所リストタイトル表示
-    CGRect titleRect = CGRectMake(90, 320, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
-    titleLabel.text = title;
-    titleLabel.textColor = [UIColor blueColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:20];
-    [self.scrollAllView addSubview:titleLabel];
-    
-    //日付入力
-    NSString *dateString = [NSString stringWithFormat:@"%d",date];
-    NSString *monthString = [dateString substringWithRange:NSMakeRange(4,2)];
-    int month = [monthString intValue];
-    NSLog(@"month=%d",month);
-    NSString *dayString = [dateString substringWithRange:NSMakeRange(6,2)];
-    int day = [dayString intValue];
-    CGRect daterect = CGRectMake(90, 370, 220, 50);
-    UILabel *dateLabel = [[UILabel alloc]initWithFrame:daterect];
-    dateLabel.text = [NSString stringWithFormat:@"%d月%d日",month,day];
-    dateLabel.textColor = [UIColor blueColor];
-    dateLabel.font = [UIFont boldSystemFontOfSize:16];
-    [self.scrollAllView addSubview:dateLabel];
-    
-    //住所情報入力
-    CGRect addressRect = CGRectMake(90, 340, 220, 50);  //横始まり・縦始まり・ラベルの横幅・縦幅
-    UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
-    addressLabel.text = address;
-    addressLabel.textColor = [UIColor blueColor];
-    addressLabel.font = [UIFont systemFontOfSize:12];
-    [self.scrollAllView addSubview:addressLabel];
-    
-    //コメント欄
-    CGRect textRect = CGRectMake(90, 390, 220, 50);
-    textfield = [[UITextField alloc]initWithFrame:textRect];
-    textfield.text = text;
-    textfield.textColor = [UIColor blueColor];
-    textfield.font = [UIFont boldSystemFontOfSize:12];
-    textfield.returnKeyType = UIReturnKeyDefault;
-    textfield.delegate = self;
-    [self.scrollAllView addSubview:textfield];
-    [self registerForKeyboardNotifications];
+
     
     //スクリーンサイズの取得
     CGRect screenSize = [[UIScreen mainScreen] bounds];
@@ -191,6 +159,66 @@
     imageViewBack.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageViewBack];
     [self.view sendSubviewToBack:imageViewBack];
+
+    
+    //文字色の指定（藍色にする！)
+    UIColor *textColor = [UIColor colorWithRed:0.16 green:0.16 blue:0.42 alpha:1.0];
+    
+    
+    //行きたい場所リストタイトル表示
+    CGRect titleRect = CGRectMake(20, 340, width-40, 40);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
+    titleLabel.text = title;
+    titleLabel.numberOfLines = 0;
+    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    titleLabel.textColor = textColor;
+    titleLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
+//    titleLabel.backgroundColor = [[UIColor greenColor]colorWithAlphaComponent:0.5]; //確認用
+    [scrollAllView addSubview:titleLabel];
+    
+    //日付入力
+    NSString *dateString = [NSString stringWithFormat:@"%d",date];
+    NSString *monthString = [dateString substringWithRange:NSMakeRange(4,2)];
+    int month = [monthString intValue];
+    NSLog(@"month=%d",month);
+    NSString *dayString = [dateString substringWithRange:NSMakeRange(6,2)];
+    int day = [dayString intValue];
+    CGRect daterect = CGRectMake(20, 430, width-40, 14);
+    UILabel *dateLabel = [[UILabel alloc]initWithFrame:daterect];
+    dateLabel.text = [NSString stringWithFormat:@"%d月%d日",month,day];
+    dateLabel.textColor = textColor;
+    dateLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
+//    dateLabel.backgroundColor = [[UIColor yellowColor]colorWithAlphaComponent:0.5];//確認用
+    [scrollAllView addSubview:dateLabel];
+    
+    //住所情報入力
+    CGRect addressRect = CGRectMake(18, 445, width-40, 20);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    UILabel *addressLabel = [[UILabel alloc]initWithFrame:addressRect];
+    addressLabel.text = address;
+    addressLabel.textColor = textColor;
+    addressLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
+//    addressLabel.backgroundColor = [[UIColor redColor]colorWithAlphaComponent:0.5]; //確認用
+    [scrollAllView addSubview:addressLabel];
+    
+    //コメント欄
+    CGRect textRect = CGRectMake(20, 380, width-40, 30);
+    textfield = [[UITextField alloc]initWithFrame:textRect];
+    textfield.text = text;
+    textfield.textColor = textColor;
+//    textfield.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0.5];//確認用
+    textfield.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
+    textfield.returnKeyType = UIReturnKeyDefault;
+    textfield.delegate = self;
+    [scrollAllView addSubview:textfield];
+    [self registerForKeyboardNotifications];
+    
+    //Facebookボタン作成
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-50, 340, 44, 44);
+    [button setBackgroundImage:[UIImage imageNamed:@"facebook.png"] forState:UIControlStateNormal];
+    [button sizeToFit];
+    [button addTarget:self action:@selector(button_Tapped) forControlEvents:UIControlEventTouchUpInside];
+    [scrollAllView addSubview:button];
 }
 
 
@@ -209,12 +237,12 @@
 	if (autoScrollStopped) {
 		return;
 	}
-	CGPoint p = self.scrollView.contentOffset;
+	CGPoint p = scrollView.contentOffset;
 	p.x = p.x + 1;
-    CGRect aFrame = self.scrollView.frame;
+    CGRect aFrame = scrollView.frame;
     //Imageの数だけ来ると自動スクロール停止
 	if (p.x < ((aFrame.size.width * picsCount)- aFrame.size.width)) {
-		self.scrollView.contentOffset = p;
+		scrollView.contentOffset = p;
 	}
 }
 
@@ -235,14 +263,14 @@
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
     CGPoint scrollPoint = CGPointMake(0.0,200.0);
-    [self.scrollAllView setContentOffset:scrollPoint animated:YES];
+    [scrollAllView setContentOffset:scrollPoint animated:YES];
 }
 
 
 //キーボードを隠す関数
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    [self.scrollAllView setContentOffset:CGPointZero animated:YES];
+    [scrollAllView setContentOffset:CGPointZero animated:YES];
 }
 
 - (void)button_Tapped
@@ -263,14 +291,11 @@
 }
 
 
-//FaceBook投稿
-- (IBAction)buttonFacebook:(UIButton *)sender {
-    [self button_Tapped];
-}
-
 -(void)didTapReturnButton{
     //BarBUttonもどるで元の画面に
     [self.navigationController popViewControllerAnimated:YES];
+    //NSTimerをstop
+    [self.timer invalidate];
 }
 
 

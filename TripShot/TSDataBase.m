@@ -22,11 +22,24 @@
 
 
 - (void)makeDatabase{
+
     
-    //ディレクトリのリストを取得する
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    //データ保存用のディレクトリを作成する（石井作成）
+    if ([self makeDirForAppContents]) {
+        //ディレクトリに対して「do not backup」属性をセット
+        NSURL *dirUrl = [NSURL fileURLWithPath: [self dataFolderPath]];
+        [self addSkipBackupAttributeToItemAtURL:dirUrl];
+    }
+    
+    
+//    //ディレクトリのリストを取得する
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentDirectry = paths[0];
+//    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //DB接続
+    NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
+    
     //インスタンスの作成
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
     //データベースを開く
@@ -64,10 +77,13 @@
     
     //データをいれる
     
-    //ディレクトリのリストを取得する
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+//    //ディレクトリのリストを取得する
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentDirectry = paths[0];
+//    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //DB接続
+    NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
     //インスタンスの作成
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
 
@@ -116,12 +132,14 @@
     NSInteger hour = [self getIntegerHour];
     NSString *address = [self getAddressFromLat:lat AndLot:lot];
     
-    //ディレクトリのリストを取得する
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
-    //インスタンスの作成
+//    //ディレクトリのリストを取得する
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentDirectry = paths[0];
+//    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
     
+    //DB接続
+    NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
+    //インスタンスの作成
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
     
     [database open];
@@ -132,7 +150,7 @@
      [NSNumber numberWithDouble:lat], [NSNumber numberWithDouble:lot],
      [NSNumber numberWithInteger:date] ,//日にち6桁int
      [NSNumber numberWithInteger:0],//写真の枚数カラム
-     @"NODATA",//空欄、なにをいれればいいかな
+     @" ",//空欄、なにをいれればいいかな→空欄（石井）
      @"NODATA",//空欄、なにを入れればいいかな
      [NSNumber numberWithInteger:1],//went_flagを最初は1に設定。行った後はフラグを0にする（石井）
      [NSNumber numberWithInteger:0],
@@ -186,10 +204,13 @@
 //DBデータをIDの大きい順に配列に格納
 -(NSMutableArray *)loadDBData{
     
-    //ディレクトリのリストを取得する
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+//    //ディレクトリのリストを取得する
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentDirectry = paths[0];
+//    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //DB接続
+    NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
 
     //データベース接続
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
@@ -385,9 +406,12 @@
 //現在の削除されてないデータ総数を確認する
 -(int)CountNowData{
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentDirectry = paths[0];
+//    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //DB接続
+    NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
     
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
     
@@ -414,12 +438,8 @@
 //削除フラグ建てるメソッド
 - (void)DeleteFlag:(int)number{
     
-    //ディレクトリのリストを取得する
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
-    
-    //データベース接続
+    //DB接続
+    NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
     [database open];
 
@@ -436,11 +456,9 @@
 
 //cameraViewでデータを上書き保存するために使う関数
 - (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount WENTFLAG:(int)went_flag{
-
-    //ディレクトリのリストを取得する
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //DB接続
+    NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
     
     //インスタンスの作成
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
@@ -472,12 +490,8 @@
 //カメラVewでDB読み込むための関数　引数numberはdataid
 - (FMResultSet *)loadDBDataOnCamera:(int)number{
     
-    //ディレクトリのリストを取得する
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
-    
-    //データベース接続
+    //DB接続
+    NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
     [database open];
     
@@ -491,10 +505,8 @@
 //DB削除メソッド。必要な時以外、絶対に使用しないこと！！（石井）
 - (void)dbDelete{
     
-    //ディレクトリのリストを取得する
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    //DB接続
+    NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
     
     //削除
     NSFileManager *fm = [NSFileManager defaultManager];
@@ -507,12 +519,9 @@
 
 //IDをplace_nameから取得する関数
 - (FMResultSet *)loadIDFromPlaceName:(NSString *)place_name{
-    //ディレクトリのリストを取得する
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
     
-    //データベース接続
+    //DB接続
+    NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
     [database open];
     
@@ -525,10 +534,8 @@
 //individualAlbumViewControllerでコメントを編集した時に使う関数
 - (void)updateText:(int)ID TEXT:(NSString *)comment{
     
-    //ディレクトリのリストを取得する
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectry = paths[0];
-    NSString *databaseFilePath = [documentDirectry stringByAppendingPathComponent:@"TSDatabase.db"];
+    //DB接続
+    NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
     
     //インスタンスの作成
     FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
@@ -539,6 +546,55 @@
     [database executeUpdate:update_sqlText];
     [database close];
 }
+
+
+//DocumentsフォルダにDB用のフォルダを作成する関数
+- (BOOL)makeDirForAppContents
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *baseDir = [self dataFolderPath];
+    
+    BOOL exists = [fileManager fileExistsAtPath:baseDir];
+    if (!exists) {
+        NSError *error;
+        BOOL created = [fileManager createDirectoryAtPath:baseDir withIntermediateDirectories:YES attributes:nil error:&error];
+        if (!created) {
+            NSLog(@"ディレクトリ作成失敗");
+            return NO;
+        }
+    } else {
+        //作成済みの場合はNO
+        return NO;
+    }
+    return YES;
+}
+
+
+//データ保存用のフォルダのパスを返す関数
+- (NSString *)dataFolderPath
+{
+    //アプリのドキュメントフォルダのパスを検索
+    NSString *documentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    //追加するディレクトリ名を指定
+    NSString *dataFolderPath = [documentsPath stringByAppendingPathComponent:@"DataFolder"];
+    NSLog(@"dataFolderPass=%@",dataFolderPath);
+    return dataFolderPath;
+}
+
+
+//iCloudへのバックアップを行なわないようにする関数
+- (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
+{
+    assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
+    NSError *error = nil;
+    BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
+                                  forKey: NSURLIsExcludedFromBackupKey error: &error];
+    if(!success){
+        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+    }
+    return success;
+}
+
 
 
 /*

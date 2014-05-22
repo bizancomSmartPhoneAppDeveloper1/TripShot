@@ -24,7 +24,6 @@
     NSMutableArray *latList;
     NSMutableArray *lonList;
     NSMutableArray *wentFlagList;
-
    
 }
 
@@ -53,7 +52,7 @@
     [self.mapView addGestureRecognizer:panGesture];
     //フラグの初期化
     self.isChasing = YES;
-    self.userLocationBtn.hidden = YES;
+    self.userLocationButton.hidden = YES;
 
 //    //tabバーのアイコンの色設定
 //    [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
@@ -73,7 +72,7 @@
     NSLog(@"検知しました");
     self.isChasing = NO;
     
-    self.userLocationBtn.hidden = NO;
+    self.userLocationButton.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -103,18 +102,18 @@
     
     //60秒に一回ロケーションマネージャを立ち上げる
     [self.locationManager stopUpdatingLocation];
-      self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
-   // self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
+     // self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(_turnOnLocationManager)  userInfo:nil repeats:NO];
 
 }
 
 //現在地ボタンが押された時
-- (IBAction)tapUserLocationBtn:(UIButton *)sender
+- (IBAction)tapUserLocationButton:(UIButton *)sender
 {
     //フラグを初期化して、現在地を地図の中心にする
     self.isChasing = YES;
     [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
-    self.userLocationBtn.hidden = YES;
+    self.userLocationButton.hidden = YES;
 }
 
 - (void)locationAuth{
@@ -209,9 +208,8 @@
 
 // 進入イベント 通知
 -(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-   NSLog(@"ジオフェンス領域%@に入りました%d",region.identifier,self.q);
-    self.q = 0;
-    self.q++;
+   NSLog(@"ジオフェンス領域%@に入りました",region.identifier);
+    
     //バックグラウンドからの通知
     [self LocalNotificationStart:region.identifier];
 }
@@ -221,6 +219,15 @@
 -(void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error {
     NSLog(@"ジオフェンス領域%@しっぱい",region.identifier);
     NSLog(@"%d",error.code);
+}
+
+//ジオフェンスキャンセル
+- (void)geoFenceCancel{
+    for (CLRegion *region in self.locationManager.monitoredRegions) {
+        // 登録してある地点を全て取得し、停止
+        [self.locationManager stopMonitoringForRegion:region];
+        NSLog(@"monotoring regions:%@", self.locationManager.monitoredRegions);
+    }
 }
 
 //読み込み失敗時に呼ばれる関数
@@ -236,9 +243,9 @@
 //バックグラウンド状態の時に通知する
 -(void)LocalNotificationStart:(NSString *)locationName {
     
-   // [[UIApplication sharedApplication] cancelAllLocalNotifications];  //設定する前に、設定済みの通知をキャンセルする
+   //ローカル通知させる時のインスタンス作成
     UILocalNotification *notification = [[UILocalNotification alloc]init];
-    //ローカル通知させる時のインスタンス作成
+
     if (notification == nil)
     
     notification.fireDate = [NSDate new]; //3秒後にメッセ時が表示されるよう設定
@@ -246,13 +253,12 @@
     notification.alertBody = [NSString stringWithFormat:@"%@が近くです＾＾",locationName];  //メッセージの内容
     notification.timeZone = [NSTimeZone defaultTimeZone];  //タイムゾーンの設定 その端末にあるローケーションに合わせる
     notification.soundName = UILocalNotificationDefaultSoundName;  //効果音
-    notification.applicationIconBadgeNumber += 1;  //通知された時のアイコンバッジの右肩の数字
+    notification.applicationIconBadgeNumber = 1;  //通知された時のアイコンバッジの右肩の数字
     [[UIApplication sharedApplication]presentLocalNotificationNow:notification];  //ローカル通知の登録
     
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 
     NSLog(@"震えてるよ");
-    
 }
 
 #pragma mark - ふじわら追加メソッド
@@ -268,6 +274,10 @@
     
     //バックグラウンド通信ができるか確認する
     [self backgroundCheck];
+    
+    //メモリーリーク防止の為に、一旦ジオフェンスを停止
+    [self geoFenceCancel];
+    NSLog(@"ジオフェンスキャンセルしたみたいよ");
 
     //DBからピンぶっさしてます
     [self markingPinFromList];
@@ -277,7 +287,6 @@
     [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
-    
 
 
 
@@ -305,7 +314,8 @@
     addressList = DBData[10];
     NSString *temp;
     
-    for(int i = 0; i < titleList.count ; i++){
+    for(int i = 0; i < titleList.count ; i++)
+    {
         temp = latList[i];
         double lat = temp.doubleValue;
         temp = lonList[i];
@@ -324,23 +334,27 @@
         distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
         
-        NSLog(@"%@",titleList[i]);
+        NSLog(@"titleList=%@",titleList[i]);
+        NSLog(@"wentFlag=%@",[[wentFlagList objectAtIndex:i] description]);
         
-        //到達点についた時に分かるようにジオフェンスをスタート
-        [self.locationManager startMonitoringForRegion:distCircularRegion];
+//        到達点についた時に分かるようにジオフェンスをスタート
+//        [self.locationManager startMonitoringForRegion:distCircularRegion];
 
-    }
-    /*
+    
     //アノテーションを刺した場所のジオフェンスを開始
     //行っていない場所にだけジオフェンスをセットするために、if文を追加（石井）
-    if ([[wentFlagList objectAtIndex:i] intValue]==1) {
+        if ([[wentFlagList objectAtIndex:i] intValue]==1)
+        {
  
-    CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
-        
-    distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
+            CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
+            distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
                                                           identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
+
+            //到達点についた時に分かるようにジオフェンスをスタート
+            [self.locationManager startMonitoringForRegion:distCircularRegion];
+            
+        }
     }
-    }*/
     
 }
 
@@ -383,10 +397,6 @@
     [savedata setObject:latString forKey:@"latFromMainPage"];
     [savedata setObject:lonString forKey:@"lonFromMainPage"];
 
-}
-
--(void)clearQ {
-    self.q=0;
 }
 
 @end

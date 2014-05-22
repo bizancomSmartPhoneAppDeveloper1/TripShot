@@ -63,4 +63,7 @@
 //individualAlbumViewControllerでコメントを編集した時に使う関数
 - (void)updateText:(int)ID TEXT:(NSString *)comment;
 
+//DBディレクトリのパスを返す関数
+- (NSString *)dataFolderPath;
+
 @end
