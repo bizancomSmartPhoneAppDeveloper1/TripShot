@@ -461,7 +461,7 @@
 
 
 //cameraViewでデータを上書き保存するために使う関数
-- (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount WENTFLAG:(int)went_flag{
+- (void)updateDBDataOnCamera:(int)ID TITLE:(NSString *)placeName TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount WENTFLAG:(int)went_flag{
     
     //DB接続
     NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
@@ -472,6 +472,7 @@
     //データのupdate
     NSInteger date = [self getIntegerDate];
     NSInteger hour = [self getIntegerHour];
+    NSString *update_titleDate = [NSString stringWithFormat:@"update testTable set place_name = '%@' where id = %d",placeName,ID];
     NSString *update_sqlDate = [NSString stringWithFormat:@"update testTable set date = %d where id = %d",date,ID];
     NSString *update_sqlHour = [NSString stringWithFormat:@"update testTable set hour = %d where id = %d",hour,ID];
     NSString *update_sqlText = [NSString stringWithFormat:@"update testTable set text = '%@' where id = %d",comment, ID];
@@ -480,7 +481,8 @@
     NSString *update_sqlWentFlag = [NSString stringWithFormat:@"update testTable set went_flag = %d where id = %d",went_flag, ID];
     
     [database open];
-    
+   
+    [database executeUpdate:update_titleDate];
     [database executeUpdate:update_sqlDate];
     [database executeUpdate:update_sqlHour];
     [database executeUpdate:update_sqlText];
@@ -601,6 +603,22 @@
     return success;
 }
 
+
+//individualAlbumViewControllerでplacenameを編集した時に使う関数
+- (void)updateTitle:(int)ID TITLE:(NSString *)placeName{
+    
+    //DB接続
+    NSString *databaseFilePath = [[self dataFolderPath] stringByAppendingPathComponent:@"TSDatabase.db"];
+    
+    //インスタンスの作成
+    FMDatabase *database = [FMDatabase databaseWithPath:databaseFilePath];
+    
+    //データのupdate
+    NSString *update_sqlText = [NSString stringWithFormat:@"update testTable set place_name = '%@' where id = %d",placeName, ID];
+    [database open];
+    [database executeUpdate:update_sqlText];
+    [database close];
+}
 
 
 /*
