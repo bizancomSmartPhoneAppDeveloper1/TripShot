@@ -106,6 +106,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
         NSLog(@"%@",dic);
         
         NSArray *arrayResult = [dic objectForKey:@"Feature"];
+        NSLog(@"arrayResult.count=%d",arrayResult.count);
         
         if(arrayResult.count != 0){
         
@@ -115,12 +116,18 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
             
             //表示させる地点名
             NSString *storeName = [resultDic objectForKey:@"Name"];
+            if (![storeName isEqualToString:nil]) {
             [_nameArray addObject:storeName];
+                NSLog(@"storeName=%@",storeName);
+            }
             
             //緯度経度情報
             NSMutableDictionary *tempgeomerty = [resultDic objectForKey:@"Geometry"];
             NSString *geometry = [tempgeomerty objectForKey:@"Coordinates"];
+            NSLog(@"geometry=%@",geometry);
+            if (![geometry isEqualToString:nil]) {
             [_locationArray addObject:geometry];
+            }
             
             //緯度経度を２つに分割する
             NSArray *locations = [geometry componentsSeparatedByString:@","];
@@ -132,7 +139,11 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
             //住所に変換
             TSDataBase *db = [[TSDataBase alloc]init];
             NSString *address = [db getAddressFromLat:doubleLat AndLot:doubleLon];
+            if (![address isEqualToString:nil]) {
             [_addressArray addObject:address];
+            }
+            NSLog(@"_addressArray=%@",[_addressArray description]);
+            NSLog(@"count=%d",i);
         }
         
             NSLog(@"result NameArray : %@",_nameArray);//店名一覧。

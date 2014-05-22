@@ -366,10 +366,15 @@
         
         NSDictionary *status = [jsonObjectResults objectForKey:@"status"];
         NSString *statusString = [status description];
+        NSLog(@"statusString=%@",statusString);
         
         if ([statusString isEqualToString:@"ZERO_RESULTS"]) {
 //            [self alertViewMethod]; //アラートビュー出す
             NSLog(@"ZERO_RESULTS");
+            addressStr = @"NODATA";
+        }else if([statusString isEqualToString:@"OVER_QUERY_LIMIT"]){
+            NSLog(@"OVER_QUERY_LIMIT");
+            addressStr = @"NODATA";
         }else{
             NSMutableArray *result = [jsonObjectResults objectForKey:@"results"];
 //            NSString *str = [result description];
