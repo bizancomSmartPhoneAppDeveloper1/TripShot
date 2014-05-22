@@ -376,6 +376,15 @@
     }
 }
 
+- (MKAnnotationView *) mapView:(MKMapView *)targetMapView
+             viewForAnnotation:(id ) annotation
+{
+    if([annotation isKindOfClass:[MKUserLocation class]]){
+        ((MKUserLocation *)annotation).title = nil;
+    }
+    return nil;
+}
+
 //アクセサリーが押された時のイベント
 -(void) mapView:(MKMapView *)mapView
     annotationView:(MKAnnotationView *)view
@@ -389,6 +398,8 @@
 
     [self.navigationController pushViewController:cameraVC animated:YES];
 }
+
+
 
 //緯度経度保存
 -(void)saveLocation:(CLLocation *)lastLocation{
