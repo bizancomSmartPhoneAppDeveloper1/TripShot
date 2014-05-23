@@ -18,7 +18,6 @@
     NSMutableArray *picsCount;
     NSMutableArray *idarray;
     NSMutableArray *placeName;
-//    int deleteIdNumb;
     int idnumb;
 }
 
@@ -30,7 +29,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+     
         }
     return self;
 }
