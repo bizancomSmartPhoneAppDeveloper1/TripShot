@@ -366,12 +366,14 @@
     // アノテーションビューを取得する
     for (MKAnnotationView* annotationView in views) {
         UIImage *cameraImg = [UIImage imageNamed:@"camera.png"];
+        UIImage *pinImg = [UIImage imageNamed:@"pin.png"];
         
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(5,0,44,44)];
         [button setBackgroundImage:cameraImg forState:UIControlStateNormal];
         
         // コールアウトの左側のアクセサリビューにボタンを追加する
         annotationView.leftCalloutAccessoryView = button;
+        annotationView.image = pinImg;
     }
 }
 
@@ -410,5 +412,75 @@
     [savedata setObject:lonString forKey:@"lonFromMainPage"];
 
 }
+
+
+-(void)markingPinFromListCustom{
+    
+    //一度全てのアノテーションを削除
+    [_mapView removeAnnotations:self.mapView.annotations];
+    
+    //DBと接続
+    TSDataBase *db = [[TSDataBase alloc]init];
+    NSMutableArray *DBData = [db loadDBData];
+    
+    titleList = [[NSMutableArray alloc]init];
+    titleList = DBData[1];
+    
+    latList =[[NSMutableArray alloc]init];
+    latList = DBData[2];
+    
+    lonList = [[NSMutableArray alloc]init];
+    lonList = DBData[3];
+    
+    wentFlagList = [[NSMutableArray alloc]init];
+    wentFlagList = DBData[8];
+    
+    NSMutableArray *addressList = [[NSMutableArray alloc]init];
+    addressList = DBData[10];
+    NSString *temp;
+    
+    for(int i = 0; i < titleList.count ; i++)
+    {
+        temp = latList[i];
+        double lat = temp.doubleValue;
+        temp = lonList[i];
+        double lon = temp.doubleValue;
+        
+        CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(lat, lon);
+        MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
+        pin.coordinate = loc;
+        pin.title = titleList[i];
+        pin.subtitle = addressList[i];
+        
+        
+        CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
+        
+        distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
+                                                          identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
+        
+        NSLog(@"titleList=%@",titleList[i]);
+        NSLog(@"wentFlag=%@",[[wentFlagList objectAtIndex:i] description]);
+        [_mapView addAnnotation:pin];
+        
+        //        到達点についた時に分かるようにジオフェンスをスタート
+        //        [self.locationManager startMonitoringForRegion:distCircularRegion];
+        
+        
+        //行っていない場所にだけジオフェンスをセット
+        if ([[wentFlagList objectAtIndex:i] intValue]==1)
+        {
+            
+            CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
+            distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
+                                                              identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
+            
+            //到達点についた時に分かるようにジオフェンスをスタート
+            [self.locationManager startMonitoringForRegion:distCircularRegion];
+            
+        }
+    }
+    
+}
+
 
 @end
