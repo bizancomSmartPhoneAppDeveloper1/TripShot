@@ -307,7 +307,6 @@
     textfield.returnKeyType = UIReturnKeyDefault;
     textfield.delegate = self;
     [scrollAllView addSubview:textfield];
-    // キーボードが表示されたときのNotificationを受け取る
     [self registerForKeyboardNotifications];
 
     //Facebookボタン作成
@@ -440,12 +439,14 @@
         picsCount =[picsArray count];
         NSLog(@"count=%d",picsCount);
         comment = textfield.text;
+        //NSLog(@"commnet=%@",comment);
         //went_flagを行ったことにする。これによりジオフェンスを外す。
         int went_frag = 0;
         
         if (!(picsCount==0)) {
             [tsdatabase updateDBDataOnCamera:self.idFromMainPage TITLE:title TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
         }
+        
     }
     
     [super viewWillDisappear:animated];
@@ -462,7 +463,6 @@
 
 //titlefieldでリターンキーが押されるとキーボードを隠す
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)textTitle{
-	
     if ([textTitle isEqualToString:@"\n"]) {
         [tsdatabase updateTitle:self.idFromMainPage TITLE:titleField.text];
         [textView resignFirstResponder];
