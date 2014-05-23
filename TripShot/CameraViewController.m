@@ -159,6 +159,8 @@
     //写真をDocumentsディレクトリへ保存
     if ([data writeToFile:path atomically:YES]) {
         NSLog(@"save OK");
+        //カメラロールにも保存
+        UIImageWriteToSavedPhotosAlbum(editedImage, nil, nil, nil);
     } else {
         NSLog(@"save NG");
     }
