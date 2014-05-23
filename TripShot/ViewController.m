@@ -292,6 +292,7 @@
     
     //一度全てのアノテーションを削除
     [_mapView removeAnnotations:self.mapView.annotations];
+
     
     //DBと接続
     TSDataBase *db = [[TSDataBase alloc]init];
@@ -352,18 +353,22 @@
     
 }
 
+
 //アノテーションビューが作られたとき
 - (void)mapView:(MKMapView*)mapView didAddAnnotationViews:(NSArray*)views{
 
     // アノテーションビューを取得する
-    for (MKAnnotationView* annotationView in views) {
+    for (MKAnnotationView * annotationView in views)
+    {
         UIImage *cameraImg = [UIImage imageNamed:@"camera.png"];
-        UIImage *pinImg = [UIImage imageNamed:@"pin.png"];
         
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(5,0,44,44)];
         [button setBackgroundImage:cameraImg forState:UIControlStateNormal];
         annotationView.leftCalloutAccessoryView = button;
-        annotationView.image = pinImg;
+            
+//        UIImage *pinImg = [UIImage imageNamed:@"pin.png"];
+//        annotationView.image = pinImg;
+        
     }
 }
 
@@ -376,6 +381,7 @@
     }
     return nil;
 }
+
 
 //アクセサリーが押された時のイベント
 -(void) mapView:(MKMapView *)mapView
