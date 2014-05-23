@@ -481,7 +481,6 @@
     NSString *update_sqlWentFlag = [NSString stringWithFormat:@"update testTable set went_flag = %d where id = %d",went_flag, ID];
     
     [database open];
-   
     [database executeUpdate:update_titleDate];
     [database executeUpdate:update_sqlDate];
     [database executeUpdate:update_sqlHour];

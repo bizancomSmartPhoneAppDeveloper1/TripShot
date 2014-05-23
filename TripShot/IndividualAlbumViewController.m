@@ -270,6 +270,14 @@
     [scrollAllView setContentOffset:CGPointZero animated:YES];
 }
 
+
+//textfieldでリターンキーが押されるとキーボードを隠す
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [tsdatabase updateText:self.idFromMainPage TEXT:textfield.text];
+    [textField resignFirstResponder];
+    return YES;
+}
+
 - (void)button_Tapped
 
 {
