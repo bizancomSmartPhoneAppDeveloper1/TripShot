@@ -325,7 +325,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
 -(void)initNavigationBar{
     //ナビゲーションバー
-    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"subtitle2.png"]];
+    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"screentitle.png"]];
     
     [navigationTitle setContentMode:UIViewContentModeScaleAspectFit];
     self.navigationItem.titleView = navigationTitle;
