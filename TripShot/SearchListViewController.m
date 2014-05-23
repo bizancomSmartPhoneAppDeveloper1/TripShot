@@ -38,23 +38,9 @@
 NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9MmM-";
 
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//    UIBarButtonItem *backitem = [[UIBarButtonItem alloc]initWithTitle:@"もどる" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
-//    self.navigationItem.leftBarButtonItem = backitem;
-    
 
     //サーチバーの定義
     _searchField.delegate = self;
@@ -67,22 +53,9 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     
 }
 
--(NSString *)barricadeString:(NSString *)word{
-    NSString *barricadedString;
-    
-    //含まれてたらアレな文字って言ったら
-    // % APIKEY # とか？ここでおきかえるよ
-    
-    
-    return barricadedString;
-}
 
 
 -(void)getJsonFromWord:(NSString *)word{
-    
-    //ここで一旦wordを検査する必要がある
-    //NSString *barricadedString = [self barricadeString:word];
-    
     
     _nameArray = [[NSMutableArray alloc]init]; //店名一覧格納
     _locationArray = [[NSMutableArray alloc]init]; //緯度経度格納
@@ -92,11 +65,6 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     NSString *encodedString = [word stringByAddingPercentEscapesUsingEncoding:
                                NSUTF8StringEncoding];
     
-    /*
-    //現在地に近い順でソートする 現時点では遠いところは表示されないので、いったんコメントアウト
-    //NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&device=mobile&query=%@&output=json&lat=%@&lon=%@&sort=hybrid&results=20",APIKEY,encodedString,_savedLat,_savedLon];
-     */
-
     //初動として20件のみ取得
     NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&device=mobile&query=%@&results=20&output=json",APIKEY,encodedString];
 
@@ -172,7 +140,12 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     }else{
         
         NSLog(@"the connection could not be created or if the download fails.");
-        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"ごめんね！"
+                                                       message:@"ネットワーク接続が切れました"
+                                                      delegate:nil
+                                             cancelButtonTitle:nil
+                                             otherButtonTitles:@"戻る", nil];
+        [alert show];
     }
 }
 
@@ -180,7 +153,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
 #pragma mark - Table view data source
@@ -222,6 +195,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     NSLog(@"lon=%f",lon2);
     double lat2 = lat1.doubleValue;
     NSLog(@"lat=%f",lat2);
+    
     //DBにデータを追加
     TSDataBase *db = [[TSDataBase alloc]init];
     [db createDBDataFromLat:lat2 andLot:lon2 andTitle:name];
@@ -279,7 +253,8 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
 -(void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    NSLog(@"%dこめのせるが表示おわったとき",indexPath.row);
+    //
+    //  NSLog(@"%dのセルが表示完了したときの動作　追加するときに書く",indexPath.row);
 
 }
 
@@ -303,9 +278,11 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     [self dismissViewControllerAnimated:YES completion:NULL];
     
 }
+
 #pragma mark - ナビゲーションバー設定
 
 -(void)viewBackground{
+    
     //スクリーンサイズの取得
     CGRect screenSize = [[UIScreen mainScreen] bounds];
     CGFloat width = screenSize.size.width;
@@ -325,11 +302,12 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
 -(void)initNavigationBar{
     //ナビゲーションバー
-    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"screentitle.png"]];
+    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"screentitle3.png"]];
     
     [navigationTitle setContentMode:UIViewContentModeScaleAspectFit];
-    self.navigationItem.titleView = navigationTitle;
     
+    self.navigationItem.titleView = navigationTitle;
+
 }
 
 //ネットワーク接続状況確認
@@ -337,39 +315,45 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 {
 	// 接続状態を取得
 	NetworkStatus status = [curReach currentReachabilityStatus];
-	
-    // ホスト接続 1
+/*
+    // ホスト接続 1において
 	if(curReach == hostReach)
 	{
-		if( status == NotReachable )
+		if( status == NotReachable )//届いてないとき
 		{
 			NSLog(@"Host connection is failed.");
-		} else {
-			NSLog(@"Host connection is successful.");
+            //ホストにつながらないアラート出す
+            UIAlertView *hostConnectionFailedAlert = [[UIAlertView alloc]initWithTitle:@"ごめんね！" message:@"現在検索が利用できません" delegate:nil cancelButtonTitle:@"戻る" otherButtonTitles:nil, nil];
+            [hostConnectionFailedAlert show];
 		}
     }
-    
-	// 3Gネットワーク接続 3
-	if(curReach == internetReach)
-	{
-		if( status == NotReachable )
-		{
-			NSLog(@"3G network is failed.");
-		} else {
-			NSLog(@"3G network is successful.");
-		}
-	}
+ */
     
 	// Wi-Fi接続 2
 	if(curReach == wifiReach)
 	{
 		if( status == NotReachable )
 		{
-			NSLog(@"Wi-Fi is failed.");
-		} else {
-			NSLog(@"Wi-Fi is successful.");
+			NSLog(@"Wi-Fi is failed.");//3Gかどうか確認する
+            UIAlertView *connectionAlert = [[UIAlertView alloc]initWithTitle:@"警告" message:@"ネットワークに接続されていません" delegate:nil cancelButtonTitle:@"戻る" otherButtonTitles:nil, nil];
+            [connectionAlert show];
+            
+            // 3Gネットワーク接続 3
+            if(curReach == internetReach)
+            {
+                if( status == NotReachable )
+                {
+                    NSLog(@"3G network is failed.");//wifiも3Gもだめなのでアラート出す
+                    
+                    UIAlertView *connectionAlert = [[UIAlertView alloc]initWithTitle:@"警告" message:@"ネットワークに接続されていません" delegate:nil cancelButtonTitle:@"戻る" otherButtonTitles:nil, nil];
+                    [connectionAlert show];
+                }
+            }
 		}
 	}
+    
+
+    
 }
 
 // ネットワーク接続状況確認
@@ -379,11 +363,12 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
                                              selector:@selector(reachabilityChanged:)
                                                  name: kReachabilityChangedNotification
                                                object: nil];
-    
+/*
     // ホスト接続を確認
     hostReach = [Reachability reachabilityWithHostName: @"search.olp.yahooapis.jp"];
     [hostReach startNotifier];
     [self updateInterfaceWithReachability: hostReach];
+*/
     
     // 3G接続を確認
     internetReach = [Reachability reachabilityForInternetConnection];

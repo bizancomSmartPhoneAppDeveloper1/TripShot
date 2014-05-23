@@ -82,7 +82,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
 
@@ -259,16 +259,6 @@
     scrollAllView = [[UIScrollView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.view addSubview:scrollAllView];
     
-//    //行きたい場所リストタイトル表示
-//    CGRect titleRect = CGRectMake(20, 340, width-40, 40);  //横始まり・縦始まり・ラベルの横幅・縦幅
-//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
-//    titleLabel.text = title;
-//    titleLabel.numberOfLines = 0;
-//    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-//    titleLabel.textColor = textColor;
-//    titleLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
-//   [scrollAllView addSubview:titleLabel];
-    
     //行きたい場所リストタイトル表示
     CGRect titleRect = CGRectMake(15, 340, width-40, 45);  //横始まり・縦始まり・ラベルの横幅・縦幅
     titleField = [[UITextView alloc]initWithFrame:titleRect];
@@ -436,22 +426,6 @@
     return success;
 }
 
-//main画面に戻る際の関数。 5/20 CommentOuted byFujiwara
-//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-//    
-//    if ([segue.identifier isEqualToString:@"cameraViewToMainView"]) {
-//        NSLog(@"確認");
-//        //DBに保存する
-//        pics = [picsArray componentsJoinedByString:@","];
-//        NSLog(@"pics=%@",[pics description]);
-//        picsCount =[picsArray count];
-//        NSLog(@"count=%d",picsCount);
-//        comment = textfield.text;
-//        //went_flagを行ったことにする。これによりジオフェンスを外す。
-//        int went_frag = 0;
-//        [tsdatabase updateDBDataOnCamera:self.idFromMainPage TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
-//    }
-//}
 
 #pragma mark - Fujiwara
 
@@ -478,11 +452,8 @@
 }
 
 -(void)didTapReturnButton{
-    //BarBUttonもどるで元の画面に
+    //BarButtonもどるで元の画面に
     [self.navigationController popViewControllerAnimated:YES];
-    //あるばむいちらん画面に戻りたいが一番したの背景が先に呼ばれて改めてタブバーボタンを押すと画面が戻る
-//    AlbumViewController *albumViewCon = [[AlbumViewController alloc]init];
-//    [self.navigationController pushViewController:albumViewCon animated:YES];
     
     //NSTimerをstop
     [self.timer invalidate];

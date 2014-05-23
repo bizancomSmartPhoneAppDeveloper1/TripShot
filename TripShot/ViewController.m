@@ -56,8 +56,6 @@
     self.isChasing = YES;
     self.userLocationButton.hidden = YES;
 
-//    //tabバーのアイコンの色設定
-//    [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
@@ -260,7 +258,6 @@
     
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 
-    NSLog(@"震えてるよ");
 }
 
 #pragma mark - ふじわら追加メソッド
@@ -279,9 +276,8 @@
     
     //メモリーリーク防止の為に、一旦ジオフェンスを停止
     [self geoFenceCancel];
-    NSLog(@"ジオフェンスキャンセルしたみたいよ");
 
-    //DBからピンぶっさしてます
+    //annotation追加
     [self markingPinFromList];
     _mapView.delegate = self;
     
@@ -331,7 +327,6 @@
         pin.subtitle = addressList[i];
         
         
-        
         CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
         
         distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
@@ -341,10 +336,6 @@
         NSLog(@"wentFlag=%@",[[wentFlagList objectAtIndex:i] description]);
         [_mapView addAnnotation:pin];
         
-//        到達点についた時に分かるようにジオフェンスをスタート
-//        [self.locationManager startMonitoringForRegion:distCircularRegion];
-
-    
     //行っていない場所にだけジオフェンスをセット
         if ([[wentFlagList objectAtIndex:i] intValue]==1)
         {
@@ -367,15 +358,16 @@
     // アノテーションビューを取得する
     for (MKAnnotationView* annotationView in views) {
         UIImage *cameraImg = [UIImage imageNamed:@"camera.png"];
+        UIImage *pinImg = [UIImage imageNamed:@"pin.png"];
         
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(5,0,44,44)];
         [button setBackgroundImage:cameraImg forState:UIControlStateNormal];
-        
-        // コールアウトの左側のアクセサリビューにボタンを追加する
         annotationView.leftCalloutAccessoryView = button;
+        annotationView.image = pinImg;
     }
 }
 
+//現在地のコールアウトを表示しない
 - (MKAnnotationView *) mapView:(MKMapView *)targetMapView
              viewForAnnotation:(id ) annotation
 {
