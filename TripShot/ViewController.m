@@ -294,6 +294,9 @@
 
 -(void)markingPinFromList{
     
+    //一度全てのアノテーションを削除
+    [_mapView removeAnnotations:self.mapView.annotations];
+    
     //DBと接続
     TSDataBase *db = [[TSDataBase alloc]init];
     NSMutableArray *DBData = [db loadDBData];
@@ -307,8 +310,8 @@
     lonList = [[NSMutableArray alloc]init];
     lonList = DBData[3];
     
-    wentFlagList = [[NSMutableArray alloc]init];//行っていない場所にだけジオフェンスをセットするために、wentFlagList作成（石井）
-    wentFlagList = DBData[8];//行っていない場所にだけジオフェンスをセットするために、wentFlagList作成（石井）
+    wentFlagList = [[NSMutableArray alloc]init];
+    wentFlagList = DBData[8];
 
     NSMutableArray *addressList = [[NSMutableArray alloc]init];
     addressList = DBData[10];
@@ -327,7 +330,7 @@
         pin.title = titleList[i];
         pin.subtitle = addressList[i];
         
-        [_mapView addAnnotation:pin];
+        
         
         CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
         
@@ -336,13 +339,13 @@
         
         NSLog(@"titleList=%@",titleList[i]);
         NSLog(@"wentFlag=%@",[[wentFlagList objectAtIndex:i] description]);
+        [_mapView addAnnotation:pin];
         
 //        到達点についた時に分かるようにジオフェンスをスタート
 //        [self.locationManager startMonitoringForRegion:distCircularRegion];
 
     
-    //アノテーションを刺した場所のジオフェンスを開始
-    //行っていない場所にだけジオフェンスをセットするために、if文を追加（石井）
+    //行っていない場所にだけジオフェンスをセット
         if ([[wentFlagList objectAtIndex:i] intValue]==1)
         {
  
@@ -366,7 +369,6 @@
         UIImage *cameraImg = [UIImage imageNamed:@"camera.png"];
         
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(5,0,44,44)];
-        
         [button setBackgroundImage:cameraImg forState:UIControlStateNormal];
         
         // コールアウトの左側のアクセサリビューにボタンを追加する

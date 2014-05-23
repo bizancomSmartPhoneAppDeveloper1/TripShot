@@ -13,6 +13,7 @@
     TSDataBase *tsdatabase;
     UIImageView *imageViewBack;
     UITextField *textfield;
+    UITextView *titleField;
     NSString *address;
     NSMutableArray *array;
     NSDate *date;
@@ -256,15 +257,28 @@
     scrollAllView = [[UIScrollView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.view addSubview:scrollAllView];
     
+//    //行きたい場所リストタイトル表示
+//    CGRect titleRect = CGRectMake(20, 340, width-40, 40);  //横始まり・縦始まり・ラベルの横幅・縦幅
+//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
+//    titleLabel.text = title;
+//    titleLabel.numberOfLines = 0;
+//    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+//    titleLabel.textColor = textColor;
+//    titleLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
+//   [scrollAllView addSubview:titleLabel];
+    
     //行きたい場所リストタイトル表示
-    CGRect titleRect = CGRectMake(20, 340, width-40, 40);  //横始まり・縦始まり・ラベルの横幅・縦幅
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
-    titleLabel.text = title;
-    titleLabel.numberOfLines = 0;
-    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    titleLabel.textColor = textColor;
-    titleLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
-   [scrollAllView addSubview:titleLabel];
+    CGRect titleRect = CGRectMake(15, 340, width-40, 45);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    titleField = [[UITextView alloc]initWithFrame:titleRect];
+    titleField.text = title;
+    titleField.returnKeyType = UIReturnKeyDone;
+    titleField.delegate = self;
+    titleField.textColor = textColor;
+    titleField.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
+    titleField.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0];
+    [scrollAllView addSubview:titleField];
+    [self registerForKeyboardNotifications];
+
     
     //日付入力
     date = [NSDate date];
@@ -295,7 +309,7 @@
     //コメント欄
     CGRect textRect = CGRectMake(20, 380, width-40, 30);
     textfield = [[UITextField alloc]initWithFrame:textRect];
-    textfield.text = @"コメントを入れてね♪";
+    textfield.placeholder = @"コメントを入れてね♪";
     textfield.textColor = textColor;
     textfield.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
     textfield.returnKeyType = UIReturnKeyDefault;
@@ -444,6 +458,7 @@
     
         
         //DBに保存する
+        title = titleField.text;
         pics = [picsArray componentsJoinedByString:@","];
         NSLog(@"pics=%@",[pics description]);
         picsCount =[picsArray count];
@@ -453,7 +468,7 @@
         int went_frag = 0;
         
         if (!(picsCount==0)) {
-        [tsdatabase updateDBDataOnCamera:self.idFromMainPage TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
+            [tsdatabase updateDBDataOnCamera:self.idFromMainPage TITLE:title TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
         }
     }
     
@@ -471,5 +486,16 @@
     [self.timer invalidate];
 }
 
+
+//titlefieldでリターンキーが押されるとキーボードを隠す
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)textTitle{
+	
+    if ([textTitle isEqualToString:@"\n"]) {
+        [tsdatabase updateTitle:self.idFromMainPage TITLE:titleField.text];
+        [textView resignFirstResponder];
+        return NO;
+    }
+	return YES;
+}
 
 @end
