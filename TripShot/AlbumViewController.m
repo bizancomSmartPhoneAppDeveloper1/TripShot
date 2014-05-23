@@ -2,7 +2,7 @@
 //  AlbumViewController.m
 //  TripShot
 //
-//  Created by Komaya & Fujiwara on 2014/05/12.
+//  Created by Fujiwara on 2014/05/12.
 //  Copyright (c) 2014年 team -IKI- All rights reserved.
 //
 
@@ -41,10 +41,6 @@
     
     [[self AlbumCollection]setDataSource:self];
     [[self AlbumCollection]setDelegate:self];
-
-//
-//self.navigationItem.leftBarButtonItem = self.editButtonItem;
-//
     
     [self viewBackground];
     
@@ -105,7 +101,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  
 }
 
 
@@ -184,7 +180,6 @@
 
     }
     
-
     return cell;
 }
 
@@ -195,8 +190,11 @@
     CGPoint p = [gestureRecognizer locationInView:_AlbumCollection];
     NSIndexPath *indexPath = [_AlbumCollection indexPathForItemAtPoint:p];
     if (indexPath == nil){
+        
         NSLog(@"long press on table view");
+    
     }else if (((UILongPressGestureRecognizer *)gestureRecognizer).state == UIGestureRecognizerStateBegan){
+        
         //セルが長押しされた場合の処理
         if(indexPath.row != 0){
       
@@ -253,12 +251,6 @@
     imageViewBackA.alpha = 0.8;
     [self.view addSubview:imageViewBackA];
     [self.view sendSubviewToBack:imageViewBackA];
-
-//    //ナビゲーションバー
-//    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"subtitle1.png"]];
-//    
-//    [navigationTitle setContentMode:UIViewContentModeScaleAspectFit];
-//    self.navigationItem.titleView = navigationTitle;
 
 }
 

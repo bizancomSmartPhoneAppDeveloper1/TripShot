@@ -38,23 +38,9 @@
 NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9MmM-";
 
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//    UIBarButtonItem *backitem = [[UIBarButtonItem alloc]initWithTitle:@"もどる" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
-//    self.navigationItem.leftBarButtonItem = backitem;
-    
 
     //サーチバーの定義
     _searchField.delegate = self;
@@ -67,22 +53,9 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     
 }
 
--(NSString *)barricadeString:(NSString *)word{
-    NSString *barricadedString;
-    
-    //含まれてたらアレな文字って言ったら
-    // % APIKEY # とか？ここでおきかえるよ
-    
-    
-    return barricadedString;
-}
 
 
 -(void)getJsonFromWord:(NSString *)word{
-    
-    //ここで一旦wordを検査する必要がある
-    //NSString *barricadedString = [self barricadeString:word];
-    
     
     _nameArray = [[NSMutableArray alloc]init]; //店名一覧格納
     _locationArray = [[NSMutableArray alloc]init]; //緯度経度格納
@@ -92,11 +65,6 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     NSString *encodedString = [word stringByAddingPercentEscapesUsingEncoding:
                                NSUTF8StringEncoding];
     
-    /*
-    //現在地に近い順でソートする 現時点では遠いところは表示されないので、いったんコメントアウト
-    //NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&device=mobile&query=%@&output=json&lat=%@&lon=%@&sort=hybrid&results=20",APIKEY,encodedString,_savedLat,_savedLon];
-     */
-
     //初動として20件のみ取得
     NSString *path = [NSString stringWithFormat:@"http://search.olp.yahooapis.jp/OpenLocalPlatform/V1/localSearch?appid=%@&device=mobile&query=%@&results=20&output=json",APIKEY,encodedString];
 
@@ -185,7 +153,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
 #pragma mark - Table view data source
@@ -227,6 +195,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     NSLog(@"lon=%f",lon2);
     double lat2 = lat1.doubleValue;
     NSLog(@"lat=%f",lat2);
+    
     //DBにデータを追加
     TSDataBase *db = [[TSDataBase alloc]init];
     [db createDBDataFromLat:lat2 andLot:lon2 andTitle:name];
@@ -284,7 +253,8 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
 -(void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    NSLog(@"%dこめのせるが表示おわったとき",indexPath.row);
+    //
+    //  NSLog(@"%dのセルが表示完了したときの動作　追加するときに書く",indexPath.row);
 
 }
 
@@ -308,9 +278,11 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     [self dismissViewControllerAnimated:YES completion:NULL];
     
 }
+
 #pragma mark - ナビゲーションバー設定
 
 -(void)viewBackground{
+    
     //スクリーンサイズの取得
     CGRect screenSize = [[UIScreen mainScreen] bounds];
     CGFloat width = screenSize.size.width;
@@ -397,6 +369,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     [hostReach startNotifier];
     [self updateInterfaceWithReachability: hostReach];
 */
+    
     // 3G接続を確認
     internetReach = [Reachability reachabilityForInternetConnection];
     [internetReach startNotifier];

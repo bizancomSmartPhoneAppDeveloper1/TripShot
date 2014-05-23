@@ -56,8 +56,6 @@
     self.isChasing = YES;
     self.userLocationButton.hidden = YES;
 
-//    //tabバーのアイコンの色設定
-//    [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
@@ -260,7 +258,6 @@
     
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 
-    NSLog(@"震えてるよ");
 }
 
 #pragma mark - ふじわら追加メソッド
@@ -279,9 +276,8 @@
     
     //メモリーリーク防止の為に、一旦ジオフェンスを停止
     [self geoFenceCancel];
-    NSLog(@"ジオフェンスキャンセルしたみたいよ");
 
-    //DBからピンぶっさしてます
+    //annotation追加
     [self markingPinFromList];
     _mapView.delegate = self;
     
@@ -340,10 +336,6 @@
         NSLog(@"wentFlag=%@",[[wentFlagList objectAtIndex:i] description]);
         [_mapView addAnnotation:pin];
         
-//        到達点についた時に分かるようにジオフェンスをスタート
-//        [self.locationManager startMonitoringForRegion:distCircularRegion];
-
-    
     //行っていない場所にだけジオフェンスをセット
         if ([[wentFlagList objectAtIndex:i] intValue]==1)
         {
@@ -370,13 +362,12 @@
         
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(5,0,44,44)];
         [button setBackgroundImage:cameraImg forState:UIControlStateNormal];
-        
-        // コールアウトの左側のアクセサリビューにボタンを追加する
         annotationView.leftCalloutAccessoryView = button;
         annotationView.image = pinImg;
     }
 }
 
+//現在地のコールアウトを表示しない
 - (MKAnnotationView *) mapView:(MKMapView *)targetMapView
              viewForAnnotation:(id ) annotation
 {
@@ -412,75 +403,5 @@
     [savedata setObject:lonString forKey:@"lonFromMainPage"];
 
 }
-
-
--(void)markingPinFromListCustom{
-    
-    //一度全てのアノテーションを削除
-    [_mapView removeAnnotations:self.mapView.annotations];
-    
-    //DBと接続
-    TSDataBase *db = [[TSDataBase alloc]init];
-    NSMutableArray *DBData = [db loadDBData];
-    
-    titleList = [[NSMutableArray alloc]init];
-    titleList = DBData[1];
-    
-    latList =[[NSMutableArray alloc]init];
-    latList = DBData[2];
-    
-    lonList = [[NSMutableArray alloc]init];
-    lonList = DBData[3];
-    
-    wentFlagList = [[NSMutableArray alloc]init];
-    wentFlagList = DBData[8];
-    
-    NSMutableArray *addressList = [[NSMutableArray alloc]init];
-    addressList = DBData[10];
-    NSString *temp;
-    
-    for(int i = 0; i < titleList.count ; i++)
-    {
-        temp = latList[i];
-        double lat = temp.doubleValue;
-        temp = lonList[i];
-        double lon = temp.doubleValue;
-        
-        CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(lat, lon);
-        MKPointAnnotation *pin = [[MKPointAnnotation alloc]init];
-        pin.coordinate = loc;
-        pin.title = titleList[i];
-        pin.subtitle = addressList[i];
-        
-        
-        CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
-        
-        distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
-                                                          identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
-        
-        NSLog(@"titleList=%@",titleList[i]);
-        NSLog(@"wentFlag=%@",[[wentFlagList objectAtIndex:i] description]);
-        [_mapView addAnnotation:pin];
-        
-        //        到達点についた時に分かるようにジオフェンスをスタート
-        //        [self.locationManager startMonitoringForRegion:distCircularRegion];
-        
-        
-        //行っていない場所にだけジオフェンスをセット
-        if ([[wentFlagList objectAtIndex:i] intValue]==1)
-        {
-            
-            CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
-            distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300
-                                                              identifier:[NSString stringWithFormat:@"%@",titleList[i]]];
-            
-            //到達点についた時に分かるようにジオフェンスをスタート
-            [self.locationManager startMonitoringForRegion:distCircularRegion];
-            
-        }
-    }
-    
-}
-
 
 @end
