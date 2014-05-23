@@ -331,7 +331,6 @@
         pin.subtitle = addressList[i];
         
         
-        
         CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
         
         distCircularRegion = [[CLCircularRegion alloc]initWithCenter:finalCoodinates radius:300

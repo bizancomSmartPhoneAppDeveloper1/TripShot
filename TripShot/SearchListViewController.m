@@ -172,7 +172,12 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     }else{
         
         NSLog(@"the connection could not be created or if the download fails.");
-        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"ごめんね！"
+                                                       message:@"ネットワーク接続が切れました"
+                                                      delegate:nil
+                                             cancelButtonTitle:nil
+                                             otherButtonTitles:@"戻る", nil];
+        [alert show];
     }
 }
 
@@ -325,11 +330,12 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 
 -(void)initNavigationBar{
     //ナビゲーションバー
-    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"screentitle.png"]];
+    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"screentitle3.png"]];
     
     [navigationTitle setContentMode:UIViewContentModeScaleAspectFit];
-    self.navigationItem.titleView = navigationTitle;
     
+    self.navigationItem.titleView = navigationTitle;
+
 }
 
 //ネットワーク接続状況確認
@@ -337,39 +343,45 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 {
 	// 接続状態を取得
 	NetworkStatus status = [curReach currentReachabilityStatus];
-	
-    // ホスト接続 1
+/*
+    // ホスト接続 1において
 	if(curReach == hostReach)
 	{
-		if( status == NotReachable )
+		if( status == NotReachable )//届いてないとき
 		{
 			NSLog(@"Host connection is failed.");
-		} else {
-			NSLog(@"Host connection is successful.");
+            //ホストにつながらないアラート出す
+            UIAlertView *hostConnectionFailedAlert = [[UIAlertView alloc]initWithTitle:@"ごめんね！" message:@"現在検索が利用できません" delegate:nil cancelButtonTitle:@"戻る" otherButtonTitles:nil, nil];
+            [hostConnectionFailedAlert show];
 		}
     }
-    
-	// 3Gネットワーク接続 3
-	if(curReach == internetReach)
-	{
-		if( status == NotReachable )
-		{
-			NSLog(@"3G network is failed.");
-		} else {
-			NSLog(@"3G network is successful.");
-		}
-	}
+ */
     
 	// Wi-Fi接続 2
 	if(curReach == wifiReach)
 	{
 		if( status == NotReachable )
 		{
-			NSLog(@"Wi-Fi is failed.");
-		} else {
-			NSLog(@"Wi-Fi is successful.");
+			NSLog(@"Wi-Fi is failed.");//3Gかどうか確認する
+            UIAlertView *connectionAlert = [[UIAlertView alloc]initWithTitle:@"警告" message:@"ネットワークに接続されていません" delegate:nil cancelButtonTitle:@"戻る" otherButtonTitles:nil, nil];
+            [connectionAlert show];
+            
+            // 3Gネットワーク接続 3
+            if(curReach == internetReach)
+            {
+                if( status == NotReachable )
+                {
+                    NSLog(@"3G network is failed.");//wifiも3Gもだめなのでアラート出す
+                    
+                    UIAlertView *connectionAlert = [[UIAlertView alloc]initWithTitle:@"警告" message:@"ネットワークに接続されていません" delegate:nil cancelButtonTitle:@"戻る" otherButtonTitles:nil, nil];
+                    [connectionAlert show];
+                }
+            }
 		}
 	}
+    
+
+    
 }
 
 // ネットワーク接続状況確認
@@ -379,12 +391,12 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
                                              selector:@selector(reachabilityChanged:)
                                                  name: kReachabilityChangedNotification
                                                object: nil];
-    
+/*
     // ホスト接続を確認
     hostReach = [Reachability reachabilityWithHostName: @"search.olp.yahooapis.jp"];
     [hostReach startNotifier];
     [self updateInterfaceWithReachability: hostReach];
-    
+*/
     // 3G接続を確認
     internetReach = [Reachability reachabilityForInternetConnection];
     [internetReach startNotifier];
