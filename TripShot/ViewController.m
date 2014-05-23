@@ -56,8 +56,6 @@
     self.isChasing = YES;
     self.userLocationButton.hidden = YES;
 
-//    //tabバーのアイコンの色設定
-//    [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0]];
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
     
@@ -260,7 +258,6 @@
     
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 
-    NSLog(@"震えてるよ");
 }
 
 #pragma mark - ふじわら追加メソッド
@@ -279,9 +276,8 @@
     
     //メモリーリーク防止の為に、一旦ジオフェンスを停止
     [self geoFenceCancel];
-    NSLog(@"ジオフェンスキャンセルしたみたいよ");
 
-    //DBからピンぶっさしてます
+    //annotation追加
     [self markingPinFromList];
     _mapView.delegate = self;
     
@@ -290,11 +286,12 @@
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
 
-
-
 }
 
 -(void)markingPinFromList{
+    
+    //一度全てのアノテーションを削除
+    [_mapView removeAnnotations:self.mapView.annotations];
     
     //DBと接続
     TSDataBase *db = [[TSDataBase alloc]init];
@@ -309,8 +306,8 @@
     lonList = [[NSMutableArray alloc]init];
     lonList = DBData[3];
     
-    wentFlagList = [[NSMutableArray alloc]init];//行っていない場所にだけジオフェンスをセットするために、wentFlagList作成（石井）
-    wentFlagList = DBData[8];//行っていない場所にだけジオフェンスをセットするために、wentFlagList作成（石井）
+    wentFlagList = [[NSMutableArray alloc]init];
+    wentFlagList = DBData[8];
 
     NSMutableArray *addressList = [[NSMutableArray alloc]init];
     addressList = DBData[10];
@@ -329,7 +326,6 @@
         pin.title = titleList[i];
         pin.subtitle = addressList[i];
         
-        [_mapView addAnnotation:pin];
         
         CLLocationCoordinate2D finalCoodinates = CLLocationCoordinate2DMake(lat, lon);
         
@@ -338,13 +334,9 @@
         
         NSLog(@"titleList=%@",titleList[i]);
         NSLog(@"wentFlag=%@",[[wentFlagList objectAtIndex:i] description]);
+        [_mapView addAnnotation:pin];
         
-//        到達点についた時に分かるようにジオフェンスをスタート
-//        [self.locationManager startMonitoringForRegion:distCircularRegion];
-
-    
-    //アノテーションを刺した場所のジオフェンスを開始
-    //行っていない場所にだけジオフェンスをセットするために、if文を追加（石井）
+    //行っていない場所にだけジオフェンスをセット
         if ([[wentFlagList objectAtIndex:i] intValue]==1)
         {
  
@@ -366,16 +358,16 @@
     // アノテーションビューを取得する
     for (MKAnnotationView* annotationView in views) {
         UIImage *cameraImg = [UIImage imageNamed:@"camera.png"];
+        UIImage *pinImg = [UIImage imageNamed:@"pin.png"];
         
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(5,0,44,44)];
-        
         [button setBackgroundImage:cameraImg forState:UIControlStateNormal];
-        
-        // コールアウトの左側のアクセサリビューにボタンを追加する
         annotationView.leftCalloutAccessoryView = button;
+        annotationView.image = pinImg;
     }
 }
 
+//現在地のコールアウトを表示しない
 - (MKAnnotationView *) mapView:(MKMapView *)targetMapView
              viewForAnnotation:(id ) annotation
 {

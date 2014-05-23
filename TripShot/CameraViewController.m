@@ -13,6 +13,7 @@
     TSDataBase *tsdatabase;
     UIImageView *imageViewBack;
     UITextField *textfield;
+    UITextView *titleField;
     NSString *address;
     NSMutableArray *array;
     NSDate *date;
@@ -81,7 +82,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
 
@@ -158,6 +159,8 @@
     //写真をDocumentsディレクトリへ保存
     if ([data writeToFile:path atomically:YES]) {
         NSLog(@"save OK");
+        //カメラロールにも保存
+        UIImageWriteToSavedPhotosAlbum(editedImage, nil, nil, nil);
     } else {
         NSLog(@"save NG");
     }
@@ -257,14 +260,17 @@
     [self.view addSubview:scrollAllView];
     
     //行きたい場所リストタイトル表示
-    CGRect titleRect = CGRectMake(20, 340, width-40, 40);  //横始まり・縦始まり・ラベルの横幅・縦幅
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
-    titleLabel.text = title;
-    titleLabel.numberOfLines = 0;
-    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    titleLabel.textColor = textColor;
-    titleLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
-   [scrollAllView addSubview:titleLabel];
+    CGRect titleRect = CGRectMake(15, 340, width-40, 45);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    titleField = [[UITextView alloc]initWithFrame:titleRect];
+    titleField.text = title;
+    titleField.returnKeyType = UIReturnKeyDone;
+    titleField.delegate = self;
+    titleField.textColor = textColor;
+    titleField.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
+    titleField.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0];
+    [scrollAllView addSubview:titleField];
+    [self registerForKeyboardNotifications];
+
     
     //日付入力
     date = [NSDate date];
@@ -295,7 +301,7 @@
     //コメント欄
     CGRect textRect = CGRectMake(20, 380, width-40, 30);
     textfield = [[UITextField alloc]initWithFrame:textRect];
-    textfield.text = @"コメントを入れてね♪";
+    textfield.placeholder = @"コメントを入れてね♪";
     textfield.textColor = textColor;
     textfield.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
     textfield.returnKeyType = UIReturnKeyDefault;
@@ -420,22 +426,6 @@
     return success;
 }
 
-//main画面に戻る際の関数。 5/20 CommentOuted byFujiwara
-//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-//    
-//    if ([segue.identifier isEqualToString:@"cameraViewToMainView"]) {
-//        NSLog(@"確認");
-//        //DBに保存する
-//        pics = [picsArray componentsJoinedByString:@","];
-//        NSLog(@"pics=%@",[pics description]);
-//        picsCount =[picsArray count];
-//        NSLog(@"count=%d",picsCount);
-//        comment = textfield.text;
-//        //went_flagを行ったことにする。これによりジオフェンスを外す。
-//        int went_frag = 0;
-//        [tsdatabase updateDBDataOnCamera:self.idFromMainPage TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
-//    }
-//}
 
 #pragma mark - Fujiwara
 
@@ -444,6 +434,7 @@
     
         
         //DBに保存する
+        title = titleField.text;
         pics = [picsArray componentsJoinedByString:@","];
         NSLog(@"pics=%@",[pics description]);
         picsCount =[picsArray count];
@@ -453,7 +444,7 @@
         int went_frag = 0;
         
         if (!(picsCount==0)) {
-        [tsdatabase updateDBDataOnCamera:self.idFromMainPage TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
+            [tsdatabase updateDBDataOnCamera:self.idFromMainPage TITLE:title TEXT:comment PICS:pics PICCOUNT:picsCount WENTFLAG:went_frag];
         }
     }
     
@@ -461,15 +452,23 @@
 }
 
 -(void)didTapReturnButton{
-    //BarBUttonもどるで元の画面に
+    //BarButtonもどるで元の画面に
     [self.navigationController popViewControllerAnimated:YES];
-    //あるばむいちらん画面に戻りたいが一番したの背景が先に呼ばれて改めてタブバーボタンを押すと画面が戻る
-//    AlbumViewController *albumViewCon = [[AlbumViewController alloc]init];
-//    [self.navigationController pushViewController:albumViewCon animated:YES];
     
     //NSTimerをstop
     [self.timer invalidate];
 }
 
+
+//titlefieldでリターンキーが押されるとキーボードを隠す
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)textTitle{
+	
+    if ([textTitle isEqualToString:@"\n"]) {
+        [tsdatabase updateTitle:self.idFromMainPage TITLE:titleField.text];
+        [textView resignFirstResponder];
+        return NO;
+    }
+	return YES;
+}
 
 @end

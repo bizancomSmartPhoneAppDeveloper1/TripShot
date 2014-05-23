@@ -52,7 +52,7 @@
 - (FMResultSet *)loadDBDataOnCamera:(int)number;
 
 //cameraViewでデータを上書き保存するために使う関数
-- (void)updateDBDataOnCamera:(int)ID TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount WENTFLAG:(int)went_flag;
+- (void)updateDBDataOnCamera:(int)ID TITLE:(NSString *)placeName TEXT:(NSString *)comment PICS:(NSString *)pics PICCOUNT:(int)picCount WENTFLAG:(int)went_flag;
 
 //完全削除メソッド 必要な時以外、絶対に使用しないこと！！
 //- (void)dbDelete;
@@ -65,5 +65,8 @@
 
 //DBディレクトリのパスを返す関数
 - (NSString *)dataFolderPath;
+
+//individualAlbumViewControllerでタイトルを編集した時に使う関数
+- (void)updateTitle:(int)ID TITLE:(NSString *)placeName;
 
 @end

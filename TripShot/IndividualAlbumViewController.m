@@ -12,6 +12,7 @@
     TSDataBase *tsdatabase;
     UIImageView *imageViewBack;
     UITextField *textfield;
+    UITextView *titleField;
     NSString *address;
     NSMutableArray *array;
     NSString *comment;
@@ -59,13 +60,6 @@
     [self.navigationController setNavigationBarHidden:NO];
     self.tabBarController.tabBar.hidden = YES;
 
-    //navigationBar設定
-//    //ナビゲーションバー
-//    [UINavigationBar appearance].tintColor = [UIColor colorWithRed:0.91 green:0.42 blue:0.41 alpha:1.0];
-//    
-//    
-//    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
-//
     //オリジナルBarButton生成　selectorでメソッドを指定
     UIImage *image = [UIImage imageNamed:@"return30.png"];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleBordered target:self action:@selector(didTapReturnButton)];
@@ -75,7 +69,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
 
@@ -159,22 +153,21 @@
     imageViewBack.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageViewBack];
     [self.view sendSubviewToBack:imageViewBack];
-
     
-    //文字色の指定（藍色にする！)
+    //文字色の指定（藍色！)
     UIColor *textColor = [UIColor colorWithRed:0.16 green:0.16 blue:0.42 alpha:1.0];
     
-    
     //行きたい場所リストタイトル表示
-    CGRect titleRect = CGRectMake(20, 340, width-40, 40);  //横始まり・縦始まり・ラベルの横幅・縦幅
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:titleRect];
-    titleLabel.text = title;
-    titleLabel.numberOfLines = 0;
-    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    titleLabel.textColor = textColor;
-    titleLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
-//    titleLabel.backgroundColor = [[UIColor greenColor]colorWithAlphaComponent:0.5]; //確認用
-    [scrollAllView addSubview:titleLabel];
+    CGRect titleRect = CGRectMake(15, 340, width-40, 45);  //横始まり・縦始まり・ラベルの横幅・縦幅
+    titleField = [[UITextView alloc]initWithFrame:titleRect];
+    titleField.text = title;
+    titleField.returnKeyType = UIReturnKeyDone;
+    titleField.delegate = self;
+    titleField.textColor = textColor;
+    titleField.font = [UIFont fontWithName:@"STHeitiJ-Light" size:18];
+    titleField.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0];
+    [scrollAllView addSubview:titleField];
+    [self registerForKeyboardNotifications];
     
     //日付入力
     NSString *dateString = [NSString stringWithFormat:@"%d",date];
@@ -188,7 +181,6 @@
     dateLabel.text = [NSString stringWithFormat:@"%d月%d日",month,day];
     dateLabel.textColor = textColor;
     dateLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
-//    dateLabel.backgroundColor = [[UIColor yellowColor]colorWithAlphaComponent:0.5];//確認用
     [scrollAllView addSubview:dateLabel];
     
     //住所情報入力
@@ -197,15 +189,17 @@
     addressLabel.text = address;
     addressLabel.textColor = textColor;
     addressLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
-//    addressLabel.backgroundColor = [[UIColor redColor]colorWithAlphaComponent:0.5]; //確認用
     [scrollAllView addSubview:addressLabel];
     
     //コメント欄
     CGRect textRect = CGRectMake(20, 380, width-40, 30);
     textfield = [[UITextField alloc]initWithFrame:textRect];
+    if ([text isEqualToString:@" "]) {
+    textfield.placeholder = @"コメントを入れてね♪";
+    }else{
     textfield.text = text;
+    }
     textfield.textColor = textColor;
-//    textfield.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0.5];//確認用
     textfield.font = [UIFont fontWithName:@"STHeitiJ-Light" size:12];
     textfield.returnKeyType = UIReturnKeyDefault;
     textfield.delegate = self;
@@ -222,12 +216,15 @@
 }
 
 
-//textfieldでリターンキーが押されるとキーボードを隠す
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    //DBにコメントを保存する
-    [tsdatabase updateText:self.idFromMainPage TEXT:textfield.text];
-    return YES;
+//titlefieldでリターンキーが押されるとキーボードを隠す
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)textTitle{
+	
+    if ([textTitle isEqualToString:@"\n"]) {
+        [tsdatabase updateTitle:self.idFromMainPage TITLE:titleField.text];
+        [textView resignFirstResponder];
+        return NO;
+    }
+	return YES;
 }
 
 

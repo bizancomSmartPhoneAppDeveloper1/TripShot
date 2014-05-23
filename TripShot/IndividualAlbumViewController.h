@@ -10,7 +10,7 @@
 #import <Social/Social.h>
 #import "TSDataBase.h"
 
-@interface IndividualAlbumViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate>{
+@interface IndividualAlbumViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate>{
     UIImage *editedImage;
 }
 @property int idFromMainPage;//メイン画面でピンを選択した時にcameraViewに対して渡されるDBのID
