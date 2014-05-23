@@ -259,6 +259,7 @@
                     <navigationItem key="navigationItem" id="OSx-66-EUQ"/>
                     <connections>
                         <outlet property="mapView" destination="Man-Q1-MmQ" id="OUe-gd-sQX"/>
+                        <outlet property="userLocationButton" destination="hTE-JN-NxY" id="jjS-lC-ryt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
