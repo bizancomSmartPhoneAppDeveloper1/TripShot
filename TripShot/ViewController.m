@@ -248,7 +248,7 @@
 
     if (notification == nil)
     
-    notification.fireDate = [NSDate new]; //3秒後にメッセ時が表示されるよう設定
+    notification.fireDate = [NSDate new]; 
     notification.shouldGroupAccessibilityChildren = YES;
     notification.alertBody = [NSString stringWithFormat:@"%@が近くです＾＾",locationName];  //メッセージの内容
     notification.timeZone = [NSTimeZone defaultTimeZone];  //タイムゾーンの設定 その端末にあるローケーションに合わせる
