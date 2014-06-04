@@ -58,6 +58,9 @@
 
     //tabbar背景色
     [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.97 green:0.96 blue:0.92 alpha:1.0];
+    
+    //全ての通知を一度キャンセルさせる
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 
 }
 
