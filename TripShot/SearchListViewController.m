@@ -9,6 +9,10 @@
 #import "SearchListViewController.h"
 #import "TSDataBase.h"
 #import "Reachability.h"
+#import "OHAttributedLabel.h"
+
+
+
 
 @class Reachability;
 
@@ -28,6 +32,7 @@
 @property NSMutableArray *addressArray;
 @property NSString *savedLat;
 @property NSString *savedLon;
+@property OHAttributedLabel *yahooLabel;
 
 @end
 
@@ -50,6 +55,28 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     [self initNavigationBar];
     [self loadLocationData];
     [self reachabilityStart];
+    
+    
+    /* YahooAPIのクレジット表記追記 */
+    
+    
+    //Viewを画面下部に追加
+    UIScreen *screenSize = [UIScreen mainScreen];
+    CGRect rect = screenSize.bounds;
+    
+    //Labelを生成
+    CGRect yahooRect = CGRectMake(15, rect.size.height-95, rect.size.width, rect.size.height);
+    _yahooLabel = [[OHAttributedLabel alloc]initWithFrame:yahooRect];
+    
+    //表示する文字列を指定
+    NSString *text = @"Web Services by Yahoo! JAPAN";
+    NSMutableAttributedString *attrStr = [NSMutableAttributedString attributedStringWithString:text];
+    NSURL *linkUrl = [NSURL URLWithString:@"http://developer.yahoo.co.jp/about"];
+    NSRange linkRange = [text rangeOfString:text];
+    [attrStr setLink:linkUrl range:linkRange];
+    [attrStr setTextColor:[UIColor blackColor]];
+    _yahooLabel.attributedText = attrStr;
+    [self.view addSubview:_yahooLabel];
     
 }
 
@@ -236,6 +263,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
                                              otherButtonTitles:nil, nil];
         [alert show];
     }
+    _yahooLabel.hidden = NO;
     
 }
 
@@ -247,6 +275,7 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
     [self getJsonFromWord:word];
     
     [_TableView reloadData];
+    _yahooLabel.hidden = YES;
     
 }
 

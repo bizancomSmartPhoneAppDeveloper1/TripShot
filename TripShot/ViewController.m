@@ -248,6 +248,8 @@
 
     if (notification == nil)
     
+    NSLog(@"check========================謎通知タイミング");
+    
     notification.fireDate = [NSDate new]; //3秒後にメッセ時が表示されるよう設定
     notification.shouldGroupAccessibilityChildren = YES;
     notification.alertBody = [NSString stringWithFormat:@"%@が近くです＾＾",locationName];  //メッセージの内容
