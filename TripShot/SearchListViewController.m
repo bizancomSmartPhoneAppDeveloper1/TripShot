@@ -364,9 +364,9 @@ NSString * const APIKEY = @"dj0zaiZpPXpXNGNjRWtiNG83ViZzPWNvbnN1bWVyc2VjcmV0Jng9
 		if( status == NotReachable )
 		{
 			NSLog(@"Wi-Fi is failed.");//3Gかどうか確認する
-            UIAlertView *connectionAlert = [[UIAlertView alloc]initWithTitle:@"警告" message:@"ネットワークに接続されていません" delegate:nil cancelButtonTitle:@"戻る" otherButtonTitles:nil, nil];
+           /* UIAlertView *connectionAlert = [[UIAlertView alloc]initWithTitle:@"警告" message:@"ネットワークに接続されていません" delegate:nil cancelButtonTitle:@"戻る" otherButtonTitles:nil, nil];
             [connectionAlert show];
-            
+            */
             // 3Gネットワーク接続 3
             if(curReach == internetReach)
             {
